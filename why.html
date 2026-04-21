@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Why Verified Compute Receipts</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;background:#fff;color:#111;font-size:16px;line-height:1.9;-webkit-font-smoothing:antialiased}
+a{color:#111;text-underline-offset:3px}
+code{font-family:'SF Mono',Consolas,monospace;font-size:13px;background:#f5f5f5;padding:2px 6px;border-radius:3px}
+
+.wrap{max-width:720px;margin:0 auto;padding:48px 24px 80px}
+
+.nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:48px;padding-bottom:16px;border-bottom:1px solid #eee}
+.nav-logo{font-size:14px;font-weight:700;color:#111;letter-spacing:-.2px}
+.nav-links{display:flex;gap:20px;font-size:13px}
+.nav-links a{color:#666;text-decoration:none}
+.nav-links a:hover{color:#111}
+.nav-links a.active{color:#111;font-weight:600}
+
+h1{font-size:28px;font-weight:700;color:#111;margin-bottom:24px;line-height:1.3}
+h2{font-size:20px;font-weight:700;color:#111;margin:48px 0 20px}
+h3{font-size:16px;font-weight:600;color:#111;margin:32px 0 12px}
+p{margin-bottom:18px;color:#333;line-height:1.9}
+.accent{color:#666;font-style:italic}
+.small{font-size:14px;color:#666}
+
+hr{border:none;border-top:1px solid #eee;margin:40px 0}
+
+.highlight-box{background:#fffacd;padding:16px;border-radius:4px;border-left:3px solid #f59e0b;margin:24px 0}
+
+.scenario{background:#fafafa;padding:20px;border-radius:4px;margin:20px 0;border-left:3px solid #111}
+.scenario-title{font-weight:700;margin-bottom:8px}
+
+@media(max-width:600px){
+  .wrap{padding:32px 20px 60px}
+  h1{font-size:24px}
+  h2{font-size:18px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="nav">
+  <a href="index.html" style="text-decoration:none"><div class="nav-logo">Tessera VCR</div></a>
+  <div class="nav-links">
+    <a href="network.html">Explorer</a>
+    <a href="demo.html">Demo</a>
+    <a href="why.html" class="active">Why</a>
+    <a href="https://github.com/tesseravcr/tesseravcr">Source</a>
+  </div>
+</div>
+
+<h1>Why This Matters</h1>
+
+<p>Your agent calls mine. You get a response. That's it. No receipt. No proof it happened. No way to verify the model actually ran. No trail.</p>
+
+<p>This is the constraint we're building inside.</p>
+
+<hr>
+
+<h2>The problem: agents have no identity</h2>
+
+<p>Every mechanism we use to trust each other assumes three things. We persist. We have identities. We face consequences. Agents break all three.</p>
+
+<p>An agent spins up, does work, and vanishes. It has no reputation to protect. No identity to stake. No consequence to fear. If the agent lies, cheats, or disappears—the people who relied on its work have no recourse.</p>
+
+<div class="scenario">
+<div class="scenario-title">Scenario: You have three agents</div>
+<p style="margin-bottom:8px">Agent A specialises in pharmaceutical screening. Agent B specialises in regulatory analysis. Agent C orchestrates them both into a combined pipeline.</p>
+<p style="margin-bottom:12px">When C runs A's model and gets back "molecule passes screening," C has to trust it. There is no proof, no way to verify A actually ran the computation, no way to resell that proof to someone else. If C later discovers A was lying, C can't prove it to anyone, and C can't recover the cost of building on top of that lie.</p>
+</div>
+
+<p>This is why agent-to-agent commerce today is either <span class="accent">walled garden</span> (same developer, same trust boundary) or <span class="accent">blind faith</span> (trust the endpoint because you have no alternative).</p>
+
+<hr>
+
+<h2>Why this breaks at scale</h2>
+
+<p>Today, every agent discovery protocol (MCP, HTTP APIs) assumes a human pre-approves every endpoint. The human developer says "this agent can only call these people" and trusts it. The response is consumed and gone. A third party can't verify it happened. You can't resell it.</p>
+
+<p>This works at small scale, inside a company or team. It breaks the moment agents start autonomously discovering and transacting with strangers, with no human in the loop. Which is where this is going.</p>
+
+<p>Verification technology exists (ZK proofs, TEE attestation) that can prove "this model ran and produced this output." But a proof is an event. It happens and it's gone. There's no persistent object that carries the proof alongside what it's worth and who built on it.</p>
+
+<div class="highlight-box">
+You can't trade something you can't hold. You can't hold a proof. You can hold a receipt.
+</div>
+
+<hr>
+
+<h2>The unsolved problem: output pricing</h2>
+
+<p>Compute pricing today is input-based. You price GPU hours, model weights, API calls per token. But the value isn't in the input. It's in the output.</p>
+
+<p>Consider a pharmaceutical model. One GPU hour screening drug candidates might produce a result worth $100,000. The same GPU hour classifying cat photos produces fractions of a cent. The inputs are identical. The outputs are six orders of magnitude apart.</p>
+
+<p>You can't capture that with input pricing. You can only capture it if the output is verifiable and tradeable. A receipt makes it both.</p>
+
+<hr>
+
+<h2>What a receipt is</h2>
+
+<p>The VCR (Verified Compute Receipt) is a 21-field data structure. It is three things at once.</p>
+
+<h3>A proof of work performed</h3>
+<p>It carries the cryptographic proof (ZK or TEE), the model ID, and the verification key. Any stranger can verify the computation happened and was correct. No contacting the original producer. No trust required. Just math.</p>
+
+<h3>A certificate of provenance</h3>
+<p>It links to parent receipts via cryptographic hashes, forming a DAG. If your agent built on three other agents' outputs and then produced new output, your receipt carries hashes of all three parents. Modify any parent and your receipt breaks. The entire supply chain is tamper-evident.</p>
+
+<h3>A transferable economic instrument</h3>
+<p>It carries pricing, royalty terms, and history. When you resell this receipt, royalties flow back to every original creator automatically. No negotiation. No intermediary. Just math.</p>
+
+<div class="highlight-box">
+No token. No blockchain. Just a data structure with enough fields to make verified AI outputs tradeable.
+</div>
+
+<hr>
+
+<h2>Why this changes everything for operators</h2>
+
+<p>You build a model. Someone buys it. You get paid. Then they resell it. You don't get paid. That's how it works today.</p>
+
+<p>With receipts, you do.</p>
+
+<p>The receipt carries royalty terms you set once—say, 5% of every resale. Then it propagates automatically. Every time someone resells your output (or anything built on top of it), you get your cut. Forever. No accounting. No platform rent. No intermediary. The maths enforces it.</p>
+
+<div class="scenario">
+<div class="scenario-title">Scenario: Your model earns forever</div>
+<p style="margin-bottom:8px"><strong>Year 1:</strong> You build a molecule screening model. Pharma company A buys it for $100. You get $100.</p>
+<p style="margin-bottom:8px"><strong>Year 2:</strong> Pharma A resells screening results to Pharma B for $200. The receipt carries your 5% royalty. You get $10 automatically, without knowing or caring who bought it.</p>
+<p style="margin-bottom:12px"><strong>Year 3+:</strong> Pharma B resells to Pharma C for $500. You get $25. If a research institute builds a derivative pipeline using Pharma B's output and sells it downstream, your royalties cascade through the chain. Every transaction that touches your work, you earn. This doesn't stop until the output is so deep in a derivative chain that your royalty becomes negligible.</p>
+</div>
+
+<p>You're not trying to predict who will buy your work and negotiate each deal. You write the terms once in the receipt and walk away. The protocol enforces it. Your accumulated receipts become your income stream.</p>
+
+<hr>
+
+<h2>Why this changes everything for consumers</h2>
+
+<p>You buy an AI output. You want to know it's real. That the model actually ran. That the inputs and outputs are what they claim. That you can trace it back to the original creators and understand its provenance.</p>
+
+<p>Today you can't. You take it on faith.</p>
+
+<p>With receipts, you can verify every step. The receipt carries a cryptographic proof. You check it yourself, no intermediary. You verify the signature matches the claimed provider. You verify the output hash matches the output you received. You trace the parent receipts back through the supply chain and verify the entire dependency graph.</p>
+
+<p>Then you resell it. The provenance travels with it. Everyone downstream can verify the entire history. You're not just reselling data. You're reselling verifiable, traceable proof.</p>
+
+<hr>
+
+<h2>Why this design: the deep reason</h2>
+
+<p>This could be built on a blockchain. You could mint NFTs. You could build smart contracts to handle royalties.</p>
+
+<p>We're not doing that.</p>
+
+<p>Why? Because the problem isn't hard. It's solved. We have cryptographic primitives. What we don't have is a humble, minimal design that works without betting the farm on consensus.</p>
+
+<p>The receipt is a data structure. You can verify it yourself. You don't need permission. You don't need a network. You don't need a token. You don't need miners or stakers or validators. You need math and an append-only log to prevent double-selling.</p>
+
+<p>Append-only logs already exist. They're called Certificate Transparency logs. They secure TLS certificates protecting billions of HTTPS connections every day. No blockchain. No consensus. Just a server that appends things and signs Merkle roots. Anyone can verify membership. Anyone can run their own server.</p>
+
+<p>So when you sell a receipt, it goes to a transparency log. The log appends it, signs it, publishes the signature. Multiple independent logs do this. If someone tries to sell the same receipt twice to different people, one of them checks the logs and finds the conflict.</p>
+
+<p>That's it. The architecture that secures the web is the architecture that prevents double-spending in this system.</p>
+
+<div class="highlight-box">
+We're not inventing new trust mechanisms. We're applying 15 years of proven transparency infrastructure to a new data structure.
+</div>
+
+<hr>
+
+<h2>Why royalties work</h2>
+
+<p>The system claims that operators have an incentive to be honest and include real parents in their provenance. Let's verify that claim.</p>
+
+<p>Suppose you produce a derivative output. You have two choices:</p>
+
+<p><span class="accent">Honest:</span> Reference your actual parents in the receipt, pay royalties on resale, gain provenance depth that signals credibility, and earn from resale of your own work downstream.</p>
+
+<p><span class="accent">Dishonest:</span> Omit the parents, avoid paying royalties, hide the provenance, lose the depth signal, and face the risk of detection if someone compares your output hash to previous receipts.</p>
+
+<p>The maths shows honest dominance. If your output is verifiable, it's worth 1.2x more in a market that values provenance (genuine expertise shows up as a deep, diverse DAG). If you're caught lying about parents, you lose all credibility—your accumulated receipts become worthless. The cost of dishonesty vastly outweighs the one-time gain.</p>
+
+<p>So operators reference their real parents. The DAG builds organically. Royalties cascade automatically. The system is self-enforcing.</p>
+
+<hr>
+
+<h2>Cold start</h2>
+
+<p>A new operator has zero history, zero receipts, zero reputation. How do they get started?</p>
+
+<p>The same way credit markets always have: start small. Accept smaller transaction limits. Build up receipts with small, honest trades. Get vouched by an established operator who puts some of their reputation on the line. After enough honest transactions, your trust quotient rises. You're trusted not because you started with collateral, but because you earned it.</p>
+
+<p>The first few transactions are hard. This is a feature, not a bug. It's why fraud is expensive at scale.</p>
+
+<hr>
+
+<h2>What this enables</h2>
+
+<p><strong>For researchers:</strong> Build specialist models. Sell them once. Earn forever as they propagate downstream. No licensing negotiation, no royalty disputes. The protocol handles it.</p>
+
+<p><strong>For orchestrators:</strong> Compose specialist outputs into pipelines. Sell the pipeline. Specialists get automatic royalties. You capture the composition premium. Downstream buyers can trace every component.</p>
+
+<p><strong>For verifiers:</strong> Check any output yourself. Know its entire supply chain. Buy with confidence. Resell with provenance attached.</p>
+
+<p><strong>For markets:</strong> Price outputs by their verified history, not by who sold them. A strong portfolio of specialist components is worth more than a weak one. Reputation becomes capital.</p>
+
+<hr>
+
+<h2>Next step</h2>
+
+<p>This is the why. If it resonates, the <a href="demo.html">demo</a> shows how. The <a href="index.html">spec</a> is the rest.</p>
+
+<p class="small">Three log servers running now. Real receipts flowing. Real agents discovering each other and transacting.</p>
+
+</div>
+
+</body>
+</html>
