@@ -10,7 +10,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;
 a{color:#111;text-underline-offset:3px}
 code{font-family:'SF Mono',Consolas,monospace;font-size:13px;background:#f5f5f5;padding:2px 6px;border-radius:3px}
 
-.wrap{max-width:640px;margin:0 auto;padding:48px 24px 80px}
+.wrap{max-width:720px;margin:0 auto;padding:48px 24px 80px}
 
 .nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:48px;padding-bottom:16px;border-bottom:1px solid #eee}
 .nav-logo{font-size:14px;font-weight:700;color:#111;letter-spacing:-.2px}
@@ -20,21 +20,39 @@ code{font-family:'SF Mono',Consolas,monospace;font-size:13px;background:#f5f5f5;
 .nav-links a.active{color:#111;font-weight:600}
 
 h1{font-size:24px;font-weight:700;color:#111;margin-bottom:20px;line-height:1.3}
-h2{font-size:16px;font-weight:700;color:#111;margin:32px 0 12px}
+h2{font-size:16px;font-weight:700;color:#111;margin:40px 0 16px}
 p{margin-bottom:16px;color:#333;line-height:1.8}
 .small{font-size:13px;color:#666}
 
 hr{border:none;border-top:1px solid #eee;margin:32px 0}
 
-.scene{background:#fafafa;border-left:3px solid #111;padding:20px;margin:24px 0;border-radius:4px}
-.scene-title{font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:#999;margin-bottom:12px;font-weight:600}
-.scene-content{font-size:15px;line-height:1.7;color:#333}
+.diagram-container{background:#fafafa;border-radius:8px;padding:24px;margin:24px 0;border:1px solid #eee;display:flex;justify-content:center}
+svg{max-width:100%;height:auto}
+
+.agent-box{fill:#f5f5f5;stroke:#111;stroke-width:2}
+.agent-label{font-size:12px;font-weight:600;fill:#111;text-anchor:middle}
+.arrow{stroke:#111;stroke-width:2;marker-end:url(#arrowhead);animation:fadeIn 1s ease-in forwards}
+.arrow-label{font-size:11px;fill:#666}
+.value-label{font-size:11px;fill:#22c55e;font-weight:600}
+
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes flowValue{
+  0%{opacity:0;transform:translate(0,0)}
+  50%{opacity:1}
+  100%{opacity:0;transform:translate(20px,-20px)}
+}
+
+.circle-node{fill:#fff;stroke:#111;stroke-width:2}
+.circle-label{font-size:12px;font-weight:600;fill:#111;text-anchor:middle;dominant-baseline:middle}
+
+hr{border:none;border-top:1px solid #eee;margin:32px 0}
 
 pre{background:#f5f5f5;border:1px solid #eee;border-radius:4px;padding:12px;font-size:12px;overflow-x:auto;margin:12px 0}
 
 @media(max-width:600px){
   .wrap{padding:32px 20px 60px}
   h1{font-size:20px}
+  .diagram-container{padding:16px}
 }
 </style>
 </head>
@@ -51,125 +69,159 @@ pre{background:#f5f5f5;border:1px solid #eee;border-radius:4px;padding:12px;font
   </div>
 </div>
 
-<h1>How it works in practice.</h1>
+<h1>How four agents transact without trust.</h1>
 
-<p>Four agents. Each is a specialist. They don't know each other. They don't trust each other. They transact anyway, using receipts as proof.</p>
-
-<hr>
-
-<div class="scene">
-<div class="scene-title">Scene 1: Sentinel computes</div>
-<div class="scene-content">
-Sentinel has proprietary satellite data. No one else has it. It runs inference on a trusted hardware enclave (AWS Nitro). The enclave signs the output with its private key. That signature is unforgeable proof that Nitro ran the code.
-
-Sentinel wraps that into a receipt:
-<pre>Receipt ID:      0x5b4c3cab...
-Model:           sentinel-v2
-Proving backend: tee-nitro-v1
-Provider:        Sentinel [d7311d09...]
-Output hash:     0xd47bddbe...
-Signature:       [real Ed25519, verifiable by anyone]</pre>
-
-The receipt is permanent. Cryptographically. Anyone can verify it.
-</div>
-</div>
-
-<div class="scene">
-<div class="scene-title">Scene 2: MedGraph builds on it</div>
-<div class="scene-content">
-MedGraph needs Sentinel's output. It doesn't trust Sentinel. So it verifies the receipt first: checks the signature, verifies the proof, checks the computation happened.
-
-Then MedGraph uses Sentinel's output as input to its own model. Creates a new receipt:
-<pre>Receipt ID:      0xdb0381ce...
-Model:           medgraph-v3
-Provider:        MedGraph [5194dfea...]
-Parent receipts: [Sentinel's receipt ID]
-Output hash:     0x8f2c4d19...
-Signature:       [MedGraph's Ed25519]</pre>
-
-Now this receipt includes a cryptographic link to Sentinel's receipt. The chain is tamper-evident.
-</div>
-</div>
-
-<div class="scene">
-<div class="scene-title">Scene 3: Nexus orchestrates all three</div>
-<div class="scene-content">
-Nexus can't do any of these tasks itself. It's the orchestrator. It calls Sentinel, MedGraph, and Regulatory. Uses all three outputs to compute investment strategy.
-
-Creates a receipt with three parents:
-<pre>Receipt ID:      0x9d2e3feb...
-Model:           nexus-strategy
-Provider:        Nexus [9d2e3feb...]
-Parent receipts: [Sentinel, MedGraph, Regulatory]
-Output hash:     0x12ab45cd...
-Signature:       [Nexus's Ed25519]</pre>
-
-The provenance DAG is now:
-
-    Sentinel  MedGraph  Regulatory
-       \        |        /
-        \       |       /
-          \     |     /
-            Nexus (depth 1)
-
-Every edge is a hash. Modify Sentinel's receipt and Nexus's receipt breaks. The chain is the audit trail.
-</div>
-</div>
-
-<div class="scene">
-<div class="scene-title">Scene 4: A fund buys Nexus's output</div>
-<div class="scene-content">
-Fund wants Nexus's strategy. Doesn't know Nexus. Doesn't need to.
-
-Fund verifies:
-— Nexus's signature (Ed25519) ✓
-— Nexus's parents (Sentinel, MedGraph, Regulatory) ✓
-— Each parent's signature and proof ✓
-— The entire chain is intact ✓
-
-Fund buys for $150. Creates a transfer record:
-
-<pre>Receipt ID:      0x9d2e3feb...  (same)
-From key:        Nexus [9d2e3feb...]
-To key:          Fund [48b79151...]
-Price:           $150
-Seller signature: [Nexus's Ed25519 on transfer]</pre>
-
-The transfer is appended to the log. Permanently. Witnessed by 3 independent servers.
-</div>
-</div>
-
-<div class="scene">
-<div class="scene-title">Scene 5: Royalties flow backward</div>
-<div class="scene-content">
-When Fund buys Nexus's receipt, royalties cascade back through the DAG automatically.
-
-Nexus gets: $147.75 (provider royalty 5% + seller remainder)
-Sentinel gets: $0.75 (parent royalty 3%, split among parents)
-MedGraph gets: $0.75
-Regulatory gets: $0.75
-
-No platform. No accounting. Protocol math.
-
-Every time Fund resells to someone else, the cascade happens again. Sentinel keeps earning forever. Not because anyone manages it. Because the receipt carries the royalty terms.
-</div>
-</div>
+<p>They don't know each other. They don't trust each other. But they can verify everything. Each receipt is cryptographic proof.</p>
 
 <hr>
 
-<h2>Why this is God</h2>
+<h2>Agent A runs compute</h2>
 
-<p>You have proof. You have provenance. You have payment. All three together, in one data structure.</p>
+<div class="diagram-container">
+  <svg viewBox="0 0 400 120" style="width:100%;max-width:400px">
+    <defs>
+      <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+        <polygon points="0 0, 10 3, 0 6" fill="#111"/>
+      </marker>
+    </defs>
+    <rect class="agent-box" x="50" y="20" width="80" height="80" rx="4"/>
+    <text class="agent-label" x="90" y="60">Agent A</text>
+    <text class="agent-label" x="90" y="75" style="font-size:10px;fill:#666">computes</text>
 
-<p>No platform took a cut. No escrow held the money. No middleman verified anything. Just cryptographic math and an append-only log.</p>
+    <rect class="agent-box" x="250" y="20" width="80" height="80" rx="4"/>
+    <text class="agent-label" x="290" y="60">Receipt</text>
+    <text class="agent-label" x="290" y="75" style="font-size:10px;fill:#666">signed</text>
 
-<p>Run it yourself:</p>
+    <line class="arrow" x1="130" y1="60" x2="250" y2="60" style="animation-delay:0s"/>
+    <text class="arrow-label" x="190" y="55">Ed25519</text>
+  </svg>
+</div>
+
+<p class="small">A computes. A signs the receipt with its private key. Receipt is now unforgeable proof of what happened.</p>
+
+<hr>
+
+<h2>Agent B uses A's output</h2>
+
+<div class="diagram-container">
+  <svg viewBox="0 0 400 150" style="width:100%;max-width:400px">
+    <defs>
+      <marker id="arrowhead2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+        <polygon points="0 0, 10 3, 0 6" fill="#111"/>
+      </marker>
+    </defs>
+    <!-- A's receipt -->
+    <rect class="agent-box" x="30" y="10" width="70" height="50" rx="4"/>
+    <text class="agent-label" x="65" y="40" style="font-size:11px">Receipt A</text>
+
+    <!-- B verifies -->
+    <rect class="agent-box" x="150" y="10" width="70" height="50" rx="4"/>
+    <text class="agent-label" x="185" y="40" style="font-size:11px">Agent B</text>
+
+    <!-- B creates new receipt -->
+    <rect class="agent-box" x="270" y="10" width="70" height="50" rx="4"/>
+    <text class="agent-label" x="305" y="40" style="font-size:11px">Receipt B</text>
+
+    <!-- Parent link -->
+    <line class="arrow" x1="100" y1="35" x2="150" y2="35" style="animation-delay:0.5s"/>
+    <text class="arrow-label" x="120" y="30" style="font-size:10px">verify</text>
+
+    <line class="arrow" x1="220" y1="35" x2="270" y2="35" style="animation-delay:1s"/>
+    <text class="arrow-label" x="240" y="30" style="font-size:10px">parent</text>
+
+    <!-- DAG forming -->
+    <line x1="65" y1="60" x2="305" y2="10" stroke="#999" stroke-width="1" stroke-dasharray="4" style="opacity:0.5"/>
+  </svg>
+</div>
+
+<p class="small">B gets A's receipt. B verifies the signature. B verifies the proof. Only then does B use the output. B creates a new receipt with A's receipt as parent.</p>
+
+<hr>
+
+<h2>C and D build the pipeline</h2>
+
+<div class="diagram-container">
+  <svg viewBox="0 0 500 200" style="width:100%;max-width:500px">
+    <defs>
+      <marker id="arrowhead3" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+        <polygon points="0 0, 10 3, 0 6" fill="#111"/>
+      </marker>
+    </defs>
+
+    <!-- A -->
+    <circle class="circle-node" cx="60" cy="40" r="25"/>
+    <text class="circle-label" x="60" y="40">A</text>
+
+    <!-- B -->
+    <circle class="circle-node" cx="160" cy="40" r="25"/>
+    <text class="circle-label" x="160" y="40">B</text>
+
+    <!-- C -->
+    <circle class="circle-node" cx="260" cy="40" r="25"/>
+    <text class="circle-label" x="260" y="40">C</text>
+
+    <!-- D (orchestrator) -->
+    <rect class="agent-box" x="330" y="20" width="60" height="40" rx="4"/>
+    <text class="circle-label" x="360" y="45">D</text>
+
+    <!-- Edges A→D, B→D, C→D -->
+    <line class="arrow" x1="85" y1="40" x2="335" y2="40" style="animation-delay:0s;stroke:#ddd"/>
+    <line class="arrow" x1="185" y1="40" x2="335" y2="40" style="animation-delay:0.3s;stroke:#999"/>
+    <line class="arrow" x1="285" y1="40" x2="335" y2="40" style="animation-delay:0.6s;stroke:#111"/>
+
+    <text class="arrow-label" x="200" y="55" style="font-size:10px">provenance DAG</text>
+  </svg>
+</div>
+
+<p class="small">D needs output from A, B, and C. D verifies all three receipts. D creates a receipt with three parents. The DAG now shows the entire computation pipeline.</p>
+
+<hr>
+
+<h2>Now comes the payment part</h2>
+
+<div class="diagram-container">
+  <svg viewBox="0 0 500 180" style="width:100%;max-width:500px">
+    <defs>
+      <marker id="arrowhead4" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+        <polygon points="0 0, 10 3, 0 6" fill="#111"/>
+      </marker>
+    </defs>
+
+    <!-- D's receipt -->
+    <rect class="agent-box" x="50" y="30" width="70" height="50" rx="4"/>
+    <text class="circle-label" x="85" y="62">Receipt D</text>
+
+    <!-- Fund buys -->
+    <rect class="agent-box" x="350" y="30" width="70" height="50" rx="4"/>
+    <text class="circle-label" x="385" y="62">Fund</text>
+
+    <!-- Transfer arrow -->
+    <line class="arrow" x1="120" y1="55" x2="350" y2="55" style="animation-delay:1s"/>
+    <text class="value-label" x="235" y="50">$150</text>
+
+    <!-- Royalties cascade back -->
+    <line x1="385" y1="80" x2="250" y2="140" stroke="#22c55e" stroke-width="2" stroke-dasharray="4" style="animation:flowValue 2s ease-in-out 1.5s infinite"/>
+    <text class="value-label" x="310" y="125">royalties</text>
+  </svg>
+</div>
+
+<p class="small">Fund wants D's output. Fund verifies: D's signature, D's parents, entire chain. Fund buys for $150. Royalties automatically cascade back to A, B, C. No middleman. Protocol math.</p>
+
+<hr>
+
+<h2>Fund resells to someone else</h2>
+
+<p>The receipt carries the royalty terms. When Fund resells, the cascade happens again. A, B, C keep earning. Forever. Not because anyone manages it. Because the receipt is programmed with it.</p>
+
+<hr>
+
+<h2>Try it yourself</h2>
 
 <pre>git clone https://github.com/tesseravcr/tesseravcr.git
 cd tesseravcr
 python3 tessera-py/demo.py</pre>
 
-<p class="small">Real Ed25519 signatures. Real SHA-256 hashes. Real Nitro enclave attestation. Real ZK proofs. You'll see every step.</p>
+<p class="small">Real Ed25519 signatures. Real hashes. Real Nitro attestation. Real ZK proofs. You'll see every step.</p>
 
 </div>
 
