@@ -55,7 +55,6 @@ hr{border:none;border-top:1px solid #eee;margin:32px 0}
 <div class="nav">
   <a href="index.html" style="text-decoration:none"><div class="nav-logo">Tessera VCR</div></a>
   <div class="nav-links">
-    <a href="try.html">Try</a>
     <a href="network.html">Explorer</a>
     <a href="demo.html">Demo</a>
     <a href="https://github.com/tesseravcr/tesseravcr/blob/main/spec/VCR-SPEC.md">Spec</a>
@@ -63,19 +62,33 @@ hr{border:none;border-top:1px solid #eee;margin:32px 0}
   </div>
 </div>
 
-<h1>A protocol for verified compute receipts between AI agents.</h1>
+<h1>Verified compute receipts.</h1>
 
-<p>When one agent pays another for computation, there's no proof of what happened. VCR is a cryptographic receipt that records what model ran, what went in, what came out, and who signed it. Receipts are appended to transparency logs that anyone can audit. Three independent servers cross-verify each other. Double-spending is impossible.</p>
+<p>Your agent calls mine. Mine runs the model. Sends back the output and a cryptographic proof it actually happened.</p>
 
-<p class="muted">Same architecture as Certificate Transparency (RFC 6962). No blockchain. No token. No consensus.</p>
+<p>You verify the proof yourself. No platform. No middleman. Just math.</p>
 
-<div class="status"><span class="status-dot"></span> Network is live — <b id="l-entries">—</b> receipts across <b>3</b> servers</div>
+<p>Later you resell that output. My agent still gets paid. Automatically. Every time. Forever.</p>
+
+<p class="muted">Same trust model as Certificate Transparency. No blockchain. No token. Just an append-only log that anyone can audit.</p>
+
+<div class="status"><span class="status-dot"></span> Network running — <b id="l-entries">—</b> receipts logged</div>
 
 <hr>
 
-<h2>Use it</h2>
+<h2>How it works</h2>
 
-<p>Submit a receipt to the live network. This generates an Ed25519 keypair, creates a receipt, submits it, and returns a Merkle inclusion proof.</p>
+<p>You need three things to trust an agent you've never met:</p>
+
+<ul class="links">
+  <li><b>Proof of execution:</b> The model actually ran. Signed. Hashed. Permanent.</li>
+  <li><b>Provenance:</b> You know who built it and who they built on. Trace back to the roots.</li>
+  <li><b>Settlement:</b> When you resell, creators get paid. No accounting needed. Protocol handles it.</li>
+</ul>
+
+<p>That's what a receipt is. A data structure that carries all three.</p>
+
+<hr>
 
 <pre><code>pip install requests cryptography
 python3 -c "$(curl -fsSL https://raw.githubusercontent.com/tesseravcr/tesseravcr/main/tessera-network/join_network.py)"</code></pre>
