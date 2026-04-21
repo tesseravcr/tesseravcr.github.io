@@ -20,31 +20,17 @@ code{font-family:'SF Mono',Consolas,monospace;font-size:12px;background:#f5f5f5;
 .nav-links a.active{color:#111;font-weight:600}
 
 h1{font-size:22px;font-weight:700;color:#111;margin-bottom:16px;line-height:1.3}
-h2{font-size:16px;font-weight:700;color:#111;margin:32px 0 12px}
-h3{font-size:14px;font-weight:600;color:#111;margin:20px 0 8px}
+h2{font-size:16px;font-weight:700;color:#111;margin:40px 0 16px}
+h3{font-size:13px;font-weight:600;color:#111;margin:24px 0 12px;padding:8px 12px;background:#f0f0f0;border-radius:4px}
 p{margin-bottom:14px;color:#333;line-height:1.7}
 .small{font-size:13px;color:#666}
 
 hr{border:none;border-top:1px solid #eee;margin:32px 0}
 
-.diagram{background:#fafafa;border-radius:8px;padding:24px;margin:24px 0;border:1px solid #eee;overflow-x:auto}
+.diagram{background:#fafafa;border-radius:8px;padding:20px;margin:24px 0;border:1px solid #eee;overflow-x:auto}
 svg{display:block;margin:0 auto;max-width:100%;height:auto}
 
-.box{fill:#fff;stroke:#111;stroke-width:1.5}
-.box-title{font-size:11px;font-weight:600;fill:#111}
-.box-label{font-size:10px;fill:#666}
-.arrow{stroke:#111;stroke-width:1.5;marker-end:url(#arrowhead);fill:none}
-.arrow-label{font-size:11px;fill:#111;font-weight:500}
-.value{font-size:10px;fill:#22c55e;font-weight:600}
-.hash{font-size:10px;fill:#999;font-family:'SF Mono',Consolas,monospace}
-.circle{fill:#f5f5f5;stroke:#111;stroke-width:1.5}
-.circle-text{font-size:11px;font-weight:600;fill:#111;text-anchor:middle;dominant-baseline:middle}
-
-.section-title{font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:#999;margin-bottom:12px;font-weight:600}
-
-pre{background:#f5f5f5;border:1px solid #eee;border-radius:4px;padding:12px;font-size:11px;overflow-x:auto;margin:12px 0;line-height:1.5}
-
-.highlight{background:#fffacd;padding:2px 4px;border-radius:2px}
+.highlight-box{background:#fffacd;padding:12px;border-radius:4px;border-left:3px solid #f59e0b;margin:16px 0}
 
 @media(max-width:600px){
   .wrap{padding:32px 20px 60px}
@@ -65,166 +51,202 @@ pre{background:#f5f5f5;border:1px solid #eee;border-radius:4px;padding:12px;font
   </div>
 </div>
 
-<h1>What is a receipt, and why do you want one.</h1>
-
-<p>You're an operator. You run a model. An agent asks you for compute. You run it. They pay you. Done.</p>
-
-<p>But here's the catch: that agent might resell your output to someone else. And someone after that. You never see another payment. Your work just keeps flowing, making money for everyone downstream except you.</p>
-
-<p>With a receipt, that changes.</p>
+<h1>What a receipt means. For operators. For consumers.</h1>
 
 <hr>
 
-<h2>The Receipt: 21 Fields</h2>
+<h2>Operator View: You Earn Forever</h2>
+
+<h3>Diagram 1: You Create a Receipt</h3>
 
 <div class="diagram">
-<svg viewBox="0 0 520 360" style="width:100%;max-width:520px">
+<svg viewBox="0 0 400 180" style="width:100%;max-width:400px">
+<rect x="20" y="20" width="160" height="100" rx="4" fill="#fff" stroke="#111" stroke-width="2"/>
+<text x="30" y="40" font-size="12" font-weight="600" fill="#111">You (Operator)</text>
+<text x="30" y="60" font-size="11" fill="#666">Run model</text>
+<text x="30" y="76" font-size="11" fill="#666">Sign with private key</text>
+<text x="30" y="92" font-size="11" fill="#666">Create receipt</text>
+<text x="30" y="108" font-size="11" fill="#666">Set royalty terms</text>
+
+<line x1="180" y1="70" x2="220" y2="70" stroke="#111" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+<rect x="220" y="20" width="160" height="100" rx="4" fill="#fff" stroke="#111" stroke-width="2"/>
+<text x="230" y="40" font-size="12" font-weight="600" fill="#111">Receipt (21 fields)</text>
+<text x="230" y="60" font-size="10" fill="#666">model_id</text>
+<text x="230" y="73" font-size="10" fill="#666">input_hash, output_hash</text>
+<text x="230" y="86" font-size="10" fill="#666">proof (ZK or TEE)</text>
+<text x="230" y="99" font-size="10" fill="#666">provider: you</text>
+<text x="230" y="112" font-size="10" fill="#666">royalty_terms: 5%</text>
+
 <defs>
   <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
     <polygon points="0 0, 8 3, 0 6" fill="#111"/>
   </marker>
 </defs>
-
-<!-- Receipt box -->
-<rect class="box" x="20" y="20" width="480" height="320" rx="4"/>
-
-<!-- IDENTITY -->
-<text x="30" y="40" class="section-title">IDENTITY</text>
-<rect class="box" x="35" y="50" width="200" height="30" rx="2"/>
-<text x="40" y="65" class="box-label">receipt_id: H(canonical_bytes)</text>
-
-<!-- COMPUTATION -->
-<text x="30" y="110" class="section-title">COMPUTATION</text>
-<rect class="box" x="35" y="120" width="200" height="16" rx="2"/><text x="40" y="130" class="box-label">model_id, input_hash, output_hash</text>
-<rect class="box" x="35" y="140" width="200" height="16" rx="2"/><text x="40" y="150" class="box-label">proof (ZK or TEE), timestamp</text>
-<rect class="box" x="35" y="160" width="200" height="16" rx="2"/><text x="40" y="170" class="box-label">proving_backend (ezkl-halo2, tee-nitro-v1)</text>
-
-<!-- PROVENANCE -->
-<text x="280" y="110" class="section-title">PROVENANCE</text>
-<rect class="box" x="295" y="120" width="200" height="16" rx="2"/><text x="300" y="130" class="box-label">parent_receipts (hash-linked DAG)</text>
-<rect class="box" x="295" y="140" width="200" height="16" rx="2"/><text x="300" y="150" class="box-label">provenance_depth (0 = root)</text>
-
-<!-- ECONOMICS -->
-<text x="280" y="180" class="section-title">ECONOMICS</text>
-<rect class="box" x="295" y="190" width="200" height="16" rx="2"/><text x="300" y="200" class="box-label">provider (your pubkey)</text>
-<rect class="box" x="295" y="210" width="200" height="16" rx="2"/><text x="300" y="220" class="box-label">original_price, royalty_terms</text>
-
-<!-- INTEGRITY -->
-<text x="30" y="200" class="section-title">INTEGRITY</text>
-<rect class="box" x="35" y="210" width="200" height="16" rx="2"/><text x="40" y="220" class="box-label">signature (Ed25519 from you)</text>
-
-<!-- Key insight -->
-<text x="30" y="250" class="box-label" style="font-weight:600;font-size:12px">Why this matters:</text>
-<text x="30" y="265" class="box-label">→ Immutable proof your model ran</text>
-<text x="30" y="280" class="box-label">→ Verifiable by anyone, forever</text>
-<text x="30" y="295" class="box-label">→ Carries royalty terms you define</text>
-<text x="30" y="310" class="box-label">→ Can be transferred, resold, audited</text>
-
 </svg>
 </div>
 
-<p class="small">Every field exists because verification, provenance, or settlement needs it. Nothing extra.</p>
-
-<hr>
-
-<h2>What Happens When You Resell</h2>
+<h3>Diagram 2: First Sale</h3>
 
 <div class="diagram">
-<svg viewBox="0 0 520 240" style="width:100%;max-width:520px">
+<svg viewBox="0 0 450 140" style="width:100%;max-width:450px">
+<!-- You -->
+<circle cx="60" cy="70" r="20" fill="#f5f5f5" stroke="#111" stroke-width="2"/>
+<text x="60" y="73" font-size="11" font-weight="600" fill="#111" text-anchor="middle">You</text>
+
+<!-- Buyer 1 -->
+<circle cx="220" cy="70" r="20" fill="#f5f5f5" stroke="#111" stroke-width="2"/>
+<text x="220" y="73" font-size="11" font-weight="600" fill="#111" text-anchor="middle">Buyer 1</text>
+
+<!-- Sale arrow -->
+<line x1="80" y1="70" x2="200" y2="70" stroke="#111" stroke-width="2" marker-end="url(#arrowhead)"/>
+<text x="140" y="55" font-size="11" font-weight="600" fill="#111">$100 sale</text>
+
+<!-- You get paid -->
+<rect x="20" y="100" width="80" height="25" rx="3" fill="#e8f5e9" stroke="#22c55e" stroke-width="1"/>
+<text x="30" y="119" font-size="11" font-weight="600" fill="#22c55e">You: $100</text>
+
 <defs>
-  <marker id="arrowhead2" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+  <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
     <polygon points="0 0, 8 3, 0 6" fill="#111"/>
   </marker>
 </defs>
+</svg>
+</div>
 
-<!-- You (operator) -->
-<g>
-  <circle class="circle" cx="80" cy="60" r="25"/>
-  <text class="circle-text" x="80" y="60">You</text>
-  <text class="box-label" x="80" y="85" text-anchor="middle">Operator</text>
-</g>
+<h3>Diagram 3: Second Sale (Resale)</h3>
 
+<div class="diagram">
+<svg viewBox="0 0 450 180" style="width:100%;max-width:450px">
 <!-- Buyer 1 -->
-<g>
-  <circle class="circle" cx="260" cy="60" r="25"/>
-  <text class="circle-text" x="260" y="60">Buyer 1</text>
-</g>
-
-<!-- Transfer 1 -->
-<line class="arrow" x1="105" y1="60" x2="235" y2="60"/>
-<text class="value" x="170" y="50">$100 sale</text>
-
-<!-- Royalty back -->
-<line x1="235" y1="75" x2="105" y2="95" stroke="#22c55e" stroke-width="2" stroke-dasharray="3,3" marker-end="url(#arrowhead2)"/>
-<text class="value" x="160" y="90">$5 royalty</text>
-<text class="box-label" x="160" y="105">(5% provider royalty)</text>
+<circle cx="60" cy="70" r="20" fill="#f5f5f5" stroke="#111" stroke-width="2"/>
+<text x="60" y="73" font-size="11" font-weight="600" fill="#111" text-anchor="middle">Buyer 1</text>
 
 <!-- Buyer 2 -->
-<g>
-  <circle class="circle" cx="440" cy="60" r="25"/>
-  <text class="circle-text" x="440" y="60">Buyer 2</text>
-</g>
+<circle cx="220" cy="70" r="20" fill="#f5f5f5" stroke="#111" stroke-width="2"/>
+<text x="220" y="73" font-size="11" font-weight="600" fill="#111" text-anchor="middle">Buyer 2</text>
 
-<!-- Transfer 2 -->
-<line class="arrow" x1="285" y1="60" x2="415" y2="60"/>
-<text class="value" x="350" y="50">$200 resale</text>
+<!-- Resale arrow -->
+<line x1="80" y1="70" x2="200" y2="70" stroke="#111" stroke-width="2" marker-end="url(#arrowhead)"/>
+<text x="140" y="55" font-size="11" font-weight="600" fill="#111">$200 resale</text>
 
-<!-- Royalty back again -->
-<line x1="415" y1="75" x2="105" y2="160" stroke="#22c55e" stroke-width="2" stroke-dasharray="3,3" marker-end="url(#arrowhead2)"/>
-<text class="value" x="240" y="140">$10 royalty</text>
-<text class="box-label" x="240" y="155">auto-paid, forever</text>
+<!-- Buyer 1 gets most -->
+<rect x="20" y="100" width="80" height="25" rx="3" fill="#e3f2fd" stroke="#2196f3" stroke-width="1"/>
+<text x="30" y="119" font-size="10" fill="#2196f3">Buyer 1: $190</text>
 
-<!-- Legend -->
-<text x="30" y="200" class="box-label" style="font-weight:600;font-size:12px">You get paid automatically every time it sells.</text>
-<text x="30" y="215" class="box-label">No middleman. No accounting. Protocol handles it.</text>
+<!-- YOU get royalty automatically -->
+<rect x="350" y="100" width="80" height="25" rx="3" fill="#e8f5e9" stroke="#22c55e" stroke-width="2"/>
+<text x="360" y="119" font-size="10" font-weight="600" fill="#22c55e">You: $10</text>
+
+<!-- Arrow showing automatic payment -->
+<line x1="200" y1="85" x2="360" y2="105" stroke="#22c55e" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrowhead-green)"/>
+
+<text x="240" y="95" font-size="10" fill="#22c55e" font-weight="600">auto-paid</text>
+
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+    <polygon points="0 0, 8 3, 0 6" fill="#111"/>
+  </marker>
+  <marker id="arrowhead-green" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+    <polygon points="0 0, 8 3, 0 6" fill="#22c55e"/>
+  </marker>
+</defs>
 </svg>
+</div>
+
+<div class="highlight-box">
+<strong>The operator value:</strong> Every resale triggers your royalty. You defined it in the receipt (5%). It's automatic. No accounting. No platform taking a cut. Forever.
 </div>
 
 <hr>
 
-<h2>What's Actually New</h2>
+<h2>Consumer View: Verify Everything, Resell with Provenance</h2>
 
-<p><strong>Right now:</strong></p>
-<ul style="margin:12px 0;padding-left:20px;list-style:none">
-  <li style="padding:4px 0">→ You run compute. Get paid once. That's it.</li>
-  <li style="padding:4px 0">→ No way to verify the output came from you.</li>
-  <li style="padding:4px 0">→ Can't track where it goes or who uses it.</li>
-  <li style="padding:4px 0">→ Can't get paid again if someone resells.</li>
-</ul>
+<h3>Diagram 4: What You Verify (5 Checks)</h3>
 
-<p><strong>With receipts:</strong></p>
-<ul style="margin:12px 0;padding-left:20px;list-style:none">
-  <li style="padding:4px 0">→ Output is cryptographically verified as yours.</li>
-  <li style="padding:4px 0">→ Anyone can trace it back to you.</li>
-  <li style="padding:4px 0">→ <span class="highlight">You earn on every resale, forever.</span></li>
-  <li style="padding:4px 0">→ <span class="highlight">No token. No escrow. Just math.</span></li>
-</ul>
+<div class="diagram">
+<svg viewBox="0 0 450 220" style="width:100%;max-width:450px">
+<text x="20" y="25" font-size="12" font-weight="600" fill="#111">You get a receipt. You verify it.</text>
+
+<!-- Check 1 -->
+<circle cx="30" cy="60" r="4" fill="#22c55e"/>
+<text x="45" y="64" font-size="11" fill="#111">Integrity: Recompute hash. Match receipt_id?</text>
+
+<!-- Check 2 -->
+<circle cx="30" cy="90" r="4" fill="#22c55e"/>
+<text x="45" y="94" font-size="11" fill="#111">Signature: Valid Ed25519 from provider?</text>
+
+<!-- Check 3 -->
+<circle cx="30" cy="120" r="4" fill="#22c55e"/>
+<text x="45" y="124" font-size="11" fill="#111">Proof: Run verify(proof, VK). Works?</text>
+
+<!-- Check 4 -->
+<circle cx="30" cy="150" r="4" fill="#22c55e"/>
+<text x="45" y="154" font-size="11" fill="#111">Output binding: SHA-256(output) matches?</text>
+
+<!-- Check 5 -->
+<circle cx="30" cy="180" r="4" fill="#22c55e"/>
+<text x="45" y="184" font-size="11" fill="#111">Provenance: Parent receipts valid?</text>
+
+<text x="20" y="215" font-size="11" fill="#666">All pass = output is real. No platform needed. Just math.</text>
+</svg>
+</div>
+
+<h3>Diagram 5: Provenance DAG (Hash-Linked Chain)</h3>
+
+<div class="diagram">
+<svg viewBox="0 0 450 200" style="width:100%;max-width:450px">
+<!-- A (root) -->
+<rect x="30" y="30" width="90" height="50" rx="3" fill="#fff" stroke="#111" stroke-width="1.5"/>
+<text x="40" y="48" font-size="11" font-weight="600" fill="#111">Receipt A</text>
+<text x="40" y="63" font-size="10" fill="#666">specialist data</text>
+<text x="40" y="77" font-size="9" fill="#999">depth: 0</text>
+
+<!-- B (root) -->
+<rect x="150" y="30" width="90" height="50" rx="3" fill="#fff" stroke="#111" stroke-width="1.5"/>
+<text x="160" y="48" font-size="11" font-weight="600" fill="#111">Receipt B</text>
+<text x="160" y="63" font-size="10" fill="#666">domain expert</text>
+<text x="160" y="77" font-size="9" fill="#999">depth: 0</text>
+
+<!-- D (child of A and B) -->
+<rect x="90" y="120" width="90" height="50" rx="3" fill="#fff" stroke="#111" stroke-width="1.5"/>
+<text x="100" y="138" font-size="11" font-weight="600" fill="#111">Receipt D</text>
+<text x="100" y="153" font-size="10" fill="#666">orchestrator</text>
+<text x="100" y="167" font-size="9" fill="#999">depth: 1</text>
+
+<!-- Edges (parent refs) -->
+<line x1="65" y1="80" x2="110" y2="120" stroke="#111" stroke-width="1.5"/>
+<line x1="180" y1="80" x2="140" y2="120" stroke="#111" stroke-width="1.5"/>
+
+<!-- Explanation -->
+<text x="20" y="190" font-size="11" fill="#666">A and B are parents of D. D's receipt carries</text>
+<text x="20" y="205" font-size="11" fill="#666">cryptographic hashes of A and B. DAG is tamper-evident.</text>
+</svg>
+</div>
+
+<div class="highlight-box">
+<strong>The consumer value:</strong> You can trace any output back to its roots. Verify the entire supply chain. Know exactly what you're buying.
+</div>
 
 <hr>
 
-<h2>The Flow</h2>
+<h2>Why Both Matter</h2>
 
-<p><strong>1. You compute.</strong> Run your model. Sign the receipt with your private key.</p>
+<p><strong>Operators:</strong> Build income streams. Your work keeps earning as it flows downstream. No platform rent.</p>
 
-<p><strong>2. Buyer verifies.</strong> They check your signature. They verify the proof (ZK or hardware attestation). They know the output is real.</p>
+<p><strong>Consumers:</strong> Buy with verification. Resell with provenance attached. Build on proven components. The chain is your audit trail.</p>
 
-<p><strong>3. Receipt is permanent.</strong> It goes into a transparent log. Witnessed by independent servers. No single point of failure.</p>
-
-<p><strong>4. They resell.</strong> Someone else buys your output from the first buyer. Automatically, royalties cascade back to you.</p>
-
-<p><strong>5. You earn forever.</strong> Every resale triggers royalty payments to you. As defined in the receipt you created.</p>
+<p><strong>Everyone:</strong> No token. No consensus. No blockchain. Just receipts, logs, and math.</p>
 
 <hr>
 
-<h2>Try it yourself</h2>
+<h2>Run It</h2>
 
 <pre>git clone https://github.com/tesseravcr/tesseravcr.git
 cd tesseravcr
 python3 tessera-py/demo.py</pre>
 
-<p class="small">Four operators, real receipts, real royalty cascades. Real Ed25519 signatures. Real Nitro attestations. Real ZK proofs. You'll see the entire protocol end-to-end.</p>
-
-<p class="small" style="margin-top:24px;padding-top:24px;border-top:1px solid #eee">This is what being an AI operator looks like when you can verify and monetize your output. You're not renting compute by the hour. You're building income streams that flow from the market, back through the supply chain, to you.</p>
+<p class="small">4 operators. Real flow. Sentinel → MedGraph → Regulatory → Nexus. Real signatures. Real proofs. Real royalty cascades.</p>
 
 </div>
 
