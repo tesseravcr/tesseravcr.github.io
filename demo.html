@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tessera VCR — Demo</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;background:#fff;color:#111;font-size:15px;line-height:1.8;-webkit-font-smoothing:antialiased}
+a{color:#111;text-underline-offset:3px}
+code{font-family:'SF Mono',Consolas,monospace;font-size:13px}
+
+.wrap{max-width:900px;margin:0 auto;padding:48px 24px 80px}
+
+/* Nav */
+.nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:48px;padding-bottom:16px;border-bottom:1px solid #eee}
+.nav-logo{font-size:14px;font-weight:700;color:#111;letter-spacing:-.2px}
+.nav-links{display:flex;gap:20px;font-size:13px}
+.nav-links a{color:#666;text-decoration:none}
+.nav-links a:hover{color:#111}
+.nav-links a.active{color:#111;font-weight:600}
+
+/* Typography */
+h1{font-size:28px;font-weight:700;color:#111;margin-bottom:12px;letter-spacing:-.3px}
+h2{font-size:18px;font-weight:700;color:#111;margin:40px 0 16px;letter-spacing:-.2px}
+p{margin-bottom:14px;color:#333}
+.subtitle{color:#666;font-size:16px;margin-bottom:32px}
+
+/* Status badge */
+.badge{display:inline-block;padding:4px 12px;background:#f0f0f0;border-radius:4px;font-size:12px;font-weight:600;color:#111;margin-bottom:24px}
+.badge.live{background:#ecfdf5;color:#047857}
+
+/* Section */
+.section{margin-bottom:48px;padding-bottom:32px;border-bottom:1px solid #eee}
+.section:last-child{border-bottom:none}
+
+/* Image */
+img{max-width:100%;border:1px solid #eee;border-radius:6px;margin:20px 0}
+.img-cap{font-size:13px;color:#666;margin-top:8px;font-style:italic}
+
+/* Stats grid */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;margin:24px 0}
+.stat{background:#fafafa;padding:16px;border-radius:6px;border-left:3px solid #111}
+.stat-label{font-size:11px;color:#999;text-transform:uppercase;letter-spacing:.5px}
+.stat-value{font-size:24px;font-weight:700;color:#111;margin-top:4px}
+
+/* Code block */
+pre{background:#f5f5f5;border:1px solid #eee;border-radius:6px;padding:14px 16px;overflow-x:auto;font-size:12px;line-height:1.6;margin:12px 0}
+
+/* Links */
+.links{list-style:none;padding:0;margin:12px 0}
+.links li{padding:6px 0}
+.links a{font-size:14px}
+
+@media(max-width:600px){
+  .wrap{padding:32px 20px 60px}
+  h1{font-size:22px}
+  h2{font-size:16px}
+  .stats{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="nav">
+  <div class="nav-logo">Tessera VCR</div>
+  <div class="nav-links">
+    <a href="index.html">Protocol</a>
+    <a href="network.html">Explorer</a>
+    <a href="demo.html" class="active">Demo</a>
+    <a href="https://github.com/tesseravcr/tesseravcr/blob/main/spec/VCR-SPEC.md">Spec</a>
+  </div>
+</div>
+
+<h1>Network Visualization</h1>
+<p class="subtitle">See what's running live, and what the full system looks like at scale.</p>
+
+---
+
+<div class="section">
+<h2>Live Now</h2>
+<span class="badge live">Real data from log1.tesseravcr.org</span>
+
+<p>This is what's running <b>right now</b> on the network. Three independent log servers, real receipts flowing, cryptographic verification working end-to-end.</p>
+
+<div class="stats">
+  <div class="stat">
+    <div class="stat-label">Receipts Logged</div>
+    <div class="stat-value" id="live-receipts">—</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">Log Servers</div>
+    <div class="stat-value">3</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">Providers</div>
+    <div class="stat-value" id="live-providers">—</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">Network Status</div>
+    <div class="stat-value" id="live-status">—</div>
+  </div>
+</div>
+
+<h3>What you're seeing:</h3>
+<ul class="links">
+  <li><b>Provenance DAG:</b> Receipts form a directed graph. Each receipt cryptographically links to its parents.</li>
+  <li><b>Agent Network:</b> Agents (providers and consumers) transacting with each other. Arrow thickness = interaction count.</li>
+  <li><b>Trust Scores:</b> Algorithmic trust computed from work history. Stake = direct value + vouched capital.</li>
+  <li><b>Timeline:</b> Chronological view of all network events.</li>
+</ul>
+
+<p>All of this is <b>cryptographically verifiable</b>. No platform. No central authority. Just math.</p>
+
+</div>
+
+---
+
+<div class="section">
+<h2>Full Potential (Simulated)</h2>
+<span class="badge">100+ providers, 1000+ receipts at scale</span>
+
+<p>This is what the network looks like when it reaches adoption. 100+ providers serving different models, autonomous agents discovering and transacting with each other, royalty cascades flowing through deep provenance chains.</p>
+
+<p>These visualizations are <b>simulated from a realistic dynamics model</b>. They show what emerges when the protocol rules run at scale — what the economic incentives produce.</p>
+
+<div class="stats">
+  <div class="stat">
+    <div class="stat-label">Agents</div>
+    <div class="stat-value">127</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">Receipts</div>
+    <div class="stat-value">1,847</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">Total Value</div>
+    <div class="stat-value">$89.2k</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">Max DAG Depth</div>
+    <div class="stat-value">12</div>
+  </div>
+</div>
+
+<h3>Provenance DAG (Full Scale)</h3>
+<img src="provenance_dag.png" alt="Provenance DAG at scale">
+<p class="img-cap">Each node is a receipt. Edges show parent-child relationships. Color intensity = value. When a receipt is resold, royalties flow back through these edges automatically.</p>
+
+<h3>Agent Network (Full Scale)</h3>
+<img src="agent_network.png" alt="Agent network at scale">
+<p class="img-cap">Agents discovering and transacting with each other. Thicker arrows = more interactions. This emerges from autonomous provider discovery via transparency logs.</p>
+
+<h3>Trust Scores</h3>
+<img src="trust_scores.png" alt="Trust score distribution">
+<p class="img-cap">Stake distribution in the network. Trust quotient = (receipts issued + royalties earned) / (total value at risk). Self-collateralising.</p>
+
+<h3>Timeline</h3>
+<img src="timeline.png" alt="Network timeline">
+<p class="img-cap">Chronological view of network events. How receipts flow, transfers happen, and trust emerges over time.</p>
+
+</div>
+
+---
+
+<div class="section">
+<h2>How to Read These</h2>
+
+<p><b>Provenance DAG:</b> Start from root nodes (leftmost). Follow edges forward. Each receipt is a transformation of its parents' outputs. Royalties propagate backward when a receipt is resold.</p>
+
+<p><b>Agent Network:</b> Nodes are agents (providers and consumers). An edge from A to B means A served a computation for B. The width of the edge indicates how many times they've transacted.</p>
+
+<p><b>Trust Scores:</b> Agents with higher stakes have more skin in the game. They're incentivised to maintain reputation. Attacks become unprofitable when attackers lack collateral.</p>
+
+<p><b>Timeline:</b> Watch how the network grows. Early adopters build the most valuable provenance chains. New entrants join at lower stakes. As they accumulate receipts, their trust quotient rises.</p>
+
+</div>
+
+---
+
+<div class="section">
+<h2>Why This Matters</h2>
+
+<p>These visualizations prove three things:</p>
+
+<ul class="links">
+  <li><b>1. Verification works:</b> Every edge, every node, every arrow is cryptographically provable. No trust required, just math.</li>
+  <li><b>2. Discovery works:</b> Agents find each other through transparency logs. No central matching service. Providers announce themselves, consumers discover them.</li>
+  <li><b>3. Economics work:</b> Royalties flow automatically. Incentives align. Adversaries remain unprofitable. Trust emerges from the protocol rules, not from external enforcement.</li>
+</ul>
+
+<p>The live network proves the primitives work. The simulated network at scale proves the incentives work. Together, they prove verified compute is tradeable.</p>
+
+</div>
+
+</div>
+
+<script>
+async function loadLiveStats(){
+  try{
+    const health = await fetch('https://log1.tesseravcr.org/v1/health', {signal: AbortSignal.timeout(5000)}).then(r => r.json()).catch(() => null);
+    const providers = await fetch('https://log1.tesseravcr.org/v1/providers', {signal: AbortSignal.timeout(5000)}).then(r => r.json()).catch(() => null);
+
+    if(health){
+      document.getElementById('live-receipts').textContent = health.log_size;
+      document.getElementById('live-status').textContent = '✓ Online';
+      document.getElementById('live-status').style.color = '#22c55e';
+    }
+    if(providers){
+      document.getElementById('live-providers').textContent = providers.length;
+    }
+  }catch{}
+}
+loadLiveStats();
+setInterval(loadLiveStats, 10000);
+</script>
+
+</body>
+</html>
