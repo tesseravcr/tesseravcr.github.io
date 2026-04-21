@@ -78,48 +78,41 @@ ul li::before{content:"→";margin-right:10px;color:#475569}
 </div>
 
 <div class="path reveal">
-  <div class="path-label node">Run a node</div>
-  <h2>Host a transparency log.</h2>
-  <p>Log servers append receipts to Merkle trees, sign roots, and serve inclusion proofs. The more independent logs exist, the harder it is to tamper with anything. One Docker command.</p>
-  <pre>docker run -d -p 8080:8080 ghcr.io/tesseravcr/log-server:latest</pre>
+  <div class="path-label user">Submit a receipt</div>
+  <h2>Put something on the network right now.</h2>
+  <p>This script generates an Ed25519 keypair, builds a receipt, signs a transfer, and submits it to a live log server. Your receipt gets a Merkle inclusion proof and shows up in the explorer within seconds.</p>
+  <pre>pip install requests cryptography
+python3 -c "$(curl -fsSL https://raw.githubusercontent.com/tesseravcr/tesseravcr/main/tessera-network/join_network.py)"</pre>
   <ul>
-    <li>Append-only Merkle tree storage</li>
+    <li>Generates a fresh keypair locally</li>
+    <li>Submits to one of three live log servers</li>
+    <li>Returns a Merkle proof you can verify yourself</li>
+  </ul>
+  <p class="dim">~120 lines. <a href="https://github.com/tesseravcr/tesseravcr/blob/main/tessera-network/join_network.py">Read the source</a> before you run it.</p>
+</div>
+
+<div class="path reveal">
+  <div class="path-label node">Run a log node</div>
+  <h2>Host a transparency log.</h2>
+  <p>Log servers append receipts to Merkle trees, sign roots, and serve inclusion proofs. The more independent logs exist, the harder it is to tamper with anything. The server is written in Rust; the source is in the repo.</p>
+  <ul>
+    <li>Append-only Merkle tree with SQLite storage</li>
     <li>Serves inclusion proofs to anyone who asks</li>
     <li>No special hardware; any VPS works</li>
   </ul>
-  <a href="https://github.com/tesseravcr/tesseravcr" class="cta cta-secondary">Setup guide</a>
+  <p class="dim">Docker image and setup instructions coming soon. For now, build from source in <a href="https://github.com/tesseravcr/tesseravcr/tree/main/tessera-rust/tessera-log-server">tessera-rust/tessera-log-server</a>.</p>
 </div>
 
 <div class="path reveal">
   <div class="path-label provider">Provide compute</div>
   <h2>Serve inference. Set your own terms.</h2>
-  <p>Wrap any model or service as a VCR provider. Every inference generates a receipt with a cryptographic proof attached. Royalty terms are set by you, baked into the receipt itself. No intermediary involved.</p>
-  <pre>pip install tesseravcr
-tessera serve --model your-model --royalty 500</pre>
+  <p>Wrap any model as a VCR provider. Every inference generates a receipt with a cryptographic proof attached. Royalty terms are set by you, baked into the receipt itself. A reference provider using Ollama is in the repo.</p>
   <ul>
     <li>Ed25519 key pair identifies you on the network</li>
     <li>Royalty terms baked into every receipt you issue</li>
     <li>Downstream resales trigger automatic attribution</li>
   </ul>
-  <p class="dim">Your keys, your terms, your provenance chain.</p>
-  <a href="https://github.com/tesseravcr/tesseravcr" class="cta cta-secondary">Provider docs</a>
-</div>
-
-<div class="path reveal">
-  <div class="path-label user">Use the network</div>
-  <h2>Get verified compute. Trust the math.</h2>
-  <p>Send a task to the network and get back a receipt, not just a response. You can verify the proof yourself, trace the full provenance, and know exactly which model ran on what input. The receipt is yours to keep, audit, or pass along.</p>
-  <pre>from tesseravcr import Client
-client = Client()
-receipt = client.infer("Summarize this dataset")</pre>
-  <ul>
-    <li>Receipts are portable; store, share, resell</li>
-    <li>Full provenance chain for audits and compliance</li>
-    <li>Works with any VCR-compatible provider</li>
-  </ul>
-  <p class="dim">Any provider on the network, same verification. No lock-in.</p>
-  <a href="demo.html" class="cta cta-primary">Learn how it works</a>
-  <a href="network.html" class="cta cta-secondary" style="margin-left:8px">See it live</a>
+  <p class="dim">Provider SDK and CLI are in development. The reference implementation is at <a href="https://github.com/tesseravcr/tesseravcr/tree/main/tessera-network">tessera-network/provider.py</a>.</p>
 </div>
 
 <div class="footer">MIT license. No token. No blockchain. Just receipts and math.</div>
