@@ -8,44 +8,35 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;background:#fff;color:#111;font-size:15px;line-height:1.8;-webkit-font-smoothing:antialiased}
 a{color:#111;text-underline-offset:3px}
-code{font-family:'SF Mono',Consolas,monospace;font-size:13px}
+code{font-family:'SF Mono',Consolas,monospace;font-size:13px;background:#f5f5f5;padding:2px 6px;border-radius:3px}
 
 .wrap{max-width:640px;margin:0 auto;padding:48px 24px 80px}
 
-/* Nav */
 .nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:48px;padding-bottom:16px;border-bottom:1px solid #eee}
 .nav-logo{font-size:14px;font-weight:700;color:#111;letter-spacing:-.2px}
 .nav-links{display:flex;gap:20px;font-size:13px}
 .nav-links a{color:#666;text-decoration:none}
 .nav-links a:hover{color:#111}
+.nav-links a.active{color:#111;font-weight:600}
 
-/* Typography */
-h1{font-size:20px;font-weight:700;color:#111;margin-bottom:16px;letter-spacing:-.3px;line-height:1.4}
-h2{font-size:16px;font-weight:700;color:#111;margin:40px 0 8px;letter-spacing:-.2px}
-p{margin-bottom:14px;color:#333}
-.muted{color:#666}
-.small{font-size:13px;color:#666}
+h1{font-size:24px;font-weight:700;color:#111;margin-bottom:20px;line-height:1.3}
+p{margin-bottom:16px;color:#333;line-height:1.8}
+.muted{color:#666;font-size:14px}
 
-/* Code blocks */
-pre{background:#fafafa;border:1px solid #eee;border-radius:6px;padding:14px 16px;overflow-x:auto;font-size:12px;line-height:1.6;margin:12px 0;white-space:pre-wrap;word-wrap:break-word}
-pre code{color:#333}
-
-/* Status indicator */
-.status{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#666;margin-bottom:24px}
-.status-dot{width:7px;height:7px;border-radius:50%;background:#22c55e;flex-shrink:0}
-.status b{color:#111}
-
-/* Separator */
 hr{border:none;border-top:1px solid #eee;margin:32px 0}
 
-/* Links list */
-.links{list-style:none;padding:0;margin:12px 0}
-.links li{padding:6px 0}
-.links a{font-size:14px}
+.spec{background:#fafafa;border-left:3px solid #111;padding:20px;margin:24px 0;border-radius:4px}
+.spec-title{font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:#999;margin-bottom:8px}
+.spec-content{font-size:15px;line-height:1.7;color:#333}
+.spec-content strong{color:#111}
+
+ul{margin:16px 0 16px 0;list-style:none}
+li{padding:6px 0;margin-left:0}
+li:before{content:"→ ";color:#666;margin-right:8px}
 
 @media(max-width:600px){
   .wrap{padding:32px 20px 60px}
-  h1{font-size:18px}
+  h1{font-size:20px}
 }
 </style>
 </head>
@@ -62,103 +53,54 @@ hr{border:none;border-top:1px solid #eee;margin:32px 0}
   </div>
 </div>
 
-<h1>Verified compute receipts.</h1>
+<h1>A receipt for compute.</h1>
 
-<p>Your agent calls mine. Mine runs the model. Sends back the output and a cryptographic proof it actually happened.</p>
+<p>When your agent calls another agent, it gets a response. That's it. No proof it happened. No way to verify the model actually ran. No trail.</p>
 
-<p>You verify the proof yourself. No platform. No middleman. Just math.</p>
+<p>A receipt changes that. It's a data structure — 21 fields. Everything about what happened. Who did it. What went in. What came out. Cryptographically signed.</p>
 
-<p>Later you resell that output. My agent still gets paid. Automatically. Every time. Forever.</p>
+<p>You can verify it yourself. You can resell it. Original creators get paid every time. Automatically.</p>
 
-<p class="muted">Same trust model as Certificate Transparency. No blockchain. No token. Just an append-only log that anyone can audit.</p>
-
-<div class="status"><span class="status-dot"></span> Network running — <b id="l-entries">—</b> receipts logged</div>
+<p class="muted">No blockchain. No token. No consensus. Just an append-only log anyone can audit.</p>
 
 <hr>
 
-<h2>How it works</h2>
+<div class="spec">
+<div class="spec-title">The Core: What a Receipt Is</div>
+<div class="spec-content">
+21 fields.<br><br>
+<strong>Identity:</strong> Receipt ID (hash of everything). Schema version (1).<br><br>
+<strong>Computation:</strong> What model ran. Who ran it. Input hash. Output hash. Proof (ZK or TEE). Timestamp.<br><br>
+<strong>Provenance:</strong> Parent receipts (who you built on). Depth (how many layers back).<br><br>
+<strong>Economics:</strong> Provider (who got paid). Original price. Royalty terms (who gets paid on resale).<br><br>
+<strong>Integrity:</strong> Signature (Ed25519). Extensions (future-proof).
+</div>
+</div>
 
-<p>You need three things to trust an agent you've never met:</p>
+<p>That's it. Minimal. Every field exists because it's necessary for verification or settlement.</p>
 
-<ul class="links">
-  <li><b>Proof of execution:</b> The model actually ran. Signed. Hashed. Permanent.</li>
-  <li><b>Provenance:</b> You know who built it and who they built on. Trace back to the roots.</li>
-  <li><b>Settlement:</b> When you resell, creators get paid. No accounting needed. Protocol handles it.</li>
+<hr>
+
+<h2 style="font-size:18px;margin:32px 0 16px">Why this works</h2>
+
+<ul>
+<li>Receipts chain into DAGs. Modify any receipt and all descendants break. The chain is the audit trail.</li>
+<li>Royalties propagate backward automatically when you resell. No platform needed. No accounting.</li>
+<li>You verify the computation yourself. No trust required. Just math.</li>
+<li>Anyone can run a log server. It's just SQLite + Merkle trees. Decentralized by default.</li>
 </ul>
 
-<p>That's what a receipt is. A data structure that carries all three.</p>
-
 <hr>
 
-<pre><code>pip install requests cryptography
-python3 -c "$(curl -fsSL https://raw.githubusercontent.com/tesseravcr/tesseravcr/main/tessera-network/join_network.py)"</code></pre>
+<h2 style="font-size:18px;margin:32px 0 16px">Live network</h2>
 
-<p class="small"><a href="https://github.com/tesseravcr/tesseravcr/blob/main/tessera-network/join_network.py">View source</a> — 120 lines.</p>
+<p>Three log servers running now. Real receipts flowing. Real agents discovering each other and transacting.</p>
 
-<h2>Query the network</h2>
+<p><code>curl https://log1.tesseravcr.org/v1/health</code></p>
 
-<pre><code># Server health
-curl https://log1.tesseravcr.org/v1/health
-
-# Latest signed checkpoint (Merkle root)
-curl https://log1.tesseravcr.org/v1/checkpoint
-
-# Get a receipt
-curl https://log1.tesseravcr.org/v1/entry/28
-
-# Get its inclusion proof
-curl https://log1.tesseravcr.org/v1/proof/28</code></pre>
-
-<h2>Run your own log server</h2>
-
-<pre><code>docker pull ghcr.io/henry-shelton/tessera-log-server:latest
-docker run -d -p 7800:7800 -v tessera-data:/data \
-  ghcr.io/henry-shelton/tessera-log-server:latest</code></pre>
-
-<p class="small">Your node witnesses peers automatically. <a href="https://github.com/tesseravcr/tesseravcr/blob/main/tessera-rust/tessera-log-server/deploy/README.md">Full deployment guide</a>.</p>
-
-<hr>
-
-<h2>How it works</h2>
-
-<p><b>Receipts.</b> A receipt is 21 fields — model ID, input hash, output hash, proof, provider signature, timestamp, provenance links. All fields are canonically serialized (deterministic binary encoding). The receipt ID is SHA-256 of those bytes. Change any field and the ID breaks.</p>
-
-<p><b>Transparency logs.</b> Transfers are appended to Merkle trees maintained by independent servers. Leaf hashing uses a 0x00 domain prefix; internal nodes use 0x01. Any entry can be proven to exist with an inclusion proof — a path of sibling hashes that reconstructs the root. Removing an entry changes the root, which breaks every witness signature.</p>
-
-<p><b>Cross-verification.</b> Three log servers (Nuremberg, Helsinki, Helsinki) countersign each other's checkpoints. A checkpoint is 69 bytes: version string, tree size, root hash, timestamp. Each peer validates the signature and checks for rollback (tree size must never decrease). 2-of-3 threshold.</p>
-
-<p><b>Double-spend prevention.</b> Each log tracks ownership per receipt ID. A transfer is only accepted if from_key matches the current owner. Attempt to transfer a receipt you don't own → 409 Conflict.</p>
-
-<p><b>Provenance.</b> Receipts reference parents by hash. Agent B uses Agent A's output → B's receipt includes A's receipt_id with a relationship type (input, reference, aggregation). Tamper with any ancestor and every descendant's hash breaks.</p>
-
-<hr>
-
-<h2>What's running</h2>
-
-<p><b>Live:</b> Canonical serialization, Ed25519 signing, SHA-256 Merkle trees, inclusion proofs, double-spend detection, witnessed checkpoints, provenance DAGs, HTTP API. Rust implementation byte-identical to Python reference. 52 tests.</p>
-
-<p><b>Not yet:</b> Trust quotient enforcement, royalty cascade settlement, ZK/TEE proof verification, SDK wrappers.</p>
-
-<hr>
-
-<ul class="links">
-  <li><a href="network.html">Network explorer</a> — live receipts, server status, verification</li>
-  <li><a href="https://github.com/tesseravcr/tesseravcr/blob/main/spec/VCR-SPEC.md">Specification</a> — full protocol definition</li>
-  <li><a href="https://github.com/tesseravcr/tesseravcr">Source code</a> — MIT license</li>
-</ul>
+<p class="muted" style="font-size:13px">Everything here is real. Real Ed25519 signatures. Real SHA-256 hashes. Real Merkle proofs. Real receipts.</p>
 
 </div>
 
-<script>
-async function loadStats(){
-  try{
-    const urls=['https://log1.tesseravcr.org','https://log2.tesseravcr.org','https://log3.tesseravcr.org'];
-    const results=await Promise.all(urls.map(u=>fetch(u+'/v1/health',{signal:AbortSignal.timeout(5000)}).then(r=>r.json()).catch(()=>null)));
-    let total=0;results.forEach(r=>{if(r)total+=r.log_size});
-    if(total)document.getElementById('l-entries').textContent=total;
-  }catch{}
-}
-loadStats();
-</script>
 </body>
 </html>

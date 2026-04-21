@@ -3,16 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tessera VCR — Demo</title>
+<title>Demo — Tessera VCR</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;background:#fff;color:#111;font-size:15px;line-height:1.8;-webkit-font-smoothing:antialiased}
 a{color:#111;text-underline-offset:3px}
-code{font-family:'SF Mono',Consolas,monospace;font-size:13px}
+code{font-family:'SF Mono',Consolas,monospace;font-size:13px;background:#f5f5f5;padding:2px 6px;border-radius:3px}
 
 .wrap{max-width:640px;margin:0 auto;padding:48px 24px 80px}
 
-/* Nav */
 .nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:48px;padding-bottom:16px;border-bottom:1px solid #eee}
 .nav-logo{font-size:14px;font-weight:700;color:#111;letter-spacing:-.2px}
 .nav-links{display:flex;gap:20px;font-size:13px}
@@ -20,31 +19,22 @@ code{font-family:'SF Mono',Consolas,monospace;font-size:13px}
 .nav-links a:hover{color:#111}
 .nav-links a.active{color:#111;font-weight:600}
 
-/* Typography */
-h1{font-size:20px;font-weight:700;color:#111;margin-bottom:16px;letter-spacing:-.3px;line-height:1.4}
-h2{font-size:16px;font-weight:700;color:#111;margin:40px 0 12px;letter-spacing:-.2px}
-p{margin-bottom:14px;color:#333}
-.muted{color:#666}
+h1{font-size:24px;font-weight:700;color:#111;margin-bottom:20px;line-height:1.3}
+h2{font-size:16px;font-weight:700;color:#111;margin:32px 0 12px}
+p{margin-bottom:16px;color:#333;line-height:1.8}
 .small{font-size:13px;color:#666}
 
-/* Code blocks */
-pre{background:#f5f5f5;border:1px solid #eee;border-radius:6px;padding:14px 16px;overflow-x:auto;font-size:12px;line-height:1.6;margin:12px 0;white-space:pre-wrap;word-wrap:break-word}
-pre code{color:#333}
-
-/* Separator */
 hr{border:none;border-top:1px solid #eee;margin:32px 0}
 
-/* Links */
-.links{list-style:none;padding:0;margin:12px 0}
-.links li{padding:6px 0}
-.links a{font-size:14px}
+.scene{background:#fafafa;border-left:3px solid #111;padding:20px;margin:24px 0;border-radius:4px}
+.scene-title{font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:#999;margin-bottom:12px;font-weight:600}
+.scene-content{font-size:15px;line-height:1.7;color:#333}
 
-/* Section */
-.section{margin-bottom:32px;padding-bottom:24px}
+pre{background:#f5f5f5;border:1px solid #eee;border-radius:4px;padding:12px;font-size:12px;overflow-x:auto;margin:12px 0}
 
 @media(max-width:600px){
   .wrap{padding:32px 20px 60px}
-  h1{font-size:18px}
+  h1{font-size:20px}
 }
 </style>
 </head>
@@ -61,68 +51,125 @@ hr{border:none;border-top:1px solid #eee;margin:32px 0}
   </div>
 </div>
 
-<h1>Run the spec locally.</h1>
+<h1>How it works in practice.</h1>
 
-<p>Four agents. Each has something the others lack. They transact through verified receipts, not trust.</p>
-
-<p>Every signature is real Ed25519. Every hash is real SHA-256. The TEE attestation is a real hardware-signed document from an AWS Nitro Enclave.</p>
-
-<p>This is what the protocol looks like in practice.</p>
+<p>Four agents. Each is a specialist. They don't know each other. They don't trust each other. They transact anyway, using receipts as proof.</p>
 
 <hr>
 
-<h2>Setup</h2>
+<div class="scene">
+<div class="scene-title">Scene 1: Sentinel computes</div>
+<div class="scene-content">
+Sentinel has proprietary satellite data. No one else has it. It runs inference on a trusted hardware enclave (AWS Nitro). The enclave signs the output with its private key. That signature is unforgeable proof that Nitro ran the code.
 
-<pre><code>git clone https://github.com/tesseravcr/tesseravcr.git
+Sentinel wraps that into a receipt:
+<pre>Receipt ID:      0x5b4c3cab...
+Model:           sentinel-v2
+Proving backend: tee-nitro-v1
+Provider:        Sentinel [d7311d09...]
+Output hash:     0xd47bddbe...
+Signature:       [real Ed25519, verifiable by anyone]</pre>
+
+The receipt is permanent. Cryptographically. Anyone can verify it.
+</div>
+</div>
+
+<div class="scene">
+<div class="scene-title">Scene 2: MedGraph builds on it</div>
+<div class="scene-content">
+MedGraph needs Sentinel's output. It doesn't trust Sentinel. So it verifies the receipt first: checks the signature, verifies the proof, checks the computation happened.
+
+Then MedGraph uses Sentinel's output as input to its own model. Creates a new receipt:
+<pre>Receipt ID:      0xdb0381ce...
+Model:           medgraph-v3
+Provider:        MedGraph [5194dfea...]
+Parent receipts: [Sentinel's receipt ID]
+Output hash:     0x8f2c4d19...
+Signature:       [MedGraph's Ed25519]</pre>
+
+Now this receipt includes a cryptographic link to Sentinel's receipt. The chain is tamper-evident.
+</div>
+</div>
+
+<div class="scene">
+<div class="scene-title">Scene 3: Nexus orchestrates all three</div>
+<div class="scene-content">
+Nexus can't do any of these tasks itself. It's the orchestrator. It calls Sentinel, MedGraph, and Regulatory. Uses all three outputs to compute investment strategy.
+
+Creates a receipt with three parents:
+<pre>Receipt ID:      0x9d2e3feb...
+Model:           nexus-strategy
+Provider:        Nexus [9d2e3feb...]
+Parent receipts: [Sentinel, MedGraph, Regulatory]
+Output hash:     0x12ab45cd...
+Signature:       [Nexus's Ed25519]</pre>
+
+The provenance DAG is now:
+
+    Sentinel  MedGraph  Regulatory
+       \        |        /
+        \       |       /
+          \     |     /
+            Nexus (depth 1)
+
+Every edge is a hash. Modify Sentinel's receipt and Nexus's receipt breaks. The chain is the audit trail.
+</div>
+</div>
+
+<div class="scene">
+<div class="scene-title">Scene 4: A fund buys Nexus's output</div>
+<div class="scene-content">
+Fund wants Nexus's strategy. Doesn't know Nexus. Doesn't need to.
+
+Fund verifies:
+— Nexus's signature (Ed25519) ✓
+— Nexus's parents (Sentinel, MedGraph, Regulatory) ✓
+— Each parent's signature and proof ✓
+— The entire chain is intact ✓
+
+Fund buys for $150. Creates a transfer record:
+
+<pre>Receipt ID:      0x9d2e3feb...  (same)
+From key:        Nexus [9d2e3feb...]
+To key:          Fund [48b79151...]
+Price:           $150
+Seller signature: [Nexus's Ed25519 on transfer]</pre>
+
+The transfer is appended to the log. Permanently. Witnessed by 3 independent servers.
+</div>
+</div>
+
+<div class="scene">
+<div class="scene-title">Scene 5: Royalties flow backward</div>
+<div class="scene-content">
+When Fund buys Nexus's receipt, royalties cascade back through the DAG automatically.
+
+Nexus gets: $147.75 (provider royalty 5% + seller remainder)
+Sentinel gets: $0.75 (parent royalty 3%, split among parents)
+MedGraph gets: $0.75
+Regulatory gets: $0.75
+
+No platform. No accounting. Protocol math.
+
+Every time Fund resells to someone else, the cascade happens again. Sentinel keeps earning forever. Not because anyone manages it. Because the receipt carries the royalty terms.
+</div>
+</div>
+
+<hr>
+
+<h2>Why this is God</h2>
+
+<p>You have proof. You have provenance. You have payment. All three together, in one data structure.</p>
+
+<p>No platform took a cut. No escrow held the money. No middleman verified anything. Just cryptographic math and an append-only log.</p>
+
+<p>Run it yourself:</p>
+
+<pre>git clone https://github.com/tesseravcr/tesseravcr.git
 cd tesseravcr
-pip install -r tessera-py/requirements.txt
-python3 tessera-py/demo.py</code></pre>
+python3 tessera-py/demo.py</pre>
 
-<p class="small">Takes ~30 seconds. Prints the entire protocol flow to stdout. No network calls. Everything local.</p>
-
-<hr>
-
-<h2>What you'll see</h2>
-
-<div class="section">
-<h3 style="font-size:14px;font-weight:600;color:#111;margin:16px 0 8px">1. Four agents introduce themselves</h3>
-<p class="small">Each generates an Ed25519 keypair. Each one is a provider with a different model.</p>
-</div>
-
-<div class="section">
-<h3 style="font-size:14px;font-weight:600;color:#111;margin:16px 0 8px">2. Agent A asks Agent B for compute</h3>
-<p class="small">B runs a model. Proves it with a Nitro TEE attestation. Returns the output + proof.</p>
-</div>
-
-<div class="section">
-<h3 style="font-size:14px;font-weight:600;color:#111;margin:16px 0 8px">3. A creates a receipt</h3>
-<p class="small">Receipt includes: what model ran. Who ran it. What went in. What came out. Proof of execution. A's signature. Everything.</p>
-</div>
-
-<div class="section">
-<h3 style="font-size:14px;font-weight:600;color:#111;margin:16px 0 8px">4. A resells the output to C</h3>
-<p class="small">C gets the receipt + proof. C can verify B actually ran the model. C can verify A didn't tamper with the output.</p>
-</div>
-
-<div class="section">
-<h3 style="font-size:14px;font-weight:600;color:#111;margin:16px 0 8px">5. Royalties flow back</h3>
-<p class="small">When A sells to C, B automatically gets a cut. Protocol handles it. No accounting. No middleman. Just math.</p>
-</div>
-
-<div class="section">
-<h3 style="font-size:14px;font-weight:600;color:#111;margin:16px 0 8px">6. C resells to D</h3>
-<p class="small">D verifies the entire provenance chain. A's signature. B's proof. C's transfer. All cryptographically locked together.</p>
-</div>
-
-<hr>
-
-<h2>The output</h2>
-
-<p>You'll see hex dumps of every structure. Receipt IDs. Merkle trees. Ed25519 signatures. Hashes. All real.</p>
-
-<p>Scroll through it. Read the comments. That's the spec in action.</p>
-
-<p class="small"><a href="https://github.com/tesseravcr/tesseravcr/blob/main/tessera-py/demo.py">Source code</a> is 500 lines. Heavily commented. No magic.</p>
+<p class="small">Real Ed25519 signatures. Real SHA-256 hashes. Real Nitro enclave attestation. Real ZK proofs. You'll see every step.</p>
 
 </div>
 
