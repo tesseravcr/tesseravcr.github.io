@@ -8,7 +8,7 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;background:#fff;color:#111;font-size:15px;line-height:1.8;-webkit-font-smoothing:antialiased}
 a{color:#111;text-underline-offset:3px}
-code{font-family:'SF Mono',Consolas,monospace;font-size:13px;background:#f5f5f5;padding:2px 6px;border-radius:3px}
+code{font-family:'SF Mono',Consolas,monospace;font-size:12px;background:#f5f5f5;padding:3px 8px;border-radius:3px}
 
 .wrap{max-width:720px;margin:0 auto;padding:48px 24px 80px}
 
@@ -19,40 +19,36 @@ code{font-family:'SF Mono',Consolas,monospace;font-size:13px;background:#f5f5f5;
 .nav-links a:hover{color:#111}
 .nav-links a.active{color:#111;font-weight:600}
 
-h1{font-size:24px;font-weight:700;color:#111;margin-bottom:20px;line-height:1.3}
-h2{font-size:16px;font-weight:700;color:#111;margin:40px 0 16px}
-p{margin-bottom:16px;color:#333;line-height:1.8}
+h1{font-size:22px;font-weight:700;color:#111;margin-bottom:16px;line-height:1.3}
+h2{font-size:16px;font-weight:700;color:#111;margin:32px 0 12px}
+h3{font-size:14px;font-weight:600;color:#111;margin:20px 0 8px}
+p{margin-bottom:14px;color:#333;line-height:1.7}
 .small{font-size:13px;color:#666}
 
 hr{border:none;border-top:1px solid #eee;margin:32px 0}
 
-.diagram-container{background:#fafafa;border-radius:8px;padding:24px;margin:24px 0;border:1px solid #eee;display:flex;justify-content:center}
-svg{max-width:100%;height:auto}
+.diagram{background:#fafafa;border-radius:8px;padding:24px;margin:24px 0;border:1px solid #eee;overflow-x:auto}
+svg{display:block;margin:0 auto;max-width:100%;height:auto}
 
-.agent-box{fill:#f5f5f5;stroke:#111;stroke-width:2}
-.agent-label{font-size:12px;font-weight:600;fill:#111;text-anchor:middle}
-.arrow{stroke:#111;stroke-width:2;marker-end:url(#arrowhead);animation:fadeIn 1s ease-in forwards}
-.arrow-label{font-size:11px;fill:#666}
-.value-label{font-size:11px;fill:#22c55e;font-weight:600}
+.box{fill:#fff;stroke:#111;stroke-width:1.5}
+.box-title{font-size:11px;font-weight:600;fill:#111}
+.box-label{font-size:10px;fill:#666}
+.arrow{stroke:#111;stroke-width:1.5;marker-end:url(#arrowhead);fill:none}
+.arrow-label{font-size:11px;fill:#111;font-weight:500}
+.value{font-size:10px;fill:#22c55e;font-weight:600}
+.hash{font-size:10px;fill:#999;font-family:'SF Mono',Consolas,monospace}
+.circle{fill:#f5f5f5;stroke:#111;stroke-width:1.5}
+.circle-text{font-size:11px;font-weight:600;fill:#111;text-anchor:middle;dominant-baseline:middle}
 
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes flowValue{
-  0%{opacity:0;transform:translate(0,0)}
-  50%{opacity:1}
-  100%{opacity:0;transform:translate(20px,-20px)}
-}
+.section-title{font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:#999;margin-bottom:12px;font-weight:600}
 
-.circle-node{fill:#fff;stroke:#111;stroke-width:2}
-.circle-label{font-size:12px;font-weight:600;fill:#111;text-anchor:middle;dominant-baseline:middle}
+pre{background:#f5f5f5;border:1px solid #eee;border-radius:4px;padding:12px;font-size:11px;overflow-x:auto;margin:12px 0;line-height:1.5}
 
-hr{border:none;border-top:1px solid #eee;margin:32px 0}
-
-pre{background:#f5f5f5;border:1px solid #eee;border-radius:4px;padding:12px;font-size:12px;overflow-x:auto;margin:12px 0}
+.highlight{background:#fffacd;padding:2px 4px;border-radius:2px}
 
 @media(max-width:600px){
   .wrap{padding:32px 20px 60px}
-  h1{font-size:20px}
-  .diagram-container{padding:16px}
+  h1{font-size:18px}
 }
 </style>
 </head>
@@ -69,149 +65,154 @@ pre{background:#f5f5f5;border:1px solid #eee;border-radius:4px;padding:12px;font
   </div>
 </div>
 
-<h1>How four agents transact without trust.</h1>
+<h1>What is a receipt, and why do you want one.</h1>
 
-<p>They don't know each other. They don't trust each other. But they can verify everything. Each receipt is cryptographic proof.</p>
+<p>You're an operator. You run a model. An agent asks you for compute. You run it. They pay you. Done.</p>
+
+<p>But here's the catch: that agent might resell your output to someone else. And someone after that. You never see another payment. Your work just keeps flowing, making money for everyone downstream except you.</p>
+
+<p>With a receipt, that changes.</p>
 
 <hr>
 
-<h2>Agent A runs compute</h2>
+<h2>The Receipt: 21 Fields</h2>
 
-<div class="diagram-container">
-  <svg viewBox="0 0 400 120" style="width:100%;max-width:400px">
-    <defs>
-      <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
-        <polygon points="0 0, 10 3, 0 6" fill="#111"/>
-      </marker>
-    </defs>
-    <rect class="agent-box" x="50" y="20" width="80" height="80" rx="4"/>
-    <text class="agent-label" x="90" y="60">Agent A</text>
-    <text class="agent-label" x="90" y="75" style="font-size:10px;fill:#666">computes</text>
+<div class="diagram">
+<svg viewBox="0 0 520 360" style="width:100%;max-width:520px">
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+    <polygon points="0 0, 8 3, 0 6" fill="#111"/>
+  </marker>
+</defs>
 
-    <rect class="agent-box" x="250" y="20" width="80" height="80" rx="4"/>
-    <text class="agent-label" x="290" y="60">Receipt</text>
-    <text class="agent-label" x="290" y="75" style="font-size:10px;fill:#666">signed</text>
+<!-- Receipt box -->
+<rect class="box" x="20" y="20" width="480" height="320" rx="4"/>
 
-    <line class="arrow" x1="130" y1="60" x2="250" y2="60" style="animation-delay:0s"/>
-    <text class="arrow-label" x="190" y="55">Ed25519</text>
-  </svg>
+<!-- IDENTITY -->
+<text x="30" y="40" class="section-title">IDENTITY</text>
+<rect class="box" x="35" y="50" width="200" height="30" rx="2"/>
+<text x="40" y="65" class="box-label">receipt_id: H(canonical_bytes)</text>
+
+<!-- COMPUTATION -->
+<text x="30" y="110" class="section-title">COMPUTATION</text>
+<rect class="box" x="35" y="120" width="200" height="16" rx="2"/><text x="40" y="130" class="box-label">model_id, input_hash, output_hash</text>
+<rect class="box" x="35" y="140" width="200" height="16" rx="2"/><text x="40" y="150" class="box-label">proof (ZK or TEE), timestamp</text>
+<rect class="box" x="35" y="160" width="200" height="16" rx="2"/><text x="40" y="170" class="box-label">proving_backend (ezkl-halo2, tee-nitro-v1)</text>
+
+<!-- PROVENANCE -->
+<text x="280" y="110" class="section-title">PROVENANCE</text>
+<rect class="box" x="295" y="120" width="200" height="16" rx="2"/><text x="300" y="130" class="box-label">parent_receipts (hash-linked DAG)</text>
+<rect class="box" x="295" y="140" width="200" height="16" rx="2"/><text x="300" y="150" class="box-label">provenance_depth (0 = root)</text>
+
+<!-- ECONOMICS -->
+<text x="280" y="180" class="section-title">ECONOMICS</text>
+<rect class="box" x="295" y="190" width="200" height="16" rx="2"/><text x="300" y="200" class="box-label">provider (your pubkey)</text>
+<rect class="box" x="295" y="210" width="200" height="16" rx="2"/><text x="300" y="220" class="box-label">original_price, royalty_terms</text>
+
+<!-- INTEGRITY -->
+<text x="30" y="200" class="section-title">INTEGRITY</text>
+<rect class="box" x="35" y="210" width="200" height="16" rx="2"/><text x="40" y="220" class="box-label">signature (Ed25519 from you)</text>
+
+<!-- Key insight -->
+<text x="30" y="250" class="box-label" style="font-weight:600;font-size:12px">Why this matters:</text>
+<text x="30" y="265" class="box-label">→ Immutable proof your model ran</text>
+<text x="30" y="280" class="box-label">→ Verifiable by anyone, forever</text>
+<text x="30" y="295" class="box-label">→ Carries royalty terms you define</text>
+<text x="30" y="310" class="box-label">→ Can be transferred, resold, audited</text>
+
+</svg>
 </div>
 
-<p class="small">A computes. A signs the receipt with its private key. Receipt is now unforgeable proof of what happened.</p>
+<p class="small">Every field exists because verification, provenance, or settlement needs it. Nothing extra.</p>
 
 <hr>
 
-<h2>Agent B uses A's output</h2>
+<h2>What Happens When You Resell</h2>
 
-<div class="diagram-container">
-  <svg viewBox="0 0 400 150" style="width:100%;max-width:400px">
-    <defs>
-      <marker id="arrowhead2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
-        <polygon points="0 0, 10 3, 0 6" fill="#111"/>
-      </marker>
-    </defs>
-    <!-- A's receipt -->
-    <rect class="agent-box" x="30" y="10" width="70" height="50" rx="4"/>
-    <text class="agent-label" x="65" y="40" style="font-size:11px">Receipt A</text>
+<div class="diagram">
+<svg viewBox="0 0 520 240" style="width:100%;max-width:520px">
+<defs>
+  <marker id="arrowhead2" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+    <polygon points="0 0, 8 3, 0 6" fill="#111"/>
+  </marker>
+</defs>
 
-    <!-- B verifies -->
-    <rect class="agent-box" x="150" y="10" width="70" height="50" rx="4"/>
-    <text class="agent-label" x="185" y="40" style="font-size:11px">Agent B</text>
+<!-- You (operator) -->
+<g>
+  <circle class="circle" cx="80" cy="60" r="25"/>
+  <text class="circle-text" x="80" y="60">You</text>
+  <text class="box-label" x="80" y="85" text-anchor="middle">Operator</text>
+</g>
 
-    <!-- B creates new receipt -->
-    <rect class="agent-box" x="270" y="10" width="70" height="50" rx="4"/>
-    <text class="agent-label" x="305" y="40" style="font-size:11px">Receipt B</text>
+<!-- Buyer 1 -->
+<g>
+  <circle class="circle" cx="260" cy="60" r="25"/>
+  <text class="circle-text" x="260" y="60">Buyer 1</text>
+</g>
 
-    <!-- Parent link -->
-    <line class="arrow" x1="100" y1="35" x2="150" y2="35" style="animation-delay:0.5s"/>
-    <text class="arrow-label" x="120" y="30" style="font-size:10px">verify</text>
+<!-- Transfer 1 -->
+<line class="arrow" x1="105" y1="60" x2="235" y2="60"/>
+<text class="value" x="170" y="50">$100 sale</text>
 
-    <line class="arrow" x1="220" y1="35" x2="270" y2="35" style="animation-delay:1s"/>
-    <text class="arrow-label" x="240" y="30" style="font-size:10px">parent</text>
+<!-- Royalty back -->
+<line x1="235" y1="75" x2="105" y2="95" stroke="#22c55e" stroke-width="2" stroke-dasharray="3,3" marker-end="url(#arrowhead2)"/>
+<text class="value" x="160" y="90">$5 royalty</text>
+<text class="box-label" x="160" y="105">(5% provider royalty)</text>
 
-    <!-- DAG forming -->
-    <line x1="65" y1="60" x2="305" y2="10" stroke="#999" stroke-width="1" stroke-dasharray="4" style="opacity:0.5"/>
-  </svg>
+<!-- Buyer 2 -->
+<g>
+  <circle class="circle" cx="440" cy="60" r="25"/>
+  <text class="circle-text" x="440" y="60">Buyer 2</text>
+</g>
+
+<!-- Transfer 2 -->
+<line class="arrow" x1="285" y1="60" x2="415" y2="60"/>
+<text class="value" x="350" y="50">$200 resale</text>
+
+<!-- Royalty back again -->
+<line x1="415" y1="75" x2="105" y2="160" stroke="#22c55e" stroke-width="2" stroke-dasharray="3,3" marker-end="url(#arrowhead2)"/>
+<text class="value" x="240" y="140">$10 royalty</text>
+<text class="box-label" x="240" y="155">auto-paid, forever</text>
+
+<!-- Legend -->
+<text x="30" y="200" class="box-label" style="font-weight:600;font-size:12px">You get paid automatically every time it sells.</text>
+<text x="30" y="215" class="box-label">No middleman. No accounting. Protocol handles it.</text>
+</svg>
 </div>
 
-<p class="small">B gets A's receipt. B verifies the signature. B verifies the proof. Only then does B use the output. B creates a new receipt with A's receipt as parent.</p>
+<hr>
+
+<h2>What's Actually New</h2>
+
+<p><strong>Right now:</strong></p>
+<ul style="margin:12px 0;padding-left:20px;list-style:none">
+  <li style="padding:4px 0">→ You run compute. Get paid once. That's it.</li>
+  <li style="padding:4px 0">→ No way to verify the output came from you.</li>
+  <li style="padding:4px 0">→ Can't track where it goes or who uses it.</li>
+  <li style="padding:4px 0">→ Can't get paid again if someone resells.</li>
+</ul>
+
+<p><strong>With receipts:</strong></p>
+<ul style="margin:12px 0;padding-left:20px;list-style:none">
+  <li style="padding:4px 0">→ Output is cryptographically verified as yours.</li>
+  <li style="padding:4px 0">→ Anyone can trace it back to you.</li>
+  <li style="padding:4px 0">→ <span class="highlight">You earn on every resale, forever.</span></li>
+  <li style="padding:4px 0">→ <span class="highlight">No token. No escrow. Just math.</span></li>
+</ul>
 
 <hr>
 
-<h2>C and D build the pipeline</h2>
+<h2>The Flow</h2>
 
-<div class="diagram-container">
-  <svg viewBox="0 0 500 200" style="width:100%;max-width:500px">
-    <defs>
-      <marker id="arrowhead3" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
-        <polygon points="0 0, 10 3, 0 6" fill="#111"/>
-      </marker>
-    </defs>
+<p><strong>1. You compute.</strong> Run your model. Sign the receipt with your private key.</p>
 
-    <!-- A -->
-    <circle class="circle-node" cx="60" cy="40" r="25"/>
-    <text class="circle-label" x="60" y="40">A</text>
+<p><strong>2. Buyer verifies.</strong> They check your signature. They verify the proof (ZK or hardware attestation). They know the output is real.</p>
 
-    <!-- B -->
-    <circle class="circle-node" cx="160" cy="40" r="25"/>
-    <text class="circle-label" x="160" y="40">B</text>
+<p><strong>3. Receipt is permanent.</strong> It goes into a transparent log. Witnessed by independent servers. No single point of failure.</p>
 
-    <!-- C -->
-    <circle class="circle-node" cx="260" cy="40" r="25"/>
-    <text class="circle-label" x="260" y="40">C</text>
+<p><strong>4. They resell.</strong> Someone else buys your output from the first buyer. Automatically, royalties cascade back to you.</p>
 
-    <!-- D (orchestrator) -->
-    <rect class="agent-box" x="330" y="20" width="60" height="40" rx="4"/>
-    <text class="circle-label" x="360" y="45">D</text>
-
-    <!-- Edges A→D, B→D, C→D -->
-    <line class="arrow" x1="85" y1="40" x2="335" y2="40" style="animation-delay:0s;stroke:#ddd"/>
-    <line class="arrow" x1="185" y1="40" x2="335" y2="40" style="animation-delay:0.3s;stroke:#999"/>
-    <line class="arrow" x1="285" y1="40" x2="335" y2="40" style="animation-delay:0.6s;stroke:#111"/>
-
-    <text class="arrow-label" x="200" y="55" style="font-size:10px">provenance DAG</text>
-  </svg>
-</div>
-
-<p class="small">D needs output from A, B, and C. D verifies all three receipts. D creates a receipt with three parents. The DAG now shows the entire computation pipeline.</p>
-
-<hr>
-
-<h2>Now comes the payment part</h2>
-
-<div class="diagram-container">
-  <svg viewBox="0 0 500 180" style="width:100%;max-width:500px">
-    <defs>
-      <marker id="arrowhead4" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
-        <polygon points="0 0, 10 3, 0 6" fill="#111"/>
-      </marker>
-    </defs>
-
-    <!-- D's receipt -->
-    <rect class="agent-box" x="50" y="30" width="70" height="50" rx="4"/>
-    <text class="circle-label" x="85" y="62">Receipt D</text>
-
-    <!-- Fund buys -->
-    <rect class="agent-box" x="350" y="30" width="70" height="50" rx="4"/>
-    <text class="circle-label" x="385" y="62">Fund</text>
-
-    <!-- Transfer arrow -->
-    <line class="arrow" x1="120" y1="55" x2="350" y2="55" style="animation-delay:1s"/>
-    <text class="value-label" x="235" y="50">$150</text>
-
-    <!-- Royalties cascade back -->
-    <line x1="385" y1="80" x2="250" y2="140" stroke="#22c55e" stroke-width="2" stroke-dasharray="4" style="animation:flowValue 2s ease-in-out 1.5s infinite"/>
-    <text class="value-label" x="310" y="125">royalties</text>
-  </svg>
-</div>
-
-<p class="small">Fund wants D's output. Fund verifies: D's signature, D's parents, entire chain. Fund buys for $150. Royalties automatically cascade back to A, B, C. No middleman. Protocol math.</p>
-
-<hr>
-
-<h2>Fund resells to someone else</h2>
-
-<p>The receipt carries the royalty terms. When Fund resells, the cascade happens again. A, B, C keep earning. Forever. Not because anyone manages it. Because the receipt is programmed with it.</p>
+<p><strong>5. You earn forever.</strong> Every resale triggers royalty payments to you. As defined in the receipt you created.</p>
 
 <hr>
 
@@ -221,7 +222,9 @@ pre{background:#f5f5f5;border:1px solid #eee;border-radius:4px;padding:12px;font
 cd tesseravcr
 python3 tessera-py/demo.py</pre>
 
-<p class="small">Real Ed25519 signatures. Real hashes. Real Nitro attestation. Real ZK proofs. You'll see every step.</p>
+<p class="small">Four operators, real receipts, real royalty cascades. Real Ed25519 signatures. Real Nitro attestations. Real ZK proofs. You'll see the entire protocol end-to-end.</p>
+
+<p class="small" style="margin-top:24px;padding-top:24px;border-top:1px solid #eee">This is what being an AI operator looks like when you can verify and monetize your output. You're not renting compute by the hour. You're building income streams that flow from the market, back through the supply chain, to you.</p>
 
 </div>
 
