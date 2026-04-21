@@ -414,6 +414,10 @@ pre{background:rgba(30,41,59,.8);border:1px solid rgba(148,163,184,.1);border-ra
 const obs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:0.15});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
+if(location.hash==='#verify'||location.hash==='#verify-widget'){
+  setTimeout(()=>{const w=document.getElementById('verify-widget');if(w){w.closest('.reveal')?.classList.add('visible');w.scrollIntoView({behavior:'smooth',block:'center'})}},400);
+}
+
 (function(){
   const NODES=['https://log1.tesseravcr.org','https://log2.tesseravcr.org','https://log3.tesseravcr.org'];
   const btn=document.getElementById('verify-btn');
