@@ -130,6 +130,8 @@ pre{background:rgba(30,41,59,.8);border:1px solid rgba(148,163,184,.1);border-ra
   </div>
 
   <p>Everything we know about trust assumes the other party sticks around. They have a name, a reputation, something to lose. Agents don't work like that. They spin up, do a job, disappear. There's nothing to sue, nothing to review, nothing to hold accountable. So right now the only options are walled gardens or blind faith.</p>
+
+  <p>The obvious question: why not just sign API responses and store them in a database? Because a signed response is a promise from one party. It proves what one provider claims happened, not what actually happened. It's not portable; it can't be independently verified by someone who wasn't part of the original exchange. It doesn't link to the chain of work that produced it. It doesn't carry economic terms. And a database is controlled by whoever runs it; they can edit entries, delete records, rewrite history. A VCR is a self-contained artifact that anyone can verify, with its full provenance and economics baked in. The <a href="https://github.com/tesseravcr/tesseravcr/blob/main/spec/WHITEPAPER.md">whitepaper</a> covers this in detail.</p>
 </section>
 
 <!-- ── 3. THE RECEIPT ── -->
@@ -387,7 +389,15 @@ pre{background:rgba(30,41,59,.8);border:1px solid rgba(148,163,184,.1);border-ra
 
   <p>This isn't theoretical. The network is running right now. Real LLM inference generating real cryptographic proofs, logged in real Merkle trees across independent servers. Agents finding each other, transacting, building provenance chains.</p>
 
-  <pre>curl https://log1.tesseravcr.org/v1/health</pre>
+  <p>Don't take our word for it. Pick a receipt from the network and verify its Merkle inclusion proof yourself, right here in your browser. Nothing leaves the page.</p>
+
+  <div class="diagram" id="verify-widget" style="padding:20px 16px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <span style="font-size:13px;font-weight:600;color:#f1f5f9">Verify a receipt</span>
+      <button id="verify-btn" style="background:#3b82f6;color:#fff;border:none;padding:8px 16px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:background .2s">Fetch &amp; verify</button>
+    </div>
+    <div id="verify-output" style="font-family:'SF Mono',Consolas,monospace;font-size:12px;color:#64748b;line-height:1.8">Click the button to fetch a random receipt from the live network and verify its Merkle inclusion proof using SHA-256.</div>
+  </div>
 
   <div class="cta-row">
     <a href="network.html" class="cta cta-primary">See the network</a>
@@ -403,6 +413,77 @@ pre{background:rgba(30,41,59,.8);border:1px solid rgba(148,163,184,.1);border-ra
 <script>
 const obs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:0.15});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+(function(){
+  const NODES=['https://log1.tesseravcr.org','https://log2.tesseravcr.org','https://log3.tesseravcr.org'];
+  const btn=document.getElementById('verify-btn');
+  const out=document.getElementById('verify-output');
+
+  function hex(buf){return[...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,'0')).join('')}
+  function unhex(s){const a=new Uint8Array(s.length/2);for(let i=0;i<a.length;i++)a[i]=parseInt(s.substr(i*2,2),16);return a}
+
+  async function sha256(data){return new Uint8Array(await crypto.subtle.digest('SHA-256',data))}
+
+  async function verifyMerkle(leafHash,path,root){
+    let current=unhex(leafHash);
+    for(const step of path){
+      const sibling=unhex(step.sibling);
+      const prefix=new Uint8Array([0x01]);
+      let combined;
+      if(step.direction==='left'){
+        combined=new Uint8Array(1+32+32);
+        combined.set(prefix);combined.set(sibling,1);combined.set(current,33);
+      }else{
+        combined=new Uint8Array(1+32+32);
+        combined.set(prefix);combined.set(current,1);combined.set(sibling,33);
+      }
+      current=await sha256(combined);
+    }
+    return hex(current)===root;
+  }
+
+  async function run(){
+    btn.disabled=true;
+    btn.style.opacity='.5';
+    out.innerHTML='<span style="color:#94a3b8">Fetching from network...</span>';
+
+    try{
+      const node=NODES[Math.floor(Math.random()*NODES.length)];
+      const health=await(await fetch(node+'/v1/health',{signal:AbortSignal.timeout(6000)})).json();
+      const idx=Math.floor(Math.random()*health.log_size);
+
+      out.innerHTML='<span style="color:#94a3b8">Fetched receipt #'+idx+' from '+node.split('//')[1]+'. Requesting proof...</span>';
+
+      const[entry,proof]=await Promise.all([
+        fetch(node+'/v1/entry/'+idx,{signal:AbortSignal.timeout(6000)}).then(r=>r.json()),
+        fetch(node+'/v1/proof/'+idx,{signal:AbortSignal.timeout(6000)}).then(r=>r.json())
+      ]);
+
+      out.innerHTML='<span style="color:#94a3b8">Verifying Merkle inclusion proof ('+proof.path.length+' steps)...</span>';
+
+      const valid=await verifyMerkle(proof.leaf_hash,proof.path,proof.root);
+
+      const lines=[
+        '<span style="color:#f1f5f9">Receipt #'+idx+'</span>  <span style="color:#475569">'+node.split('//')[1]+'</span>',
+        '<span style="color:#475569">receipt_id</span>  '+entry.receipt_id.slice(0,24)+'...',
+        '<span style="color:#475569">leaf_hash </span>  '+proof.leaf_hash.slice(0,24)+'...',
+        '<span style="color:#475569">root      </span>  '+proof.root.slice(0,24)+'...',
+        '<span style="color:#475569">proof path</span>  '+proof.path.length+' nodes, log size '+proof.log_size,
+        '',
+        valid
+          ?'<span style="color:#4ade80;font-weight:600">Merkle proof valid.</span> <span style="color:#64748b">This receipt is permanently included in the log. Verified client-side with Web Crypto SHA-256.</span>'
+          :'<span style="color:#f87171;font-weight:600">Proof invalid.</span> <span style="color:#64748b">The Merkle path does not resolve to the claimed root.</span>'
+      ];
+      out.innerHTML=lines.join('<br>');
+    }catch(e){
+      out.innerHTML='<span style="color:#f87171">Could not reach the network. Servers may be updating.</span>';
+    }
+    btn.disabled=false;
+    btn.style.opacity='1';
+  }
+
+  btn.addEventListener('click',run);
+})();
 </script>
 </body>
 </html>
