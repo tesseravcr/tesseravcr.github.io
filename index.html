@@ -56,8 +56,8 @@ hr{border:none;border-top:1px solid #eee;margin:32px 0}
   <div class="nav-logo">Tessera VCR</div>
   <div class="nav-links">
     <a href="network.html">Explorer</a>
-    <a href="https://github.com/Henry-Shelton/tesseravcr/blob/main/spec/VCR-SPEC.md">Spec</a>
-    <a href="https://github.com/Henry-Shelton/tesseravcr">Source</a>
+    <a href="https://github.com/tesseravcr/tesseravcr/blob/main/spec/VCR-SPEC.md">Spec</a>
+    <a href="https://github.com/tesseravcr/tesseravcr">Source</a>
   </div>
 </div>
 
@@ -76,9 +76,9 @@ hr{border:none;border-top:1px solid #eee;margin:32px 0}
 <p>Submit a receipt to the live network. This generates an Ed25519 keypair, creates a receipt, submits it, and returns a Merkle inclusion proof.</p>
 
 <pre><code>pip install requests cryptography
-python3 -c "$(curl -fsSL https://raw.githubusercontent.com/Henry-Shelton/tesseravcr/main/tessera-network/join_network.py)"</code></pre>
+python3 -c "$(curl -fsSL https://raw.githubusercontent.com/tesseravcr/tesseravcr/main/tessera-network/join_network.py)"</code></pre>
 
-<p class="small"><a href="https://github.com/Henry-Shelton/tesseravcr/blob/main/tessera-network/join_network.py">View source</a> — 120 lines.</p>
+<p class="small"><a href="https://github.com/tesseravcr/tesseravcr/blob/main/tessera-network/join_network.py">View source</a> — 120 lines.</p>
 
 <h2>Query the network</h2>
 
@@ -100,7 +100,7 @@ curl https://log1.tesseravcr.org/v1/proof/28</code></pre>
 docker run -d -p 7800:7800 -v tessera-data:/data \
   ghcr.io/henry-shelton/tessera-log-server:latest</code></pre>
 
-<p class="small">Your node witnesses peers automatically. <a href="https://github.com/Henry-Shelton/tesseravcr/blob/main/tessera-rust/tessera-log-server/deploy/README.md">Full deployment guide</a>.</p>
+<p class="small">Your node witnesses peers automatically. <a href="https://github.com/tesseravcr/tesseravcr/blob/main/tessera-rust/tessera-log-server/deploy/README.md">Full deployment guide</a>.</p>
 
 <hr>
 
@@ -128,8 +128,8 @@ docker run -d -p 7800:7800 -v tessera-data:/data \
 
 <ul class="links">
   <li><a href="network.html">Network explorer</a> — live receipts, server status, verification</li>
-  <li><a href="https://github.com/Henry-Shelton/tesseravcr/blob/main/spec/VCR-SPEC.md">Specification</a> — full protocol definition</li>
-  <li><a href="https://github.com/Henry-Shelton/tesseravcr">Source code</a> — MIT license</li>
+  <li><a href="https://github.com/tesseravcr/tesseravcr/blob/main/spec/VCR-SPEC.md">Specification</a> — full protocol definition</li>
+  <li><a href="https://github.com/tesseravcr/tesseravcr">Source code</a> — MIT license</li>
 </ul>
 
 </div>
