@@ -14,7 +14,7 @@ code{font-family:'SF Mono',Consolas,monospace;font-size:12px;background:#f5f5f5;
 
 .nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:48px;padding-bottom:16px;border-bottom:1px solid #eee}
 .nav-logo{font-size:14px;font-weight:700;color:#111;letter-spacing:-.2px}
-.nav-links{display:flex;gap:20px;font-size:13px}
+.nav-links{display:flex;gap:20px;font-size:13px;flex-wrap:wrap}
 .nav-links a{color:#666;text-decoration:none}
 .nav-links a:hover{color:#111}
 .nav-links a.active{color:#111;font-weight:600}
@@ -27,14 +27,21 @@ p{margin-bottom:14px;color:#333;line-height:1.7}
 
 hr{border:none;border-top:1px solid #eee;margin:32px 0}
 
-.diagram{background:#fafafa;border-radius:8px;padding:20px;margin:24px 0;border:1px solid #eee;overflow-x:auto}
-svg{display:block;margin:0 auto;max-width:100%;height:auto}
+.diagram{background:#fafafa;border-radius:8px;padding:16px;margin:24px 0;border:1px solid #eee;overflow:hidden;width:100%}
+.diagram-container{display:flex;justify-content:center;width:100%}
+svg{display:block;width:100%;height:auto;max-width:100%}
+
+.diagram-text{font-size:12px;color:#666;margin-top:12px;text-align:center;line-height:1.6}
 
 .highlight-box{background:#fffacd;padding:12px;border-radius:4px;border-left:3px solid #f59e0b;margin:16px 0}
 
 @media(max-width:600px){
-  .wrap{padding:32px 20px 60px}
+  .wrap{padding:32px 16px 60px}
   h1{font-size:18px}
+  h2{font-size:14px}
+  .nav{margin-bottom:32px}
+  .nav-links{gap:12px;font-size:12px}
+  .diagram{padding:12px;margin:16px 0}
 }
 </style>
 </head>
@@ -60,172 +67,159 @@ svg{display:block;margin:0 auto;max-width:100%;height:auto}
 <h3>Diagram 1: You Create a Receipt</h3>
 
 <div class="diagram">
-<svg viewBox="0 0 400 180" style="width:100%;max-width:400px">
-<rect x="20" y="20" width="160" height="100" rx="4" fill="#fff" stroke="#111" stroke-width="2"/>
-<text x="30" y="40" font-size="12" font-weight="600" fill="#111">You (Operator)</text>
-<text x="30" y="60" font-size="11" fill="#666">Run model</text>
-<text x="30" y="76" font-size="11" fill="#666">Sign with private key</text>
-<text x="30" y="92" font-size="11" fill="#666">Create receipt</text>
-<text x="30" y="108" font-size="11" fill="#666">Set royalty terms</text>
+<div class="diagram-container">
+<svg viewBox="0 0 320 140" preserveAspectRatio="xMidYMid meet">
+<rect x="10" y="10" width="130" height="80" rx="3" fill="#fff" stroke="#111" stroke-width="1.5"/>
+<text x="20" y="28" font-size="11" font-weight="600" fill="#111">You</text>
+<text x="20" y="48" font-size="9" fill="#666">Run model</text>
+<text x="20" y="62" font-size="9" fill="#666">Sign with key</text>
+<text x="20" y="76" font-size="9" fill="#666">Create receipt</text>
 
-<line x1="180" y1="70" x2="220" y2="70" stroke="#111" stroke-width="2" marker-end="url(#arrowhead)"/>
+<line x1="140" y1="50" x2="165" y2="50" stroke="#111" stroke-width="1.5" marker-end="url(#arrow)"/>
 
-<rect x="220" y="20" width="160" height="100" rx="4" fill="#fff" stroke="#111" stroke-width="2"/>
-<text x="230" y="40" font-size="12" font-weight="600" fill="#111">Receipt (21 fields)</text>
-<text x="230" y="60" font-size="10" fill="#666">model_id</text>
-<text x="230" y="73" font-size="10" fill="#666">input_hash, output_hash</text>
-<text x="230" y="86" font-size="10" fill="#666">proof (ZK or TEE)</text>
-<text x="230" y="99" font-size="10" fill="#666">provider: you</text>
-<text x="230" y="112" font-size="10" fill="#666">royalty_terms: 5%</text>
+<rect x="165" y="10" width="145" height="80" rx="3" fill="#fff" stroke="#111" stroke-width="1.5"/>
+<text x="175" y="28" font-size="11" font-weight="600" fill="#111">Receipt</text>
+<text x="175" y="46" font-size="8" fill="#666">model_id</text>
+<text x="175" y="57" font-size="8" fill="#666">input/output hash</text>
+<text x="175" y="68" font-size="8" fill="#666">proof (ZK/TEE)</text>
+<text x="175" y="79" font-size="8" fill="#666">royalty_terms: 5%</text>
 
 <defs>
-  <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
-    <polygon points="0 0, 8 3, 0 6" fill="#111"/>
+  <marker id="arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+    <polygon points="0 0, 6 3, 0 6" fill="#111"/>
   </marker>
 </defs>
 </svg>
+</div>
 </div>
 
 <h3>Diagram 2: First Sale</h3>
 
 <div class="diagram">
-<svg viewBox="0 0 450 140" style="width:100%;max-width:450px">
-<!-- You -->
-<circle cx="60" cy="70" r="20" fill="#f5f5f5" stroke="#111" stroke-width="2"/>
-<text x="60" y="73" font-size="11" font-weight="600" fill="#111" text-anchor="middle">You</text>
+<div class="diagram-container">
+<svg viewBox="0 0 280 110" preserveAspectRatio="xMidYMid meet">
+<circle cx="30" cy="40" r="16" fill="#f5f5f5" stroke="#111" stroke-width="1.5"/>
+<text x="30" y="44" font-size="10" font-weight="600" fill="#111" text-anchor="middle">You</text>
 
-<!-- Buyer 1 -->
-<circle cx="220" cy="70" r="20" fill="#f5f5f5" stroke="#111" stroke-width="2"/>
-<text x="220" y="73" font-size="11" font-weight="600" fill="#111" text-anchor="middle">Buyer 1</text>
+<circle cx="150" cy="40" r="16" fill="#f5f5f5" stroke="#111" stroke-width="1.5"/>
+<text x="150" y="44" font-size="10" font-weight="600" fill="#111" text-anchor="middle">Buyer 1</text>
 
-<!-- Sale arrow -->
-<line x1="80" y1="70" x2="200" y2="70" stroke="#111" stroke-width="2" marker-end="url(#arrowhead)"/>
-<text x="140" y="55" font-size="11" font-weight="600" fill="#111">$100 sale</text>
+<line x1="46" y1="40" x2="134" y2="40" stroke="#111" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="85" y="32" font-size="10" font-weight="600" fill="#111">$100 sale</text>
 
-<!-- You get paid -->
-<rect x="20" y="100" width="80" height="25" rx="3" fill="#e8f5e9" stroke="#22c55e" stroke-width="1"/>
-<text x="30" y="119" font-size="11" font-weight="600" fill="#22c55e">You: $100</text>
+<rect x="10" y="70" width="40" height="22" rx="2" fill="#e8f5e9" stroke="#22c55e" stroke-width="1"/>
+<text x="30" y="86" font-size="9" font-weight="600" fill="#22c55e" text-anchor="middle">You: $100</text>
 
 <defs>
-  <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
-    <polygon points="0 0, 8 3, 0 6" fill="#111"/>
+  <marker id="arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+    <polygon points="0 0, 6 3, 0 6" fill="#111"/>
   </marker>
 </defs>
 </svg>
 </div>
+</div>
 
-<h3>Diagram 3: Second Sale (Resale)</h3>
+<h3>Diagram 3: Resale (You Keep Earning)</h3>
 
 <div class="diagram">
-<svg viewBox="0 0 450 180" style="width:100%;max-width:450px">
-<!-- Buyer 1 -->
-<circle cx="60" cy="70" r="20" fill="#f5f5f5" stroke="#111" stroke-width="2"/>
-<text x="60" y="73" font-size="11" font-weight="600" fill="#111" text-anchor="middle">Buyer 1</text>
+<div class="diagram-container">
+<svg viewBox="0 0 320 120" preserveAspectRatio="xMidYMid meet">
+<circle cx="25" cy="35" r="14" fill="#f5f5f5" stroke="#111" stroke-width="1.5"/>
+<text x="25" y="38" font-size="9" font-weight="600" fill="#111" text-anchor="middle">Buyer 1</text>
 
-<!-- Buyer 2 -->
-<circle cx="220" cy="70" r="20" fill="#f5f5f5" stroke="#111" stroke-width="2"/>
-<text x="220" y="73" font-size="11" font-weight="600" fill="#111" text-anchor="middle">Buyer 2</text>
+<circle cx="155" cy="35" r="14" fill="#f5f5f5" stroke="#111" stroke-width="1.5"/>
+<text x="155" y="38" font-size="9" font-weight="600" fill="#111" text-anchor="middle">Buyer 2</text>
 
-<!-- Resale arrow -->
-<line x1="80" y1="70" x2="200" y2="70" stroke="#111" stroke-width="2" marker-end="url(#arrowhead)"/>
-<text x="140" y="55" font-size="11" font-weight="600" fill="#111">$200 resale</text>
+<line x1="39" y1="35" x2="141" y2="35" stroke="#111" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="85" y="27" font-size="10" font-weight="600" fill="#111">$200 resale</text>
 
-<!-- Buyer 1 gets most -->
-<rect x="20" y="100" width="80" height="25" rx="3" fill="#e3f2fd" stroke="#2196f3" stroke-width="1"/>
-<text x="30" y="119" font-size="10" fill="#2196f3">Buyer 1: $190</text>
+<rect x="5" y="65" width="40" height="20" rx="2" fill="#e3f2fd" stroke="#2196f3" stroke-width="1"/>
+<text x="25" y="79" font-size="8" fill="#2196f3" text-anchor="middle">Buyer 1: $190</text>
 
-<!-- YOU get royalty automatically -->
-<rect x="350" y="100" width="80" height="25" rx="3" fill="#e8f5e9" stroke="#22c55e" stroke-width="2"/>
-<text x="360" y="119" font-size="10" font-weight="600" fill="#22c55e">You: $10</text>
+<rect x="260" y="65" width="50" height="20" rx="2" fill="#e8f5e9" stroke="#22c55e" stroke-width="1.5"/>
+<text x="285" y="79" font-size="8" font-weight="600" fill="#22c55e" text-anchor="middle">You: $10</text>
 
-<!-- Arrow showing automatic payment -->
-<line x1="200" y1="85" x2="360" y2="105" stroke="#22c55e" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrowhead-green)"/>
-
-<text x="240" y="95" font-size="10" fill="#22c55e" font-weight="600">auto-paid</text>
+<line x1="155" y1="49" x2="270" y2="70" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#arrow-green)"/>
+<text x="190" y="56" font-size="8" fill="#22c55e" font-weight="600">auto-paid</text>
 
 <defs>
-  <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
-    <polygon points="0 0, 8 3, 0 6" fill="#111"/>
+  <marker id="arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+    <polygon points="0 0, 6 3, 0 6" fill="#111"/>
   </marker>
-  <marker id="arrowhead-green" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
-    <polygon points="0 0, 8 3, 0 6" fill="#22c55e"/>
+  <marker id="arrow-green" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+    <polygon points="0 0, 6 3, 0 6" fill="#22c55e"/>
   </marker>
 </defs>
 </svg>
+</div>
 </div>
 
 <div class="highlight-box">
-<strong>The operator value:</strong> Every resale triggers your royalty. You defined it in the receipt (5%). It's automatic. No accounting. No platform taking a cut. Forever.
+<strong>The operator value:</strong> Every resale triggers your royalty automatically. No accounting. No platform. Forever.
 </div>
 
 <hr>
 
-<h2>Consumer View: Verify Everything, Resell with Provenance</h2>
+<h2>Consumer View: Verify Everything</h2>
 
-<h3>Diagram 4: What You Verify (5 Checks)</h3>
+<h3>Diagram 4: Five Verification Checks</h3>
 
 <div class="diagram">
-<svg viewBox="0 0 450 220" style="width:100%;max-width:450px">
-<text x="20" y="25" font-size="12" font-weight="600" fill="#111">You get a receipt. You verify it.</text>
+<div class="diagram-container">
+<svg viewBox="0 0 300 160" preserveAspectRatio="xMidYMid meet">
+<text x="15" y="20" font-size="11" font-weight="600" fill="#111">You verify it</text>
 
-<!-- Check 1 -->
-<circle cx="30" cy="60" r="4" fill="#22c55e"/>
-<text x="45" y="64" font-size="11" fill="#111">Integrity: Recompute hash. Match receipt_id?</text>
+<circle cx="20" cy="45" r="3" fill="#22c55e"/>
+<text x="32" y="49" font-size="9" fill="#111">Integrity: Hash match?</text>
 
-<!-- Check 2 -->
-<circle cx="30" cy="90" r="4" fill="#22c55e"/>
-<text x="45" y="94" font-size="11" fill="#111">Signature: Valid Ed25519 from provider?</text>
+<circle cx="20" cy="65" r="3" fill="#22c55e"/>
+<text x="32" y="69" font-size="9" fill="#111">Signature: Valid Ed25519?</text>
 
-<!-- Check 3 -->
-<circle cx="30" cy="120" r="4" fill="#22c55e"/>
-<text x="45" y="124" font-size="11" fill="#111">Proof: Run verify(proof, VK). Works?</text>
+<circle cx="20" cy="85" r="3" fill="#22c55e"/>
+<text x="32" y="89" font-size="9" fill="#111">Proof: verify() works?</text>
 
-<!-- Check 4 -->
-<circle cx="30" cy="150" r="4" fill="#22c55e"/>
-<text x="45" y="154" font-size="11" fill="#111">Output binding: SHA-256(output) matches?</text>
+<circle cx="20" cy="105" r="3" fill="#22c55e"/>
+<text x="32" y="109" font-size="9" fill="#111">Output: SHA-256 match?</text>
 
-<!-- Check 5 -->
-<circle cx="30" cy="180" r="4" fill="#22c55e"/>
-<text x="45" y="184" font-size="11" fill="#111">Provenance: Parent receipts valid?</text>
+<circle cx="20" cy="125" r="3" fill="#22c55e"/>
+<text x="32" y="129" font-size="9" fill="#111">Parents: Valid chain?</text>
 
-<text x="20" y="215" font-size="11" fill="#666">All pass = output is real. No platform needed. Just math.</text>
+<text x="15" y="155" font-size="9" fill="#666">All pass = real. No platform. Just math.</text>
 </svg>
 </div>
+</div>
 
-<h3>Diagram 5: Provenance DAG (Hash-Linked Chain)</h3>
+<h3>Diagram 5: Provenance DAG</h3>
 
 <div class="diagram">
-<svg viewBox="0 0 450 200" style="width:100%;max-width:450px">
-<!-- A (root) -->
-<rect x="30" y="30" width="90" height="50" rx="3" fill="#fff" stroke="#111" stroke-width="1.5"/>
-<text x="40" y="48" font-size="11" font-weight="600" fill="#111">Receipt A</text>
-<text x="40" y="63" font-size="10" fill="#666">specialist data</text>
-<text x="40" y="77" font-size="9" fill="#999">depth: 0</text>
+<div class="diagram-container">
+<svg viewBox="0 0 280 150" preserveAspectRatio="xMidYMid meet">
+<rect x="10" y="10" width="70" height="45" rx="2" fill="#fff" stroke="#111" stroke-width="1"/>
+<text x="18" y="27" font-size="10" font-weight="600" fill="#111">Receipt A</text>
+<text x="18" y="40" font-size="8" fill="#666">specialist</text>
+<text x="18" y="50" font-size="8" fill="#999">depth: 0</text>
 
-<!-- B (root) -->
-<rect x="150" y="30" width="90" height="50" rx="3" fill="#fff" stroke="#111" stroke-width="1.5"/>
-<text x="160" y="48" font-size="11" font-weight="600" fill="#111">Receipt B</text>
-<text x="160" y="63" font-size="10" fill="#666">domain expert</text>
-<text x="160" y="77" font-size="9" fill="#999">depth: 0</text>
+<rect x="100" y="10" width="70" height="45" rx="2" fill="#fff" stroke="#111" stroke-width="1"/>
+<text x="108" y="27" font-size="10" font-weight="600" fill="#111">Receipt B</text>
+<text x="108" y="40" font-size="8" fill="#666">expert</text>
+<text x="108" y="50" font-size="8" fill="#999">depth: 0</text>
 
-<!-- D (child of A and B) -->
-<rect x="90" y="120" width="90" height="50" rx="3" fill="#fff" stroke="#111" stroke-width="1.5"/>
-<text x="100" y="138" font-size="11" font-weight="600" fill="#111">Receipt D</text>
-<text x="100" y="153" font-size="10" fill="#666">orchestrator</text>
-<text x="100" y="167" font-size="9" fill="#999">depth: 1</text>
+<rect x="55" y="85" width="70" height="45" rx="2" fill="#fff" stroke="#111" stroke-width="1"/>
+<text x="63" y="102" font-size="10" font-weight="600" fill="#111">Receipt D</text>
+<text x="63" y="115" font-size="8" fill="#666">orchestrator</text>
+<text x="63" y="125" font-size="8" fill="#999">depth: 1</text>
 
-<!-- Edges (parent refs) -->
-<line x1="65" y1="80" x2="110" y2="120" stroke="#111" stroke-width="1.5"/>
-<line x1="180" y1="80" x2="140" y2="120" stroke="#111" stroke-width="1.5"/>
+<line x1="40" y1="55" x2="75" y2="85" stroke="#111" stroke-width="1"/>
+<line x1="130" y1="55" x2="100" y2="85" stroke="#111" stroke-width="1"/>
 
-<!-- Explanation -->
-<text x="20" y="190" font-size="11" fill="#666">A and B are parents of D. D's receipt carries</text>
-<text x="20" y="205" font-size="11" fill="#666">cryptographic hashes of A and B. DAG is tamper-evident.</text>
+<text x="10" y="150" font-size="8" fill="#666">A, B are parents of D</text>
 </svg>
+</div>
+<div class="diagram-text">D's receipt carries cryptographic hashes of A and B. Tamper any parent and D breaks.</div>
 </div>
 
 <div class="highlight-box">
-<strong>The consumer value:</strong> You can trace any output back to its roots. Verify the entire supply chain. Know exactly what you're buying.
+<strong>The consumer value:</strong> Trace any output to its roots. Verify the entire supply chain. Buy with certainty.
 </div>
 
 <hr>
