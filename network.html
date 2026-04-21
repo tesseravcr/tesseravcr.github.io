@@ -6,92 +6,86 @@
 <title>Tessera VCR — Explorer</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;background:#fff;color:#111;font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased}
-a{color:#111;text-decoration:none}
-a:hover{text-decoration:underline}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f172a;color:#cbd5e1;font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:#60a5fa;text-decoration:none}
+a:hover{color:#93bbfc}
 
 .wrap{max-width:960px;margin:0 auto;padding:0 24px 60px}
 
-/* Nav */
-.nav{display:flex;justify-content:space-between;align-items:center;padding:16px 0;margin-bottom:24px;border-bottom:1px solid #eee}
-.nav-logo{font-size:14px;font-weight:700;color:#111}
-.nav-links{display:flex;gap:20px;font-size:13px}
-.nav-links a{color:#666;text-decoration:none}
-.nav-links a:hover{color:#111}
-.nav-links a.active{color:#111;font-weight:600}
+.nav{display:flex;justify-content:space-between;align-items:center;padding:16px 0;margin-bottom:24px;border-bottom:1px solid rgba(148,163,184,.1)}
+.nav-logo{font-size:14px;font-weight:700;color:#f1f5f9;letter-spacing:-.2px}
+.nav-links{display:flex;gap:24px;font-size:13px}
+.nav-links a{color:#64748b;text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:#f1f5f9}
+.nav-links a.active{color:#f1f5f9;font-weight:600}
 
-/* Stats */
-.stats{display:flex;gap:32px;padding:16px 0;margin-bottom:24px;border-bottom:1px solid #eee}
-.stat-item{font-size:13px;color:#666}
-.stat-item b{color:#111;font-size:18px;font-weight:700;display:block;margin-bottom:1px}
+.stats{display:flex;gap:32px;padding:16px 0;margin-bottom:24px;border-bottom:1px solid rgba(148,163,184,.1)}
+.stat-item{font-size:13px;color:#64748b}
+.stat-item b{color:#f1f5f9;font-size:18px;font-weight:700;display:block;margin-bottom:1px}
 
-/* Grid */
 .grid{display:grid;grid-template-columns:1fr 280px;gap:24px}
 
-/* Table section */
 .sec{margin-bottom:24px}
 .sec-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-.sec-title{font-size:13px;font-weight:700;color:#111}
-.sec-sub{font-size:12px;color:#999}
+.sec-title{font-size:13px;font-weight:700;color:#f1f5f9}
+.sec-sub{font-size:12px;color:#64748b}
 
 .tbl{width:100%;border-collapse:collapse}
-.tbl th{text-align:left;padding:8px 0;font-size:11px;color:#999;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid #eee;font-weight:600}
-.tbl td{padding:10px 0;border-bottom:1px solid #f5f5f5;font-size:13px;vertical-align:top}
-.tbl tbody tr{cursor:pointer;transition:background .1s}
-.tbl tbody tr:hover{background:#fafafa}
-.entry-desc{font-weight:500;color:#111;margin-bottom:2px}
-.entry-meta{font-size:11px;color:#999}
-.entry-amount{font-weight:700;color:#111}
-.entry-server{font-size:11px;color:#666;background:#f5f5f5;padding:2px 6px;border-radius:3px}
-.entry-time{font-size:12px;color:#999}
-.entry-status{font-size:11px;color:#22c55e;font-weight:500}
+.tbl th{text-align:left;padding:8px 0;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid rgba(148,163,184,.1);font-weight:600}
+.tbl td{padding:10px 0;border-bottom:1px solid rgba(148,163,184,.06);font-size:13px;vertical-align:top}
+.tbl tbody tr{cursor:pointer;transition:background .15s}
+.tbl tbody tr:hover{background:rgba(148,163,184,.05)}
+.entry-desc{font-weight:500;color:#e2e8f0;margin-bottom:2px}
+.entry-meta{font-size:11px;color:#64748b}
+.entry-amount{font-weight:700;color:#e2e8f0}
+.entry-server{font-size:11px;color:#94a3b8;background:rgba(148,163,184,.08);padding:2px 6px;border-radius:4px}
+.entry-time{font-size:12px;color:#64748b}
+.entry-status{font-size:11px;color:#4ade80;font-weight:500}
 
-/* Sidebar */
 .sidebar-section{margin-bottom:24px}
-.sidebar-title{font-size:12px;font-weight:700;color:#111;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
+.sidebar-title{font-size:12px;font-weight:700;color:#f1f5f9;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
 
-.log-card{border:1px solid #eee;border-radius:6px;padding:10px 12px;margin-bottom:8px}
+.log-card{border:1px solid rgba(148,163,184,.1);border-radius:8px;padding:10px 12px;margin-bottom:8px;background:rgba(30,41,59,.5)}
 .log-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
-.log-name{font-weight:700;font-size:13px;color:#111}
-.log-up{font-size:10px;color:#22c55e;font-weight:700}
-.log-down{font-size:10px;color:#dc2626;font-weight:700}
-.log-meta{font-size:11px;color:#666;line-height:1.5}
-.log-bar{height:2px;background:#f0f0f0;border-radius:1px;margin-top:6px;overflow:hidden}
-.log-bar-fill{height:100%;background:#111;border-radius:1px;transition:width .4s}
+.log-name{font-weight:700;font-size:13px;color:#f1f5f9}
+.log-up{font-size:10px;color:#4ade80;font-weight:700}
+.log-down{font-size:10px;color:#f87171;font-weight:700}
+.log-meta{font-size:11px;color:#64748b;line-height:1.5}
+.log-bar{height:2px;background:rgba(148,163,184,.1);border-radius:1px;margin-top:6px;overflow:hidden}
+.log-bar-fill{height:100%;background:#60a5fa;border-radius:1px;transition:width .4s}
 
-.join-box{background:#fafafa;border:1px solid #eee;border-radius:6px;padding:12px}
-.join-box p{font-size:12px;color:#666;margin-bottom:8px}
-.join-box pre{background:#fff;border:1px solid #eee;border-radius:4px;padding:8px 10px;font-size:10px;line-height:1.5;overflow-x:auto;white-space:pre-wrap;word-wrap:break-word;margin:0}
-.join-box pre code{color:#333}
-.join-box .note{font-size:11px;color:#999;margin-top:6px}
-.join-box .note a{color:#666}
+.join-box{background:rgba(30,41,59,.5);border:1px solid rgba(148,163,184,.1);border-radius:8px;padding:12px}
+.join-box p{font-size:12px;color:#64748b;margin-bottom:8px}
+.join-box pre{background:rgba(15,23,42,.8);border:1px solid rgba(148,163,184,.1);border-radius:6px;padding:8px 10px;font-size:10px;line-height:1.5;overflow-x:auto;white-space:pre-wrap;word-wrap:break-word;margin:0}
+.join-box pre code{color:#94a3b8}
+.join-box .note{font-size:11px;color:#64748b;margin-top:6px}
+.join-box .note a{color:#60a5fa}
 
-/* Overlay */
-.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.25);z-index:200;justify-content:center;align-items:start;padding:48px 20px;overflow-y:auto}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;justify-content:center;align-items:start;padding:48px 20px;overflow-y:auto;backdrop-filter:blur(4px)}
 .overlay.show{display:flex}
-.detail{background:#fff;border-radius:8px;padding:28px;max-width:520px;width:100%;box-shadow:0 16px 48px rgba(0,0,0,.12)}
-.detail-close{float:right;background:none;border:none;color:#999;font-size:20px;cursor:pointer;line-height:1}
-.detail-close:hover{color:#111}
-.detail h2{font-size:16px;font-weight:700;margin-bottom:4px}
-.detail .what{font-size:14px;color:#555;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid #eee}
-.dr{display:flex;justify-content:space-between;padding:6px 0;font-size:13px;border-bottom:1px solid #f8f8f8}
-.dr .k{color:#666}
-.dr .v{font-family:'SF Mono',monospace;font-size:11px;color:#111;text-align:right;max-width:280px;word-break:break-all}
+.detail{background:#1e293b;border:1px solid rgba(148,163,184,.12);border-radius:12px;padding:28px;max-width:520px;width:100%;box-shadow:0 16px 48px rgba(0,0,0,.4)}
+.detail-close{float:right;background:none;border:none;color:#64748b;font-size:20px;cursor:pointer;line-height:1}
+.detail-close:hover{color:#f1f5f9}
+.detail h2{font-size:16px;font-weight:700;color:#f1f5f9;margin-bottom:4px}
+.detail .what{font-size:14px;color:#94a3b8;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid rgba(148,163,184,.1)}
+.dr{display:flex;justify-content:space-between;padding:6px 0;font-size:13px;border-bottom:1px solid rgba(148,163,184,.06)}
+.dr .k{color:#64748b}
+.dr .v{font-family:'SF Mono',Consolas,monospace;font-size:11px;color:#e2e8f0;text-align:right;max-width:280px;word-break:break-all}
 
-.checks{margin-top:16px;padding-top:14px;border-top:1px solid #eee}
-.checks-title{font-size:11px;font-weight:700;color:#111;margin-bottom:8px;text-transform:uppercase;letter-spacing:.3px}
+.checks{margin-top:16px;padding-top:14px;border-top:1px solid rgba(148,163,184,.1)}
+.checks-title{font-size:11px;font-weight:700;color:#f1f5f9;margin-bottom:8px;text-transform:uppercase;letter-spacing:.3px}
 .check{display:flex;align-items:flex-start;gap:8px;padding:5px 0;font-size:13px}
-.check-icon{color:#22c55e;font-weight:700;flex-shrink:0;font-size:12px;margin-top:2px}
-.check-text{color:#333}
-.check-sub{font-size:11px;color:#999}
+.check-icon{color:#4ade80;font-weight:700;flex-shrink:0;font-size:12px;margin-top:2px}
+.check-text{color:#e2e8f0}
+.check-sub{font-size:11px;color:#64748b}
 
-.proof-toggle{font-size:12px;color:#666;cursor:pointer;margin-top:12px;border-top:1px solid #eee;padding-top:10px}
-.proof-toggle:hover{color:#111}
-.proof-box{background:#fafafa;border:1px solid #eee;border-radius:4px;padding:10px;margin-top:6px;font-family:'SF Mono',monospace;font-size:10px;color:#555;max-height:100px;overflow-y:auto;white-space:pre;line-height:1.5;display:none}
+.proof-toggle{font-size:12px;color:#64748b;cursor:pointer;margin-top:12px;border-top:1px solid rgba(148,163,184,.1);padding-top:10px}
+.proof-toggle:hover{color:#f1f5f9}
+.proof-box{background:rgba(15,23,42,.8);border:1px solid rgba(148,163,184,.1);border-radius:6px;padding:10px;margin-top:6px;font-family:'SF Mono',Consolas,monospace;font-size:10px;color:#94a3b8;max-height:100px;overflow-y:auto;white-space:pre;line-height:1.5;display:none}
 .proof-box.show{display:block}
 
-.detail-links{margin-top:12px;font-size:12px;color:#999}
-.detail-links a{color:#666;margin-right:12px}
+.detail-links{margin-top:12px;font-size:12px;color:#64748b}
+.detail-links a{color:#60a5fa;margin-right:12px}
 
 @media(max-width:768px){
   .grid{grid-template-columns:1fr}
@@ -103,10 +97,11 @@ a:hover{text-decoration:underline}
 <div class="wrap">
 
 <div class="nav">
-  <a href="index.html" style="text-decoration:none"><div class="nav-logo">Tessera VCR</div></a>
+  <a href="/" style="text-decoration:none"><div class="nav-logo">Tessera VCR</div></a>
   <div class="nav-links">
     <a href="demo.html">Learn</a>
     <a href="network.html" class="active">Explorer</a>
+    <a href="join.html">Join</a>
     <a href="https://github.com/tesseravcr/tesseravcr">Source</a>
   </div>
 </div>
@@ -183,7 +178,7 @@ function renderReceipts(){
     const p=e.parent_receipts&&e.parent_receipts.length;
     return `<tr onclick="showDetail('${e._nodeUrl}',${e._idx},'${e._node}')">
       <td><div class="entry-desc">${describeEntry(e)}</div><div class="entry-meta">${sh(e.from_key)} → ${sh(e.to_key)}${p?' · '+p+' parent'+(p>1?'s':''):''}</div></td>
-      <td><span class="entry-amount">$${(e.price/100).toFixed(2)}</span></td>
+      <td><span class="entry-amount">${e.price} units</span></td>
       <td><span class="entry-server">${e._node}</span></td>
       <td><span class="entry-time">${fmtTime(e.transfer_timestamp)}</span><br><span class="entry-status">verified</span></td>
     </tr>`}).join('');
@@ -238,11 +233,11 @@ async function refresh(){
 async function showDetail(nodeUrl,idx,nodeName){
   const overlay=document.getElementById('overlay');
   const detail=document.getElementById('detail');
-  detail.innerHTML='<button class="detail-close" onclick="closeDetail()">&times;</button><div style="text-align:center;padding:32px;color:#999">Loading…</div>';
+  detail.innerHTML='<button class="detail-close" onclick="closeDetail()">&times;</button><div style="text-align:center;padding:32px;color:#64748b">Loading…</div>';
   overlay.classList.add('show');
 
   const[entry,proof]=await Promise.all([fetchJSON(nodeUrl+'/v1/entry/'+idx),fetchJSON(nodeUrl+'/v1/proof/'+idx)]);
-  if(!entry){detail.innerHTML='<button class="detail-close" onclick="closeDetail()">&times;</button><p style="padding:20px;color:#dc2626">Failed to load.</p>';return}
+  if(!entry){detail.innerHTML='<button class="detail-close" onclick="closeDetail()">&times;</button><p style="padding:20px;color:#f87171">Failed to load.</p>';return}
 
   const hasP=entry.parent_receipts&&entry.parent_receipts.length;
   const proofOk=proof&&proof.path;
@@ -256,10 +251,10 @@ async function showDetail(nodeUrl,idx,nodeName){
   detail.innerHTML=`
     <button class="detail-close" onclick="closeDetail()">&times;</button>
     <h2>Receipt #${idx}</h2>
-    <div class="what">${describeEntry(entry)}. $${(entry.price/100).toFixed(2)} paid. Recorded on ${nodeName}.</div>
+    <div class="what">${describeEntry(entry)}. Recorded on ${nodeName}.</div>
     <div class="dr"><span class="k">From</span><span class="v">${entry.from_key}</span></div>
     <div class="dr"><span class="k">To</span><span class="v">${entry.to_key}</span></div>
-    <div class="dr"><span class="k">Amount</span><span class="v">$${(entry.price/100).toFixed(2)} ${entry.currency}</span></div>
+    <div class="dr"><span class="k">Value</span><span class="v">${entry.price} ${entry.currency}</span></div>
     <div class="dr"><span class="k">Time</span><span class="v" style="font-family:inherit">${new Date(entry.transfer_timestamp*1000).toLocaleString()}</span></div>
     <div class="dr"><span class="k">Receipt ID</span><span class="v" style="font-size:10px">${entry.receipt_id}</span></div>
     ${hasP?`<div class="dr"><span class="k">Parents</span><span class="v" style="font-family:inherit">${entry.parent_receipts.length}</span></div>`:''}
@@ -267,8 +262,8 @@ async function showDetail(nodeUrl,idx,nodeName){
     <div class="checks">
       <div class="checks-title">Verified</div>
       <div class="check"><span class="check-icon">✓</span><div><span class="check-text">Signature valid</span><br><span class="check-sub">Provider's key signed this receipt</span></div></div>
-      <div class="check"><span class="check-icon">✓</span><div><span class="check-text">Integrity intact</span><br><span class="check-sub">Fingerprint matches — not modified</span></div></div>
-      <div class="check"><span class="check-icon">✓</span><div><span class="check-text">Permanently recorded</span><br><span class="check-sub">${proofOk?'Merkle proof valid — cannot be removed':'In log'}</span></div></div>
+      <div class="check"><span class="check-icon">✓</span><div><span class="check-text">Integrity intact</span><br><span class="check-sub">Fingerprint matches; not modified</span></div></div>
+      <div class="check"><span class="check-icon">✓</span><div><span class="check-text">Permanently recorded</span><br><span class="check-sub">${proofOk?'Merkle proof valid; cannot be removed':'In log'}</span></div></div>
       <div class="check"><span class="check-icon">✓</span><div><span class="check-text">No double-spend</span><br><span class="check-sub">Transferred exactly once</span></div></div>
     </div>
 

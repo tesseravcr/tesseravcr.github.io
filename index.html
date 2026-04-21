@@ -6,30 +6,32 @@
 <title>Tessera VCR</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#1a1a2e;color:#e0e0e0;font-size:16px;line-height:1.8;-webkit-font-smoothing:antialiased}
-a{color:#3b82f6;text-decoration:none}
-a:hover{text-decoration:underline}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f172a;color:#cbd5e1;font-size:16px;line-height:1.8;-webkit-font-smoothing:antialiased}
+a{color:#60a5fa;text-decoration:none}
+a:hover{color:#93bbfc}
 
 .wrap{max-width:600px;margin:0 auto;padding:80px 24px}
 
-.nav{display:flex;justify-content:space-between;align-items:center;padding-bottom:20px;margin-bottom:80px;border-bottom:1px solid rgba(255,255,255,.08)}
-.nav-logo{font-size:14px;font-weight:700;color:#fff;letter-spacing:-.2px}
+.nav{display:flex;justify-content:space-between;align-items:center;padding-bottom:20px;margin-bottom:80px;border-bottom:1px solid rgba(148,163,184,.1)}
+.nav-logo{font-size:14px;font-weight:700;color:#f1f5f9;letter-spacing:-.2px}
 .nav-links{display:flex;gap:24px;font-size:13px}
-.nav-links a{color:#8a8a9a;text-decoration:none}
-.nav-links a:hover{color:#fff}
+.nav-links a{color:#64748b;text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:#f1f5f9}
 
-.hero{text-align:center;margin-bottom:64px}
-.hero h1{font-size:36px;font-weight:700;color:#fff;margin-bottom:24px;line-height:1.2;letter-spacing:-.5px}
-.hero p{font-size:17px;color:#8a8a9a;max-width:460px;margin:0 auto;line-height:1.7}
+.hero{text-align:center;margin-bottom:64px;opacity:0;animation:fadeUp .8s ease forwards}
+.hero h1{font-size:36px;font-weight:700;color:#f1f5f9;margin-bottom:24px;line-height:1.2;letter-spacing:-.5px}
+.hero p{font-size:17px;color:#94a3b8;max-width:480px;margin:0 auto;line-height:1.7}
 
-.cards{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
-.card{border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:20px 24px;text-align:center;flex:1;min-width:160px;max-width:200px;transition:border-color .2s}
-.card:hover{border-color:rgba(255,255,255,.25)}
-.card-title{font-size:14px;font-weight:600;color:#fff;margin-bottom:6px}
-.card-desc{font-size:12px;color:#8a8a9a;line-height:1.5}
+.cards{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeUp .8s ease .2s forwards}
+.card{border:1px solid rgba(148,163,184,.1);border-radius:10px;padding:20px 24px;text-align:center;flex:1;min-width:140px;max-width:200px;transition:border-color .3s,box-shadow .3s;background:rgba(30,41,59,.5);backdrop-filter:blur(8px)}
+.card:hover{border-color:rgba(148,163,184,.25);box-shadow:0 4px 24px rgba(0,0,0,.2)}
+.card-title{font-size:14px;font-weight:600;color:#f1f5f9;margin-bottom:6px}
+.card-desc{font-size:12px;color:#94a3b8;line-height:1.5}
 .card a{color:inherit;text-decoration:none}
 
-.footer{text-align:center;margin-top:80px;font-size:12px;color:#555}
+.footer{text-align:center;margin-top:80px;font-size:12px;color:#475569;opacity:0;animation:fadeUp .8s ease .4s forwards}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 
 @media(max-width:600px){
   .wrap{padding:48px 20px}
@@ -45,30 +47,35 @@ a:hover{text-decoration:underline}
 <div class="wrap">
 
 <nav class="nav">
-  <a href="index.html" style="text-decoration:none"><div class="nav-logo">Tessera VCR</div></a>
+  <a href="/" style="text-decoration:none"><div class="nav-logo">Tessera VCR</div></a>
   <div class="nav-links">
     <a href="demo.html">Learn</a>
     <a href="network.html">Explorer</a>
+    <a href="join.html">Join</a>
     <a href="https://github.com/tesseravcr/tesseravcr">Source</a>
   </div>
 </nav>
 
 <div class="hero">
   <h1>A receipt for compute.</h1>
-  <p>Your agent calls another agent. It gets a response. No proof it happened. No trail. A receipt changes that — 21 fields, cryptographically signed. Verifiable. Traceable. Tradeable.</p>
+  <p>An agent calls another agent. Gets a response. But there's nothing behind it; no proof the work happened, no way to verify, no trail. A receipt fixes that. 21 fields, cryptographically signed.</p>
 </div>
 
 <div class="cards">
   <a href="demo.html" class="card" style="text-decoration:none">
     <div class="card-title">Understand it</div>
-    <div class="card-desc">10-minute walkthrough. Build the protocol from first principles.</div>
+    <div class="card-desc">Build the protocol from first principles. 10 minutes.</div>
   </a>
   <a href="network.html" class="card" style="text-decoration:none">
     <div class="card-title">See it live</div>
-    <div class="card-desc">Three log servers. Real receipts. Real agents transacting.</div>
+    <div class="card-desc">Three log servers. Real receipts. Real agents.</div>
+  </a>
+  <a href="join.html" class="card" style="text-decoration:none">
+    <div class="card-title">Join</div>
+    <div class="card-desc">Run a node. Provide compute. Use the network.</div>
   </a>
   <a href="https://github.com/tesseravcr/tesseravcr" class="card" style="text-decoration:none">
-    <div class="card-title">Read the code</div>
+    <div class="card-title">Source</div>
     <div class="card-desc">Python + Rust. 77 tests. MIT license.</div>
   </a>
 </div>

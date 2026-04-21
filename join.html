@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Join — Tessera VCR</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f172a;color:#cbd5e1;font-size:16px;line-height:1.8;-webkit-font-smoothing:antialiased}
+a{color:#60a5fa;text-decoration:none}
+a:hover{color:#93bbfc}
+code{font-family:'SF Mono',Consolas,monospace;font-size:13px;background:rgba(148,163,184,.08);padding:2px 6px;border-radius:4px;color:#e2e8f0}
+
+.wrap{max-width:720px;margin:0 auto;padding:48px 24px 100px}
+
+.nav{display:flex;justify-content:space-between;align-items:center;padding-bottom:20px;margin-bottom:48px;border-bottom:1px solid rgba(148,163,184,.1)}
+.nav-logo{font-size:14px;font-weight:700;color:#f1f5f9;letter-spacing:-.2px}
+.nav-links{display:flex;gap:24px;font-size:13px;flex-wrap:wrap}
+.nav-links a{color:#64748b;text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:#f1f5f9}
+.nav-links a.active{color:#f1f5f9;font-weight:600}
+
+h1{font-size:32px;font-weight:700;color:#f1f5f9;margin-bottom:16px;line-height:1.2;letter-spacing:-.3px}
+h2{font-size:22px;font-weight:700;color:#f1f5f9;margin-bottom:12px;line-height:1.3}
+p{margin-bottom:16px;color:#94a3b8;line-height:1.8}
+p.dim{color:#64748b;font-size:14px}
+
+.hero{margin-bottom:64px}
+
+.path{margin-bottom:56px;padding:28px;border-radius:12px;background:rgba(30,41,59,.5);border:1px solid rgba(148,163,184,.08);backdrop-filter:blur(4px)}
+.path-label{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px;font-weight:600}
+.path-label.node{color:#3b82f6}
+.path-label.provider{color:#f59e0b}
+.path-label.user{color:#4ade80}
+
+pre{background:rgba(15,23,42,.8);border:1px solid rgba(148,163,184,.1);border-radius:8px;padding:14px 16px;font-family:'SF Mono',Consolas,monospace;font-size:12px;color:#94a3b8;overflow-x:auto;line-height:1.6;margin:16px 0}
+
+ul{list-style:none;margin:12px 0}
+ul li{padding:6px 0;color:#94a3b8;font-size:15px}
+ul li::before{content:"→";margin-right:10px;color:#475569}
+
+.cta{display:inline-block;padding:10px 20px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;transition:all .25s;margin-top:8px}
+.cta:hover{text-decoration:none;transform:translateY(-1px)}
+.cta-primary{background:#3b82f6;color:#fff;box-shadow:0 2px 12px rgba(59,130,246,.25)}
+.cta-primary:hover{background:#2563eb;box-shadow:0 4px 20px rgba(59,130,246,.35)}
+.cta-secondary{border:1px solid rgba(148,163,184,.2);color:#cbd5e1}
+.cta-secondary:hover{border-color:rgba(148,163,184,.4);background:rgba(148,163,184,.05)}
+
+.footer{text-align:center;margin-top:48px;font-size:12px;color:#475569}
+
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:600px){
+  .wrap{padding:32px 16px 80px}
+  h1{font-size:24px}
+  h2{font-size:18px}
+  .path{padding:20px 16px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="nav">
+  <a href="/" style="text-decoration:none"><div class="nav-logo">Tessera VCR</div></a>
+  <div class="nav-links">
+    <a href="demo.html">Learn</a>
+    <a href="network.html">Explorer</a>
+    <a href="join.html" class="active">Join</a>
+    <a href="https://github.com/tesseravcr/tesseravcr">Source</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <h1>Participate.</h1>
+  <p>The network has three roles. Pick whichever makes sense.</p>
+</div>
+
+<div class="path reveal">
+  <div class="path-label node">Run a node</div>
+  <h2>Host a transparency log.</h2>
+  <p>Log servers append receipts to Merkle trees, sign roots, and serve inclusion proofs. The more independent logs exist, the harder it is to tamper with anything. One Docker command.</p>
+  <pre>docker run -d -p 8080:8080 ghcr.io/tesseravcr/log-server:latest</pre>
+  <ul>
+    <li>Append-only Merkle tree storage</li>
+    <li>Serves inclusion proofs to anyone who asks</li>
+    <li>No special hardware; any VPS works</li>
+  </ul>
+  <a href="https://github.com/tesseravcr/tesseravcr" class="cta cta-secondary">Setup guide</a>
+</div>
+
+<div class="path reveal">
+  <div class="path-label provider">Provide compute</div>
+  <h2>Serve inference. Set your own terms.</h2>
+  <p>Wrap any model or service as a VCR provider. Every inference generates a receipt with a cryptographic proof attached. Royalty terms are set by you, baked into the receipt itself. No intermediary involved.</p>
+  <pre>pip install tesseravcr
+tessera serve --model your-model --royalty 500</pre>
+  <ul>
+    <li>Ed25519 key pair identifies you on the network</li>
+    <li>Royalty terms baked into every receipt you issue</li>
+    <li>Downstream resales trigger automatic attribution</li>
+  </ul>
+  <p class="dim">Your keys, your terms, your provenance chain.</p>
+  <a href="https://github.com/tesseravcr/tesseravcr" class="cta cta-secondary">Provider docs</a>
+</div>
+
+<div class="path reveal">
+  <div class="path-label user">Use the network</div>
+  <h2>Get verified compute. Trust the math.</h2>
+  <p>Send a task to the network and get back a receipt, not just a response. You can verify the proof yourself, trace the full provenance, and know exactly which model ran on what input. The receipt is yours to keep, audit, or pass along.</p>
+  <pre>from tesseravcr import Client
+client = Client()
+receipt = client.infer("Summarize this dataset")</pre>
+  <ul>
+    <li>Receipts are portable; store, share, resell</li>
+    <li>Full provenance chain for audits and compliance</li>
+    <li>Works with any VCR-compatible provider</li>
+  </ul>
+  <p class="dim">Any provider on the network, same verification. No lock-in.</p>
+  <a href="demo.html" class="cta cta-primary">Learn how it works</a>
+  <a href="network.html" class="cta cta-secondary" style="margin-left:8px">See it live</a>
+</div>
+
+<div class="footer">MIT license. No token. No blockchain. Just receipts and math.</div>
+
+</div>
+
+<script>
+const obs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:0.15});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

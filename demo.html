@@ -6,38 +6,41 @@
 <title>Learn — Tessera VCR</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#1a1a2e;color:#e0e0e0;font-size:16px;line-height:1.8;-webkit-font-smoothing:antialiased}
-a{color:#3b82f6;text-decoration:none}
-a:hover{text-decoration:underline}
-code{font-family:'SF Mono',Consolas,monospace;font-size:13px;background:rgba(255,255,255,.06);padding:2px 6px;border-radius:3px;color:#e0e0e0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f172a;color:#cbd5e1;font-size:16px;line-height:1.8;-webkit-font-smoothing:antialiased}
+a{color:#60a5fa;text-decoration:none}
+a:hover{color:#93bbfc}
+code{font-family:'SF Mono',Consolas,monospace;font-size:13px;background:rgba(148,163,184,.08);padding:2px 6px;border-radius:4px;color:#e2e8f0}
 
 .wrap{max-width:720px;margin:0 auto;padding:48px 24px 100px}
 
-.nav{display:flex;justify-content:space-between;align-items:center;padding-bottom:20px;margin-bottom:48px;border-bottom:1px solid rgba(255,255,255,.08)}
-.nav-logo{font-size:14px;font-weight:700;color:#fff;letter-spacing:-.2px}
+.nav{display:flex;justify-content:space-between;align-items:center;padding-bottom:20px;margin-bottom:48px;border-bottom:1px solid rgba(148,163,184,.1)}
+.nav-logo{font-size:14px;font-weight:700;color:#f1f5f9;letter-spacing:-.2px}
 .nav-links{display:flex;gap:24px;font-size:13px;flex-wrap:wrap}
-.nav-links a{color:#8a8a9a;text-decoration:none}
-.nav-links a:hover{color:#fff}
-.nav-links a.active{color:#fff;font-weight:600}
+.nav-links a{color:#64748b;text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:#f1f5f9}
+.nav-links a.active{color:#f1f5f9;font-weight:600}
 
 section{margin-bottom:80px}
-.section-label{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:#555;margin-bottom:12px}
-h1{font-size:32px;font-weight:700;color:#fff;margin-bottom:16px;line-height:1.2;letter-spacing:-.3px}
-h2{font-size:22px;font-weight:700;color:#fff;margin-bottom:16px;line-height:1.3}
-p{margin-bottom:16px;color:#c0c0c0;line-height:1.8}
-p.dim{color:#8a8a9a;font-size:14px}
+.section-label{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:#475569;margin-bottom:12px}
+h1{font-size:32px;font-weight:700;color:#f1f5f9;margin-bottom:16px;line-height:1.2;letter-spacing:-.3px}
+h2{font-size:22px;font-weight:700;color:#f1f5f9;margin-bottom:16px;line-height:1.3}
+p{margin-bottom:16px;color:#94a3b8;line-height:1.8}
+p.dim{color:#64748b;font-size:14px}
 
-.diagram{background:rgba(255,255,255,.03);border-radius:12px;padding:24px 16px;margin:24px 0;border:1px solid rgba(255,255,255,.06)}
+.diagram{background:rgba(30,41,59,.6);border-radius:12px;padding:24px 16px;margin:24px 0;border:1px solid rgba(148,163,184,.08);backdrop-filter:blur(4px)}
 svg{display:block;width:100%;height:auto}
 
-.sep{border:none;border-top:1px solid rgba(255,255,255,.06);margin:0}
-
 .cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
-.cta{display:inline-block;padding:12px 24px;border-radius:6px;font-size:14px;font-weight:600;text-decoration:none;transition:opacity .2s}
-.cta:hover{opacity:.85;text-decoration:none}
-.cta-primary{background:#3b82f6;color:#fff}
-.cta-secondary{border:1px solid rgba(255,255,255,.15);color:#e0e0e0}
-pre{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:6px;padding:14px 16px;font-family:'SF Mono',Consolas,monospace;font-size:12px;color:#8a8a9a;overflow-x:auto;line-height:1.6}
+.cta{display:inline-block;padding:12px 24px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;transition:all .25s}
+.cta:hover{text-decoration:none;transform:translateY(-1px)}
+.cta-primary{background:#3b82f6;color:#fff;box-shadow:0 2px 12px rgba(59,130,246,.25)}
+.cta-primary:hover{background:#2563eb;box-shadow:0 4px 20px rgba(59,130,246,.35)}
+.cta-secondary{border:1px solid rgba(148,163,184,.2);color:#cbd5e1}
+.cta-secondary:hover{border-color:rgba(148,163,184,.4);background:rgba(148,163,184,.05)}
+pre{background:rgba(30,41,59,.8);border:1px solid rgba(148,163,184,.1);border-radius:8px;padding:14px 16px;font-family:'SF Mono',Consolas,monospace;font-size:12px;color:#94a3b8;overflow-x:auto;line-height:1.6}
+
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
 
 @media(max-width:600px){
   .wrap{padding:32px 16px 80px}
@@ -52,10 +55,11 @@ pre{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);bord
 <div class="wrap">
 
 <nav class="nav">
-  <a href="index.html" style="text-decoration:none"><div class="nav-logo">Tessera VCR</div></a>
+  <a href="/" style="text-decoration:none"><div class="nav-logo">Tessera VCR</div></a>
   <div class="nav-links">
     <a href="demo.html" class="active">Learn</a>
     <a href="network.html">Explorer</a>
+    <a href="join.html">Join</a>
     <a href="https://github.com/tesseravcr/tesseravcr">Source</a>
   </div>
 </nav>
@@ -65,396 +69,340 @@ pre{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);bord
   <p class="dim">10 minutes. No assumptions. Each section builds on the last.</p>
 </section>
 
-<!-- ─────────────────────────────────────────── -->
-<!-- SECTION 1: THE PROBLEM                      -->
-<!-- ─────────────────────────────────────────── -->
+<!-- ── 1. THE PROBLEM ── -->
 
-<section>
-  <div class="section-label">1 — The Problem</div>
-  <h2>Your agent calls another agent. It gets a response. No proof. No trail.</h2>
+<section class="reveal">
+  <div class="section-label">1</div>
+  <h2>There's no proof behind any of this.</h2>
 
   <div class="diagram">
     <svg viewBox="0 0 320 120" preserveAspectRatio="xMidYMid meet">
-      <circle cx="70" cy="50" r="28" fill="#2a2a4a" stroke="#3b82f6" stroke-width="1.5"/>
-      <text x="70" y="54" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="12" font-weight="600" fill="#e0e0e0">Agent A</text>
+      <circle cx="70" cy="50" r="28" fill="#1e293b" stroke="#3b82f6" stroke-width="1.5"/>
+      <text x="70" y="54" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="12" font-weight="600" fill="#e2e8f0">Agent A</text>
 
-      <line x1="100" y1="50" x2="218" y2="50" stroke="#555" stroke-width="1.5" marker-end="url(#d1-arrow)"/>
-      <text x="160" y="38" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" fill="#8a8a9a">response</text>
+      <line x1="100" y1="50" x2="218" y2="50" stroke="#475569" stroke-width="1.5" marker-end="url(#d1-a)"/>
+      <text x="160" y="38" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" fill="#64748b">response</text>
 
-      <circle cx="250" cy="50" r="28" fill="#2a2a4a" stroke="#555" stroke-width="1.5"/>
-      <text x="250" y="54" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="12" font-weight="600" fill="#e0e0e0">Agent B</text>
+      <circle cx="250" cy="50" r="28" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+      <text x="250" y="54" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="12" font-weight="600" fill="#e2e8f0">Agent B</text>
 
-      <text x="250" y="14" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="22" fill="#ef4444">?</text>
-      <text x="250" y="100" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" font-style="italic" fill="#ef4444">"Trust me."</text>
+      <text x="250" y="14" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="22" fill="#f87171">?</text>
+      <text x="250" y="100" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" font-style="italic" fill="#f87171">"Trust me."</text>
 
-      <defs><marker id="d1-arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><polygon points="0 0,7 3.5,0 7" fill="#555"/></marker></defs>
+      <defs><marker id="d1-a" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><polygon points="0 0,7 3.5,0 7" fill="#475569"/></marker></defs>
     </svg>
   </div>
 
-  <p>When your agent gets a response, there's no proof the model actually ran. No way to verify what went in or came out. No trail a third party can audit.</p>
+  <p>Think about what actually happens. Your agent sends a request, gets back some text. Maybe correct, maybe hallucinated, maybe from the model you asked for, maybe not. You have no way to tell. The response shows up and that's it; nothing to check, nothing to keep, nothing to show anyone later.</p>
 </section>
 
-<!-- ─────────────────────────────────────────── -->
-<!-- SECTION 2: WHY THIS BREAKS                  -->
-<!-- ─────────────────────────────────────────── -->
+<!-- ── 2. WHY THIS BREAKS ── -->
 
-<section>
-  <div class="section-label">2 — Why This Breaks</div>
-  <h2>Every trust system assumes three things. Agents break all three.</h2>
+<section class="reveal">
+  <div class="section-label">2</div>
+  <h2>Trust systems weren't built for this.</h2>
 
   <div class="diagram">
     <svg viewBox="0 0 320 140" preserveAspectRatio="xMidYMid meet">
-      <!-- Pillar 1 -->
-      <rect x="15" y="10" width="80" height="85" rx="4" fill="#2a2a4a" stroke="rgba(255,255,255,.1)" stroke-width="1"/>
-      <text x="55" y="40" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="12" font-weight="600" fill="#e0e0e0">Persist</text>
-      <text x="55" y="58" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" fill="#8a8a9a">They exist</text>
-      <text x="55" y="72" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" fill="#8a8a9a">over time</text>
-      <line x1="25" y1="20" x2="85" y2="85" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="85" y1="20" x2="25" y2="85" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round"/>
+      <rect x="15" y="10" width="80" height="85" rx="6" fill="#1e293b" stroke="rgba(148,163,184,.12)" stroke-width="1"/>
+      <text x="55" y="40" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="12" font-weight="600" fill="#e2e8f0">Persist</text>
+      <text x="55" y="58" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" fill="#64748b">They exist</text>
+      <text x="55" y="72" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" fill="#64748b">over time</text>
+      <line x1="25" y1="20" x2="85" y2="85" stroke="#f87171" stroke-width="2" stroke-linecap="round" opacity=".8"/>
+      <line x1="85" y1="20" x2="25" y2="85" stroke="#f87171" stroke-width="2" stroke-linecap="round" opacity=".8"/>
 
-      <!-- Pillar 2 -->
-      <rect x="120" y="10" width="80" height="85" rx="4" fill="#2a2a4a" stroke="rgba(255,255,255,.1)" stroke-width="1"/>
-      <text x="160" y="40" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="12" font-weight="600" fill="#e0e0e0">Identity</text>
-      <text x="160" y="58" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" fill="#8a8a9a">They have</text>
-      <text x="160" y="72" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" fill="#8a8a9a">reputation</text>
-      <line x1="130" y1="20" x2="190" y2="85" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="190" y1="20" x2="130" y2="85" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round"/>
+      <rect x="120" y="10" width="80" height="85" rx="6" fill="#1e293b" stroke="rgba(148,163,184,.12)" stroke-width="1"/>
+      <text x="160" y="40" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="12" font-weight="600" fill="#e2e8f0">Identity</text>
+      <text x="160" y="58" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" fill="#64748b">They have</text>
+      <text x="160" y="72" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" fill="#64748b">reputation</text>
+      <line x1="130" y1="20" x2="190" y2="85" stroke="#f87171" stroke-width="2" stroke-linecap="round" opacity=".8"/>
+      <line x1="190" y1="20" x2="130" y2="85" stroke="#f87171" stroke-width="2" stroke-linecap="round" opacity=".8"/>
 
-      <!-- Pillar 3 -->
-      <rect x="225" y="10" width="80" height="85" rx="4" fill="#2a2a4a" stroke="rgba(255,255,255,.1)" stroke-width="1"/>
-      <text x="265" y="40" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="12" font-weight="600" fill="#e0e0e0">Cost</text>
-      <text x="265" y="58" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" fill="#8a8a9a">They face</text>
-      <text x="265" y="72" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" fill="#8a8a9a">consequences</text>
-      <line x1="235" y1="20" x2="295" y2="85" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="295" y1="20" x2="235" y2="85" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round"/>
+      <rect x="225" y="10" width="80" height="85" rx="6" fill="#1e293b" stroke="rgba(148,163,184,.12)" stroke-width="1"/>
+      <text x="265" y="40" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="12" font-weight="600" fill="#e2e8f0">Cost</text>
+      <text x="265" y="58" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" fill="#64748b">They face</text>
+      <text x="265" y="72" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" fill="#64748b">consequences</text>
+      <line x1="235" y1="20" x2="295" y2="85" stroke="#f87171" stroke-width="2" stroke-linecap="round" opacity=".8"/>
+      <line x1="295" y1="20" x2="235" y2="85" stroke="#f87171" stroke-width="2" stroke-linecap="round" opacity=".8"/>
 
-      <text x="160" y="125" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="12" font-weight="600" fill="#ef4444">Agents break all three.</text>
+      <text x="160" y="125" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="12" font-weight="600" fill="#f87171">Agents break all three.</text>
     </svg>
   </div>
 
-  <p>An agent spins up, does work, and vanishes. No reputation to protect. No consequence for lying. Agent-to-agent commerce today is either walled garden or blind faith.</p>
+  <p>Everything we know about trust assumes the other party sticks around. They have a name, a reputation, something to lose. Agents don't work like that. They spin up, do a job, disappear. There's nothing to sue, nothing to review, nothing to hold accountable. So right now the only options are walled gardens or blind faith.</p>
 </section>
 
-<!-- ─────────────────────────────────────────── -->
-<!-- SECTION 3: THE RECEIPT                      -->
-<!-- ─────────────────────────────────────────── -->
+<!-- ── 3. THE RECEIPT ── -->
 
-<section>
-  <div class="section-label">3 — The Receipt</div>
+<section class="reveal">
+  <div class="section-label">3</div>
   <h2>A data structure. 21 fields. Three functions.</h2>
 
   <div class="diagram">
     <svg viewBox="0 0 320 195" preserveAspectRatio="xMidYMid meet">
-      <!-- Outer receipt -->
-      <rect x="20" y="8" width="280" height="180" rx="8" fill="#1e1e36" stroke="rgba(255,255,255,.12)" stroke-width="1.5"/>
-      <text x="260" y="26" text-anchor="end" font-family="'SF Mono',Consolas,monospace" font-size="10" fill="#555">21 fields</text>
+      <rect x="20" y="8" width="280" height="180" rx="10" fill="#1e293b" stroke="rgba(148,163,184,.12)" stroke-width="1.5"/>
+      <text x="260" y="26" text-anchor="end" font-family="'SF Mono',Consolas,monospace" font-size="10" fill="#475569">21 fields</text>
 
-      <!-- Proof band -->
       <rect x="24" y="12" width="4" height="52" rx="2" fill="#3b82f6"/>
-      <rect x="28" y="12" width="268" height="52" rx="0" fill="rgba(59,130,246,.06)"/>
-      <text x="42" y="32" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="13" font-weight="600" fill="#3b82f6">Proof</text>
-      <text x="42" y="50" font-family="'SF Mono',Consolas,monospace" font-size="10" fill="#8a8a9a">model_id  proof  output_hash</text>
+      <rect x="28" y="12" width="268" height="52" rx="0" fill="rgba(59,130,246,.05)"/>
+      <text x="42" y="32" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="13" font-weight="600" fill="#60a5fa">Proof</text>
+      <text x="42" y="50" font-family="'SF Mono',Consolas,monospace" font-size="10" fill="#64748b">model_id  proof  output_hash</text>
 
-      <!-- Provenance band -->
       <rect x="24" y="68" width="4" height="52" rx="2" fill="#f59e0b"/>
-      <rect x="28" y="68" width="268" height="52" rx="0" fill="rgba(245,158,11,.06)"/>
-      <text x="42" y="88" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="13" font-weight="600" fill="#f59e0b">Provenance</text>
-      <text x="42" y="106" font-family="'SF Mono',Consolas,monospace" font-size="10" fill="#8a8a9a">parent_receipts  depth</text>
+      <rect x="28" y="68" width="268" height="52" rx="0" fill="rgba(245,158,11,.05)"/>
+      <text x="42" y="88" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="13" font-weight="600" fill="#fbbf24">Provenance</text>
+      <text x="42" y="106" font-family="'SF Mono',Consolas,monospace" font-size="10" fill="#64748b">parent_receipts  depth</text>
 
-      <!-- Economics band -->
       <rect x="24" y="124" width="4" height="52" rx="2" fill="#22c55e"/>
-      <rect x="28" y="124" width="268" height="52" rx="0" fill="rgba(34,197,94,.06)"/>
-      <text x="42" y="144" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="13" font-weight="600" fill="#22c55e">Economics</text>
-      <text x="42" y="162" font-family="'SF Mono',Consolas,monospace" font-size="10" fill="#8a8a9a">provider  price  royalty_terms</text>
+      <rect x="28" y="124" width="268" height="52" rx="0" fill="rgba(34,197,94,.05)"/>
+      <text x="42" y="144" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="13" font-weight="600" fill="#4ade80">Economics</text>
+      <text x="42" y="162" font-family="'SF Mono',Consolas,monospace" font-size="10" fill="#64748b">provider  royalty_terms  signature</text>
     </svg>
   </div>
 
-  <p>One data structure wraps a cryptographic proof in an economic envelope. It's simultaneously a proof of work performed, a certificate of provenance, and a transferable economic instrument.</p>
-  <p class="dim">No blockchain. No token. No consensus. Just a data structure with enough fields to make verified AI outputs tradeable.</p>
+  <p>The whole idea fits in one data structure. A cryptographic proof wrapped in an economic envelope. It proves the work happened, traces where it came from, and carries the terms for what happens next. Proof of work, certificate of origin, transferable instrument; same object.</p>
+  <p class="dim">No blockchain. No token. No consensus mechanism. Just enough structure to make verified compute something you can actually hold onto.</p>
 </section>
 
-<!-- ─────────────────────────────────────────── -->
-<!-- SECTION 4: PROOF                            -->
-<!-- ─────────────────────────────────────────── -->
+<!-- ── 4. PROOF ── -->
 
-<section>
-  <div class="section-label">4 — Proof</div>
+<section class="reveal">
+  <div class="section-label">4</div>
   <h2>Anyone can verify. No trust required.</h2>
 
   <div class="diagram">
     <svg viewBox="0 0 320 110" preserveAspectRatio="xMidYMid meet">
-      <!-- Receipt -->
-      <rect x="10" y="22" width="95" height="65" rx="4" fill="#2a2a4a" stroke="#3b82f6" stroke-width="1.5"/>
-      <text x="57" y="42" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" font-weight="600" fill="#3b82f6">Receipt</text>
-      <text x="20" y="58" font-family="'SF Mono',Consolas,monospace" font-size="9" fill="#8a8a9a">model_id</text>
-      <text x="20" y="72" font-family="'SF Mono',Consolas,monospace" font-size="9" fill="#8a8a9a">proof</text>
-      <text x="20" y="82" font-family="'SF Mono',Consolas,monospace" font-size="9" fill="#8a8a9a">output_hash</text>
+      <rect x="10" y="22" width="95" height="65" rx="6" fill="#1e293b" stroke="#3b82f6" stroke-width="1.5"/>
+      <text x="57" y="42" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" font-weight="600" fill="#60a5fa">Receipt</text>
+      <text x="20" y="58" font-family="'SF Mono',Consolas,monospace" font-size="9" fill="#64748b">model_id</text>
+      <text x="20" y="72" font-family="'SF Mono',Consolas,monospace" font-size="9" fill="#64748b">proof</text>
+      <text x="20" y="82" font-family="'SF Mono',Consolas,monospace" font-size="9" fill="#64748b">output_hash</text>
 
-      <!-- Arrow -->
-      <line x1="110" y1="55" x2="155" y2="55" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#d4-arrow)"/>
-      <text x="133" y="44" text-anchor="middle" font-family="'SF Mono',Consolas,monospace" font-size="11" font-weight="600" fill="#3b82f6">verify()</text>
+      <line x1="110" y1="55" x2="155" y2="55" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#d4-a)"/>
+      <text x="133" y="44" text-anchor="middle" font-family="'SF Mono',Consolas,monospace" font-size="11" font-weight="600" fill="#60a5fa">verify()</text>
 
-      <!-- Checkmark -->
-      <circle cx="200" cy="55" r="25" fill="rgba(34,197,94,.08)" stroke="#22c55e" stroke-width="2"/>
-      <polyline points="188,55 196,63 214,45" fill="none" stroke="#22c55e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="200" cy="55" r="25" fill="rgba(34,197,94,.06)" stroke="#4ade80" stroke-width="2"/>
+      <polyline points="188,55 196,63 214,45" fill="none" stroke="#4ade80" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
 
-      <!-- Label -->
-      <text x="248" y="50" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" fill="#8a8a9a">Anyone</text>
-      <text x="248" y="65" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" fill="#8a8a9a">can check.</text>
+      <text x="248" y="50" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" fill="#64748b">Anyone</text>
+      <text x="248" y="65" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" fill="#64748b">can check.</text>
 
-      <defs><marker id="d4-arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><polygon points="0 0,7 3.5,0 7" fill="#3b82f6"/></marker></defs>
+      <defs><marker id="d4-a" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><polygon points="0 0,7 3.5,0 7" fill="#3b82f6"/></marker></defs>
     </svg>
   </div>
 
-  <p>The receipt carries a cryptographic proof — ZK or TEE. Call <code>verify(proof, verification_key)</code> and you know the computation happened correctly. No contacting the producer. Just math.</p>
+  <p>Each receipt carries a cryptographic proof, either a zero-knowledge proof or a TEE attestation. You call <code>verify(proof, key)</code> and that's it. You know whether the computation happened correctly. You don't need to contact the provider, you don't need to trust a middleman. The math is the entire argument.</p>
 </section>
 
-<!-- ─────────────────────────────────────────── -->
-<!-- SECTION 5: PROVENANCE                       -->
-<!-- ─────────────────────────────────────────── -->
+<!-- ── 5. PROVENANCE ── -->
 
-<section>
-  <div class="section-label">5 — Provenance</div>
+<section class="reveal">
+  <div class="section-label">5</div>
   <h2>Receipts link to parents. Modify one, all descendants break.</h2>
 
   <div class="diagram">
     <svg viewBox="0 0 320 185" preserveAspectRatio="xMidYMid meet">
-      <!-- Root A -->
-      <rect x="10" y="10" width="80" height="48" rx="4" fill="#2a2a4a" stroke="rgba(255,255,255,.15)" stroke-width="1.5"/>
-      <text x="50" y="32" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" font-weight="600" fill="#e0e0e0">Receipt A</text>
-      <text x="50" y="48" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="9" fill="#8a8a9a">depth: 0</text>
+      <rect x="10" y="10" width="80" height="48" rx="6" fill="#1e293b" stroke="rgba(148,163,184,.15)" stroke-width="1.5"/>
+      <text x="50" y="32" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" font-weight="600" fill="#e2e8f0">Receipt A</text>
+      <text x="50" y="48" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="9" fill="#64748b">depth: 0</text>
 
-      <!-- Root B -->
-      <rect x="120" y="10" width="80" height="48" rx="4" fill="#2a2a4a" stroke="rgba(255,255,255,.15)" stroke-width="1.5"/>
-      <text x="160" y="32" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" font-weight="600" fill="#e0e0e0">Receipt B</text>
-      <text x="160" y="48" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="9" fill="#8a8a9a">depth: 0</text>
+      <rect x="120" y="10" width="80" height="48" rx="6" fill="#1e293b" stroke="rgba(148,163,184,.15)" stroke-width="1.5"/>
+      <text x="160" y="32" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" font-weight="600" fill="#e2e8f0">Receipt B</text>
+      <text x="160" y="48" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="9" fill="#64748b">depth: 0</text>
 
-      <!-- Root C (tampered) -->
-      <rect x="230" y="10" width="80" height="48" rx="4" fill="rgba(239,68,68,.08)" stroke="#ef4444" stroke-width="1.5"/>
-      <text x="270" y="32" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" font-weight="600" fill="#ef4444">Receipt C</text>
-      <text x="270" y="48" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="9" fill="#ef4444">modified</text>
+      <rect x="230" y="10" width="80" height="48" rx="6" fill="rgba(248,113,113,.06)" stroke="#f87171" stroke-width="1.5"/>
+      <text x="270" y="32" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" font-weight="600" fill="#f87171">Receipt C</text>
+      <text x="270" y="48" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="9" fill="#f87171">modified</text>
 
-      <!-- Lines to D -->
-      <line x1="50" y1="58" x2="150" y2="105" stroke="rgba(255,255,255,.2)" stroke-width="1.5"/>
-      <line x1="160" y1="58" x2="160" y2="105" stroke="rgba(255,255,255,.2)" stroke-width="1.5"/>
-      <line x1="270" y1="58" x2="175" y2="105" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="5,3"/>
+      <line x1="50" y1="58" x2="150" y2="105" stroke="rgba(148,163,184,.2)" stroke-width="1.5"/>
+      <line x1="160" y1="58" x2="160" y2="105" stroke="rgba(148,163,184,.2)" stroke-width="1.5"/>
+      <line x1="270" y1="58" x2="175" y2="105" stroke="#f87171" stroke-width="1.5" stroke-dasharray="5,3"/>
 
-      <!-- Child D (broken) -->
-      <rect x="110" y="105" width="100" height="48" rx="4" fill="rgba(239,68,68,.06)" stroke="#ef4444" stroke-width="1.5"/>
-      <text x="160" y="127" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" font-weight="600" fill="#ef4444">Receipt D</text>
-      <text x="160" y="143" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="9" fill="#ef4444">broken</text>
+      <rect x="110" y="105" width="100" height="48" rx="6" fill="rgba(248,113,113,.04)" stroke="#f87171" stroke-width="1.5"/>
+      <text x="160" y="127" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" font-weight="600" fill="#f87171">Receipt D</text>
+      <text x="160" y="143" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="9" fill="#f87171">broken</text>
 
-      <text x="160" y="177" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" fill="#8a8a9a">Tamper any parent, all descendants break.</text>
+      <text x="160" y="177" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" fill="#64748b">Tamper any parent, all descendants break.</text>
     </svg>
   </div>
 
-  <p>Each receipt carries cryptographic hashes of its parents, forming a DAG. Your agent builds on three specialists' outputs? Your receipt links to all three. The entire supply chain is tamper-evident.</p>
+  <p>Every receipt stores cryptographic hashes of whatever it was built on. If your agent used three specialists to compose a result, the receipt links to all three. Change anything upstream and the hashes stop matching; the whole chain becomes visibly broken. It's a tamper-evident supply chain for compute.</p>
 </section>
 
-<!-- ─────────────────────────────────────────── -->
-<!-- SECTION 6: ECONOMICS                        -->
-<!-- ─────────────────────────────────────────── -->
+<!-- ── 6. ECONOMICS ── -->
 
-<section>
-  <div class="section-label">6 — Economics</div>
-  <h2>You set royalty terms once. Every resale, you get paid.</h2>
+<section class="reveal">
+  <div class="section-label">6</div>
+  <h2>The economics are baked in.</h2>
 
   <div class="diagram">
     <svg viewBox="0 0 320 145" preserveAspectRatio="xMidYMid meet">
-      <!-- You -->
-      <circle cx="40" cy="40" r="22" fill="#2a2a4a" stroke="#22c55e" stroke-width="1.5"/>
-      <text x="40" y="44" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" font-weight="600" fill="#e0e0e0">You</text>
+      <circle cx="40" cy="40" r="22" fill="#1e293b" stroke="#4ade80" stroke-width="1.5"/>
+      <text x="40" y="44" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" font-weight="600" fill="#e2e8f0">Provider</text>
 
-      <!-- Arrow 1 -->
-      <line x1="64" y1="40" x2="116" y2="40" stroke="#8a8a9a" stroke-width="1.5" marker-end="url(#d6-arrow)"/>
-      <text x="90" y="30" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" font-weight="600" fill="#e0e0e0">$100</text>
+      <line x1="64" y1="40" x2="116" y2="40" stroke="#475569" stroke-width="1.5" marker-end="url(#d6-a)"/>
+      <text x="90" y="30" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" font-weight="600" fill="#e2e8f0">serves</text>
 
-      <!-- Buyer 1 -->
-      <circle cx="140" cy="40" r="22" fill="#2a2a4a" stroke="rgba(255,255,255,.15)" stroke-width="1.5"/>
-      <text x="140" y="37" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" font-weight="600" fill="#e0e0e0">Buyer</text>
-      <text x="140" y="49" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" font-weight="600" fill="#e0e0e0">1</text>
+      <circle cx="140" cy="40" r="22" fill="#1e293b" stroke="rgba(148,163,184,.15)" stroke-width="1.5"/>
+      <text x="140" y="37" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" font-weight="600" fill="#e2e8f0">User</text>
+      <text x="140" y="49" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" fill="#64748b">A</text>
 
-      <!-- Arrow 2 -->
-      <line x1="164" y1="40" x2="236" y2="40" stroke="#8a8a9a" stroke-width="1.5" marker-end="url(#d6-arrow)"/>
-      <text x="200" y="30" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" font-weight="600" fill="#e0e0e0">$200</text>
+      <line x1="164" y1="40" x2="236" y2="40" stroke="#475569" stroke-width="1.5" marker-end="url(#d6-a)"/>
+      <text x="200" y="30" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" font-weight="600" fill="#e2e8f0">resells</text>
 
-      <!-- Buyer 2 -->
-      <circle cx="260" cy="40" r="22" fill="#2a2a4a" stroke="rgba(255,255,255,.15)" stroke-width="1.5"/>
-      <text x="260" y="37" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" font-weight="600" fill="#e0e0e0">Buyer</text>
-      <text x="260" y="49" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" font-weight="600" fill="#e0e0e0">2</text>
+      <circle cx="260" cy="40" r="22" fill="#1e293b" stroke="rgba(148,163,184,.15)" stroke-width="1.5"/>
+      <text x="260" y="37" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" font-weight="600" fill="#e2e8f0">User</text>
+      <text x="260" y="49" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" fill="#64748b">B</text>
 
-      <!-- Royalty arrow -->
-      <path d="M 250,64 Q 200,100 55,85" fill="none" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#d6-arrow-g)"/>
-      <text x="160" y="100" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" font-weight="600" fill="#22c55e">auto-paid 5%</text>
+      <path d="M 250,64 Q 200,100 55,85" fill="none" stroke="#4ade80" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#d6-g)"/>
+      <text x="160" y="100" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" font-weight="600" fill="#4ade80">royalty auto-paid</text>
 
-      <!-- Payout box -->
-      <rect x="10" y="112" width="100" height="28" rx="4" fill="rgba(34,197,94,.1)" stroke="#22c55e" stroke-width="1"/>
-      <text x="60" y="131" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="12" font-weight="700" fill="#22c55e">You get $10</text>
+      <rect x="10" y="112" width="120" height="28" rx="6" fill="rgba(34,197,94,.08)" stroke="#4ade80" stroke-width="1"/>
+      <text x="70" y="131" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="12" font-weight="700" fill="#4ade80">royalty triggered</text>
 
       <defs>
-        <marker id="d6-arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><polygon points="0 0,7 3.5,0 7" fill="#8a8a9a"/></marker>
-        <marker id="d6-arrow-g" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><polygon points="0 0,7 3.5,0 7" fill="#22c55e"/></marker>
+        <marker id="d6-a" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><polygon points="0 0,7 3.5,0 7" fill="#475569"/></marker>
+        <marker id="d6-g" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><polygon points="0 0,7 3.5,0 7" fill="#4ade80"/></marker>
       </defs>
     </svg>
   </div>
 
-  <p>The receipt carries royalty terms you define once. Every time someone resells your output — or anything built on top of it — you get your cut. Automatically. No platform. No accounting. Forever.</p>
+  <p>Royalty terms live inside the receipt itself. When someone resells your output, or builds something on top of it and sells that, the terms propagate. The protocol handles attribution. There's no platform in the middle deciding rates or taking a cut; the structure of the receipt is the entire enforcement mechanism.</p>
+  <p class="dim">Terms set once, enforced everywhere. No renegotiation, no accounting.</p>
 </section>
 
-<!-- ─────────────────────────────────────────── -->
-<!-- SECTION 7: ROYALTY CASCADE                  -->
-<!-- ─────────────────────────────────────────── -->
+<!-- ── 7. THE CASCADE ── -->
 
-<section>
-  <div class="section-label">7 — The Cascade</div>
-  <h2>Everyone who contributed earns.</h2>
+<section class="reveal">
+  <div class="section-label">7</div>
+  <h2>Attribution flows backward.</h2>
 
   <div class="diagram">
     <svg viewBox="0 0 320 210" preserveAspectRatio="xMidYMid meet">
-      <!-- Specialist -->
-      <rect x="100" y="10" width="120" height="35" rx="4" fill="#2a2a4a" stroke="#3b82f6" stroke-width="1.5"/>
-      <text x="160" y="32" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" font-weight="600" fill="#e0e0e0">Specialist</text>
+      <rect x="100" y="10" width="120" height="35" rx="6" fill="#1e293b" stroke="#3b82f6" stroke-width="1.5"/>
+      <text x="160" y="32" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" font-weight="600" fill="#e2e8f0">Specialist</text>
+      <line x1="160" y1="45" x2="160" y2="60" stroke="rgba(148,163,184,.2)" stroke-width="1.5"/>
 
-      <line x1="160" y1="45" x2="160" y2="60" stroke="rgba(255,255,255,.2)" stroke-width="1.5"/>
+      <rect x="100" y="60" width="120" height="35" rx="6" fill="#1e293b" stroke="#fbbf24" stroke-width="1.5"/>
+      <text x="160" y="82" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" font-weight="600" fill="#e2e8f0">Analyst</text>
+      <line x1="160" y1="95" x2="160" y2="110" stroke="rgba(148,163,184,.2)" stroke-width="1.5"/>
 
-      <!-- Analyst -->
-      <rect x="100" y="60" width="120" height="35" rx="4" fill="#2a2a4a" stroke="#f59e0b" stroke-width="1.5"/>
-      <text x="160" y="82" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" font-weight="600" fill="#e0e0e0">Analyst</text>
+      <rect x="100" y="110" width="120" height="35" rx="6" fill="#1e293b" stroke="#4ade80" stroke-width="1.5"/>
+      <text x="160" y="132" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" font-weight="600" fill="#e2e8f0">Orchestrator</text>
+      <line x1="160" y1="145" x2="160" y2="160" stroke="rgba(148,163,184,.2)" stroke-width="1.5"/>
 
-      <line x1="160" y1="95" x2="160" y2="110" stroke="rgba(255,255,255,.2)" stroke-width="1.5"/>
+      <text x="160" y="178" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="13" font-weight="700" fill="#f1f5f9">Output resold</text>
 
-      <!-- Orchestrator -->
-      <rect x="100" y="110" width="120" height="35" rx="4" fill="#2a2a4a" stroke="#22c55e" stroke-width="1.5"/>
-      <text x="160" y="132" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" font-weight="600" fill="#e0e0e0">Orchestrator</text>
+      <line x1="95" y1="170" x2="95" y2="132" stroke="#4ade80" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#d7-a)"/>
+      <text x="55" y="155" text-anchor="middle" font-family="'SF Mono',Consolas,monospace" font-size="10" fill="#4ade80">5%</text>
 
-      <line x1="160" y1="145" x2="160" y2="160" stroke="rgba(255,255,255,.2)" stroke-width="1.5"/>
+      <line x1="95" y1="90" x2="95" y2="82" stroke="#4ade80" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#d7-a)"/>
+      <text x="55" y="90" text-anchor="middle" font-family="'SF Mono',Consolas,monospace" font-size="10" fill="#4ade80">3%</text>
 
-      <!-- Sale -->
-      <text x="160" y="178" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="13" font-weight="700" fill="#fff">Sold for $1,000</text>
+      <line x1="95" y1="55" x2="95" y2="32" stroke="#4ade80" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#d7-a)"/>
+      <text x="55" y="42" text-anchor="middle" font-family="'SF Mono',Consolas,monospace" font-size="10" fill="#4ade80">1%</text>
 
-      <!-- Backward royalty arrows -->
-      <line x1="95" y1="170" x2="95" y2="132" stroke="#22c55e" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#d7-arrow)"/>
-      <text x="55" y="155" text-anchor="middle" font-family="'SF Mono',Consolas,monospace" font-size="10" fill="#22c55e">$50</text>
+      <text x="160" y="205" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" fill="#64748b">Diminishes geometrically. By design.</text>
 
-      <line x1="95" y1="90" x2="95" y2="82" stroke="#22c55e" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#d7-arrow)"/>
-      <text x="55" y="90" text-anchor="middle" font-family="'SF Mono',Consolas,monospace" font-size="10" fill="#22c55e">$15</text>
-
-      <line x1="95" y1="55" x2="95" y2="32" stroke="#22c55e" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#d7-arrow)"/>
-      <text x="55" y="42" text-anchor="middle" font-family="'SF Mono',Consolas,monospace" font-size="10" fill="#22c55e">$5</text>
-
-      <text x="160" y="205" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" fill="#8a8a9a">Diminishes geometrically. By design.</text>
-
-      <defs><marker id="d7-arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><polygon points="0 0,6 3,0 6" fill="#22c55e"/></marker></defs>
+      <defs><marker id="d7-a" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><polygon points="0 0,6 3,0 6" fill="#4ade80"/></marker></defs>
     </svg>
   </div>
 
-  <p>Royalties propagate backward through the provenance chain. The specialist who provided the data, the analyst who refined it, the orchestrator who composed the pipeline — everyone gets paid. Diminishing geometrically at each level, so deep ancestors get fractions of a cent. By design.</p>
+  <p>Say an orchestrator sells a result that was built on an analyst's work, which was built on a specialist's data. Royalties propagate backward through the entire chain. Each level gets a smaller fraction; deep ancestors receive diminishing amounts. That's by design. The point is that contribution gets recorded and attributed no matter how many layers deep it sits.</p>
 </section>
 
-<!-- ─────────────────────────────────────────── -->
-<!-- SECTION 8: OWNERSHIP                        -->
-<!-- ─────────────────────────────────────────── -->
+<!-- ── 8. OWNERSHIP ── -->
 
-<section>
-  <div class="section-label">8 — Ownership</div>
-  <h2>No blockchain. Just append-only Merkle trees.</h2>
+<section class="reveal">
+  <div class="section-label">8</div>
+  <h2>Ownership without a blockchain.</h2>
 
   <div class="diagram">
     <svg viewBox="0 0 320 165" preserveAspectRatio="xMidYMid meet">
-      <!-- Root -->
-      <circle cx="160" cy="25" r="14" fill="#2a2a4a" stroke="rgba(255,255,255,.15)" stroke-width="1.5"/>
-      <text x="160" y="29" text-anchor="middle" font-family="'SF Mono',Consolas,monospace" font-size="8" fill="#8a8a9a">root</text>
+      <circle cx="160" cy="25" r="14" fill="#1e293b" stroke="rgba(148,163,184,.15)" stroke-width="1.5"/>
+      <text x="160" y="29" text-anchor="middle" font-family="'SF Mono',Consolas,monospace" font-size="8" fill="#64748b">root</text>
 
-      <!-- Level 1 -->
-      <circle cx="80" cy="65" r="14" fill="#2a2a4a" stroke="rgba(255,255,255,.15)" stroke-width="1.5"/>
-      <circle cx="240" cy="65" r="14" fill="rgba(34,197,94,.1)" stroke="#22c55e" stroke-width="1.5"/>
+      <circle cx="80" cy="65" r="14" fill="#1e293b" stroke="rgba(148,163,184,.15)" stroke-width="1.5"/>
+      <circle cx="240" cy="65" r="14" fill="rgba(74,222,128,.06)" stroke="#4ade80" stroke-width="1.5"/>
 
-      <!-- Level 2 -->
-      <circle cx="40" cy="110" r="14" fill="#2a2a4a" stroke="rgba(255,255,255,.1)" stroke-width="1"/>
-      <circle cx="120" cy="110" r="14" fill="#2a2a4a" stroke="rgba(255,255,255,.1)" stroke-width="1"/>
-      <circle cx="200" cy="110" r="14" fill="#2a2a4a" stroke="rgba(255,255,255,.1)" stroke-width="1"/>
-      <circle cx="280" cy="110" r="14" fill="rgba(34,197,94,.1)" stroke="#22c55e" stroke-width="1.5"/>
-      <text x="280" y="114" text-anchor="middle" font-family="'SF Mono',Consolas,monospace" font-size="8" fill="#22c55e">rcpt</text>
+      <circle cx="40" cy="110" r="14" fill="#1e293b" stroke="rgba(148,163,184,.08)" stroke-width="1"/>
+      <circle cx="120" cy="110" r="14" fill="#1e293b" stroke="rgba(148,163,184,.08)" stroke-width="1"/>
+      <circle cx="200" cy="110" r="14" fill="#1e293b" stroke="rgba(148,163,184,.08)" stroke-width="1"/>
+      <circle cx="280" cy="110" r="14" fill="rgba(74,222,128,.06)" stroke="#4ade80" stroke-width="1.5"/>
+      <text x="280" y="114" text-anchor="middle" font-family="'SF Mono',Consolas,monospace" font-size="8" fill="#4ade80">rcpt</text>
 
-      <!-- Edges -->
-      <line x1="150" y1="37" x2="90" y2="53" stroke="rgba(255,255,255,.1)" stroke-width="1"/>
-      <line x1="170" y1="37" x2="230" y2="53" stroke="#22c55e" stroke-width="1.5" opacity=".6"/>
-      <line x1="70" y1="77" x2="50" y2="98" stroke="rgba(255,255,255,.1)" stroke-width="1"/>
-      <line x1="90" y1="77" x2="110" y2="98" stroke="rgba(255,255,255,.1)" stroke-width="1"/>
-      <line x1="230" y1="77" x2="210" y2="98" stroke="rgba(255,255,255,.1)" stroke-width="1"/>
-      <line x1="250" y1="77" x2="270" y2="98" stroke="#22c55e" stroke-width="1.5" opacity=".6"/>
+      <line x1="150" y1="37" x2="90" y2="53" stroke="rgba(148,163,184,.08)" stroke-width="1"/>
+      <line x1="170" y1="37" x2="230" y2="53" stroke="#4ade80" stroke-width="1.5" opacity=".5"/>
+      <line x1="70" y1="77" x2="50" y2="98" stroke="rgba(148,163,184,.08)" stroke-width="1"/>
+      <line x1="90" y1="77" x2="110" y2="98" stroke="rgba(148,163,184,.08)" stroke-width="1"/>
+      <line x1="230" y1="77" x2="210" y2="98" stroke="rgba(148,163,184,.08)" stroke-width="1"/>
+      <line x1="250" y1="77" x2="270" y2="98" stroke="#4ade80" stroke-width="1.5" opacity=".5"/>
 
-      <!-- Labels -->
-      <text x="160" y="150" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" fill="#22c55e">inclusion proof</text>
-      <text x="160" y="163" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" fill="#8a8a9a">anyone can verify membership</text>
+      <text x="160" y="150" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" fill="#4ade80">inclusion proof</text>
+      <text x="160" y="163" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" fill="#64748b">anyone can verify membership</text>
     </svg>
   </div>
 
-  <p>Double-selling is prevented by transparency logs — the same append-only Merkle trees that secure billions of HTTPS connections via Certificate Transparency. Receipt goes in, log signs a Merkle root. Multiple independent logs do this. Try to sell twice, the conflict is caught.</p>
-  <p class="dim">No consensus protocol. No mining. No tokens. Just servers that append things and sign roots.</p>
+  <p>This is the part where people expect a blockchain, but it's not necessary. Ownership gets tracked through transparency logs; append-only Merkle trees, the same data structure that already secures billions of HTTPS connections through Certificate Transparency. A receipt goes in, the log signs a new root. Run multiple independent logs and any attempt to double-sell the same receipt creates a visible conflict.</p>
+  <p class="dim">Servers that append things and sign roots. That's the whole infrastructure. Anyone can run one.</p>
 </section>
 
-<!-- ─────────────────────────────────────────── -->
-<!-- SECTION 9: TRUST                            -->
-<!-- ─────────────────────────────────────────── -->
+<!-- ── 9. TRUST ── -->
 
-<section>
-  <div class="section-label">9 — Trust</div>
-  <h2>Your receipts ARE your collateral.</h2>
+<section class="reveal">
+  <div class="section-label">9</div>
+  <h2>Your receipts are your collateral.</h2>
 
   <div class="diagram">
     <svg viewBox="0 0 320 155" preserveAspectRatio="xMidYMid meet">
-      <!-- Fulcrum -->
-      <polygon points="160,95 145,110 175,110" fill="#2a2a4a" stroke="rgba(255,255,255,.15)" stroke-width="1"/>
+      <polygon points="160,95 145,110 175,110" fill="#1e293b" stroke="rgba(148,163,184,.15)" stroke-width="1"/>
+      <line x1="38" y1="80" x2="282" y2="68" stroke="rgba(148,163,184,.15)" stroke-width="2" stroke-linecap="round"/>
 
-      <!-- Beam (tilted — left side heavier) -->
-      <line x1="38" y1="80" x2="282" y2="68" stroke="rgba(255,255,255,.2)" stroke-width="2" stroke-linecap="round"/>
+      <rect x="20" y="38" width="80" height="38" rx="6" fill="rgba(74,222,128,.06)" stroke="#4ade80" stroke-width="1"/>
+      <text x="60" y="55" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" font-weight="600" fill="#4ade80">Stake</text>
+      <text x="60" y="68" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="9" fill="#64748b">accumulated work</text>
 
-      <!-- Left pan — stake -->
-      <rect x="20" y="38" width="80" height="38" rx="4" fill="rgba(34,197,94,.1)" stroke="#22c55e" stroke-width="1"/>
-      <text x="60" y="53" text-anchor="middle" font-family="'SF Mono',Consolas,monospace" font-size="10" font-weight="600" fill="#22c55e">$73,000</text>
-      <text x="60" y="68" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="9" fill="#8a8a9a">eff. stake</text>
+      <rect x="42" y="12" width="36" height="5" rx="1" fill="rgba(74,222,128,.1)"/>
+      <rect x="38" y="19" width="44" height="5" rx="1" fill="rgba(74,222,128,.15)"/>
+      <rect x="34" y="26" width="52" height="5" rx="1" fill="rgba(74,222,128,.2)"/>
 
-      <!-- Stacked receipts icon -->
-      <rect x="42" y="12" width="36" height="6" rx="1" fill="rgba(34,197,94,.15)"/>
-      <rect x="38" y="20" width="44" height="6" rx="1" fill="rgba(34,197,94,.2)"/>
-      <rect x="34" y="28" width="52" height="6" rx="1" fill="rgba(34,197,94,.25)"/>
+      <rect x="230" y="28" width="72" height="34" rx="6" fill="rgba(148,163,184,.04)" stroke="rgba(148,163,184,.15)" stroke-width="1"/>
+      <text x="266" y="45" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" fill="#e2e8f0">Transaction</text>
+      <text x="266" y="57" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="9" fill="#64748b">single job</text>
 
-      <!-- Right pan — transaction -->
-      <rect x="230" y="28" width="72" height="34" rx="4" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.15)" stroke-width="1"/>
-      <text x="266" y="43" text-anchor="middle" font-family="'SF Mono',Consolas,monospace" font-size="10" fill="#e0e0e0">$1,000</text>
-      <text x="266" y="56" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="9" fill="#8a8a9a">transaction</text>
-
-      <!-- Trust quotient -->
-      <text x="160" y="132" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="14" font-weight="700" fill="#22c55e">Trust quotient: 73x</text>
-      <text x="160" y="150" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" fill="#8a8a9a">73x more to lose than to gain by cheating.</text>
+      <text x="160" y="132" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="14" font-weight="700" fill="#4ade80">Trust quotient: 73x</text>
+      <text x="160" y="150" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" fill="#64748b">73x more to lose than gain by cheating.</text>
     </svg>
   </div>
 
-  <p>Your effective stake is computed from your accumulated receipts, royalty streams, and how many downstream receipts depend on your work. Cheat, and you destroy all of it. The collateral is endogenous — generated by honest work, not deposited from outside.</p>
-  <p class="dim">A new operator starts at zero. Builds up through small honest trades. Fraud is expensive in proportion to its payoff.</p>
+  <p>Here's the interesting part. Your accumulated receipts, the royalty streams they generate, all the downstream work that depends on yours; that's your collateral. It emerges from honest participation. Nobody deposits it from outside. And if you cheat, all of it breaks. Not as a punishment; the cryptography simply stops verifying.</p>
+  <p class="dim">New operators start at zero and build up. The first few transactions are the hardest. That's the point.</p>
 </section>
 
-<!-- ─────────────────────────────────────────── -->
-<!-- SECTION 10: IT'S LIVE                       -->
-<!-- ─────────────────────────────────────────── -->
+<!-- ── 10. IT'S LIVE ── -->
 
-<section>
-  <div class="section-label">10 — It's Live</div>
+<section class="reveal">
+  <div class="section-label">10</div>
   <h2>Three log servers. Real receipts. Real agents.</h2>
 
-  <p>The network is running. Real LLM inference, real cryptographic proofs, real Merkle inclusion proofs. Agents discover each other, transact, and build provenance chains.</p>
+  <p>This isn't theoretical. The network is running right now. Real LLM inference generating real cryptographic proofs, logged in real Merkle trees across independent servers. Agents finding each other, transacting, building provenance chains.</p>
 
   <pre>curl https://log1.tesseravcr.org/v1/health</pre>
 
   <div class="cta-row">
     <a href="network.html" class="cta cta-primary">See the network</a>
-    <a href="https://github.com/tesseravcr/tesseravcr" class="cta cta-secondary">Read the code</a>
+    <a href="join.html" class="cta cta-secondary">Join</a>
+    <a href="https://github.com/tesseravcr/tesseravcr" class="cta cta-secondary">Source</a>
   </div>
 
-  <p class="dim" style="margin-top:24px">Python + Rust. 77 tests. MIT license. No token. No hype. Just math.</p>
+  <p class="dim" style="margin-top:24px">Python + Rust. MIT license. No token. Just math.</p>
 </section>
 
 </div>
+
+<script>
+const obs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:0.15});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
 </body>
 </html>
