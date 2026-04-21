@@ -6,104 +6,75 @@
 <title>Tessera VCR</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;background:#fff;color:#111;font-size:15px;line-height:1.8;-webkit-font-smoothing:antialiased}
-a{color:#111;text-underline-offset:3px}
-code{font-family:'SF Mono',Consolas,monospace;font-size:13px;background:#f5f5f5;padding:2px 6px;border-radius:3px}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#1a1a2e;color:#e0e0e0;font-size:16px;line-height:1.8;-webkit-font-smoothing:antialiased}
+a{color:#3b82f6;text-decoration:none}
+a:hover{text-decoration:underline}
 
-.wrap{max-width:640px;margin:0 auto;padding:48px 24px 80px}
+.wrap{max-width:600px;margin:0 auto;padding:80px 24px}
 
-.nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:48px;padding-bottom:16px;border-bottom:1px solid #eee}
-.nav-logo{font-size:14px;font-weight:700;color:#111;letter-spacing:-.2px}
-.nav-links{display:flex;gap:20px;font-size:13px}
-.nav-links a{color:#666;text-decoration:none}
-.nav-links a:hover{color:#111}
-.nav-links a.active{color:#111;font-weight:600}
+.nav{display:flex;justify-content:space-between;align-items:center;padding-bottom:20px;margin-bottom:80px;border-bottom:1px solid rgba(255,255,255,.08)}
+.nav-logo{font-size:14px;font-weight:700;color:#fff;letter-spacing:-.2px}
+.nav-links{display:flex;gap:24px;font-size:13px}
+.nav-links a{color:#8a8a9a;text-decoration:none}
+.nav-links a:hover{color:#fff}
 
-h1{font-size:24px;font-weight:700;color:#111;margin-bottom:20px;line-height:1.3}
-p{margin-bottom:16px;color:#333;line-height:1.8}
-.muted{color:#666;font-size:14px}
+.hero{text-align:center;margin-bottom:64px}
+.hero h1{font-size:36px;font-weight:700;color:#fff;margin-bottom:24px;line-height:1.2;letter-spacing:-.5px}
+.hero p{font-size:17px;color:#8a8a9a;max-width:460px;margin:0 auto;line-height:1.7}
 
-hr{border:none;border-top:1px solid #eee;margin:32px 0}
+.cards{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.card{border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:20px 24px;text-align:center;flex:1;min-width:160px;max-width:200px;transition:border-color .2s}
+.card:hover{border-color:rgba(255,255,255,.25)}
+.card-title{font-size:14px;font-weight:600;color:#fff;margin-bottom:6px}
+.card-desc{font-size:12px;color:#8a8a9a;line-height:1.5}
+.card a{color:inherit;text-decoration:none}
 
-.spec{background:#fafafa;border-left:3px solid #111;padding:20px;margin:24px 0;border-radius:4px}
-.spec-title{font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:#999;margin-bottom:8px}
-.spec-content{font-size:15px;line-height:1.7;color:#333}
-.spec-content strong{color:#111}
-
-ul{margin:16px 0 16px 0;list-style:none}
-li{padding:6px 0;margin-left:0}
-li:before{content:"→ ";color:#666;margin-right:8px}
+.footer{text-align:center;margin-top:80px;font-size:12px;color:#555}
 
 @media(max-width:600px){
-  .wrap{padding:32px 20px 60px}
-  h1{font-size:20px}
+  .wrap{padding:48px 20px}
+  .hero{margin-bottom:48px}
+  .hero h1{font-size:28px}
+  .hero p{font-size:15px}
+  .cards{flex-direction:column;align-items:center}
+  .card{max-width:280px;width:100%}
 }
 </style>
 </head>
 <body>
 <div class="wrap">
 
-<div class="nav">
+<nav class="nav">
   <a href="index.html" style="text-decoration:none"><div class="nav-logo">Tessera VCR</div></a>
   <div class="nav-links">
+    <a href="demo.html">Learn</a>
     <a href="network.html">Explorer</a>
-    <a href="demo.html">Demo</a>
-    <a href="why.html">Why</a>
-    <a href="spec.html">Spec</a>
     <a href="https://github.com/tesseravcr/tesseravcr">Source</a>
   </div>
+</nav>
+
+<div class="hero">
+  <h1>A receipt for compute.</h1>
+  <p>Your agent calls another agent. It gets a response. No proof it happened. No trail. A receipt changes that — 21 fields, cryptographically signed. Verifiable. Traceable. Tradeable.</p>
 </div>
 
-<h1>A receipt for compute.</h1>
-
-<p>When your agent calls another agent, it gets a response. That's it. No proof it happened. No way to verify the model actually ran. No trail.</p>
-
-<p>A receipt changes that. It's a data structure — 21 fields. Everything about what happened. Who did it. What went in. What came out. Cryptographically signed.</p>
-
-<p>You can verify it yourself. You can resell it. Original creators get paid every time. Automatically.</p>
-
-<p class="muted">No blockchain. No token. No consensus. Just an append-only log anyone can audit.</p>
-
-<hr>
-
-<div class="spec">
-<div class="spec-title">The Core: What a Receipt Is</div>
-<div class="spec-content">
-21 fields.<br><br>
-<strong>Identity:</strong> Receipt ID (hash of everything). Schema version (1).<br><br>
-<strong>Computation:</strong> What model ran. Who ran it. Input hash. Output hash. Proof (ZK or TEE). Timestamp.<br><br>
-<strong>Provenance:</strong> Parent receipts (who you built on). Depth (how many layers back).<br><br>
-<strong>Economics:</strong> Provider (who got paid). Original price. Royalty terms (who gets paid on resale).<br><br>
-<strong>Integrity:</strong> Signature (Ed25519). Extensions (future-proof).
-</div>
+<div class="cards">
+  <a href="demo.html" class="card" style="text-decoration:none">
+    <div class="card-title">Understand it</div>
+    <div class="card-desc">10-minute walkthrough. Build the protocol from first principles.</div>
+  </a>
+  <a href="network.html" class="card" style="text-decoration:none">
+    <div class="card-title">See it live</div>
+    <div class="card-desc">Three log servers. Real receipts. Real agents transacting.</div>
+  </a>
+  <a href="https://github.com/tesseravcr/tesseravcr" class="card" style="text-decoration:none">
+    <div class="card-title">Read the code</div>
+    <div class="card-desc">Python + Rust. 77 tests. MIT license.</div>
+  </a>
 </div>
 
-<p>That's it. Minimal. Every field exists because it's necessary for verification or settlement.</p>
-
-<hr>
-
-<h2 style="font-size:18px;margin:32px 0 16px">Why this works</h2>
-
-<ul>
-<li>Receipts chain into DAGs. Modify any receipt and all descendants break. The chain is the audit trail.</li>
-<li>Royalties propagate backward automatically when you resell. No platform needed. No accounting.</li>
-<li>You verify the computation yourself. No trust required. Just math.</li>
-<li>Anyone can run a log server. It's just SQLite + Merkle trees. Decentralized by default.</li>
-</ul>
-
-<hr>
-
-<h2 style="font-size:18px;margin:32px 0 16px">Live network</h2>
-
-<p>Three log servers running now. Real receipts flowing. Real agents discovering each other and transacting.</p>
-
-<p><code>curl https://log1.tesseravcr.org/v1/health</code></p>
-
-<hr>
-
-<p class="muted" style="font-size:13px">We're trying to help you verify compute. That's it. No token. No hype. Just math. Use it if it solves your problem.</p>
+<div class="footer">No token. No blockchain. No consensus. Just receipts and math.</div>
 
 </div>
-
 </body>
 </html>
